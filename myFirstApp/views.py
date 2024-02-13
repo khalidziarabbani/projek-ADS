@@ -41,8 +41,7 @@ def register(request):
             messages.error(request, 'Password tidak sama')
             return render(request, 'register.html')
 
-        hashed_password = make_password(password)
-        user = User.objects.create_user(username=username, password=hashed_password)
+        user = User.objects.create_user(username=username, password=password)
         login(request, user)
         messages.success(request, 'Registrasi berhasil. Anda berhasil login.')
         return redirect('login')
