@@ -1,5 +1,11 @@
 {% extends 'base.html' %}
 {% block title %}My First App{% endblock title %}
 {% block content %}
-    hello world
+    <h1>hello world</h1>
+    {% if request.user.is_anonymous %}
+    <h1>Gagal</h1>
+    {% elif request.user.is_authenticated %}
+    <h1>{{ request.user.username }}</h1>
+    <a href="{% url 'logout' %}">Logout</a>
+    {% endif %}
 {% endblock content %}
