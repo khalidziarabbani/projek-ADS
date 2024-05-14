@@ -2,12 +2,32 @@
 {% block title %}Login{% endblock title %}
 {% block content %}
 {% load static %}
-<link rel="stylesheet" href="{% static 'login.css' %}">
-<h1>Login</h1>
-<form action="" method="post">
-    {% csrf_token %}
-    <input type="text" name="username" placeholder="Username" required>
-    <input type="password" name="password" placeholder="Password" required>
-    <input type="submit" value="Login">
-</form>
+<link rel="stylesheet" href="{% static 'css/login.css' %}">
+<div class="background"></div>
+<div class="content">
+    <div class="left">
+        <img src="{% static "img/logo.svg" %}" alt="logo">
+        <h1>LE<span>SHOP</span></h1>
+        <p>Tempat belanja kebutuhan game No. 1<br>di Cibaduyut dan Cilembu</p>
+    </div>
+    <div class="right">
+        <form action="" method="post">
+            {% csrf_token %}
+            <div class="judul">
+                <p>Login</p>
+                <a href={% url 'register' %}>Register</a>
+            </div>
+            <div class="form">
+                <label for="username">Username</label>
+                <input type="text" name="username" placeholder="Enter your username" required>
+                <label for="password">Password</label>
+                <input type="password" name="password" placeholder="Enter your password" required>
+            </div>
+            <div class="button">
+                <input type="submit" value="Login">
+            </div>
+        </form>
+    </div>
+</div>
+<div class="background"></div>
 {% endblock content %}
