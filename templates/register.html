@@ -1,15 +1,53 @@
 {% extends 'base.html' %}
-{% block title %}Register{% endblock %}
+{% block title %}Register{% endblock title %}
 {% block content %}
-    <h2>Register</h2>
-    <form action="" method="post">
-        {% csrf_token %}
-        <input type="text" name="username" placeholder="Enter Username" required>
-        <input type="email" name="email" placeholder="Enter Email" required>
-        <input type="text" name="full_name" placeholder="Enter Full Name" required>
-        <input type="text" name="phone_number" placeholder="Enter Phone Number" required>
-        <input type="password" name="password" placeholder="Enter Password" required>
-        <input type="password" name="password2" placeholder="Confirm Password" required>
-        <input type="submit" value="Register">
-    </form>
+{% load static %}
+<link rel="stylesheet" href="{% static 'css/register.css' %}">
+<script src="{% static 'js/register.js' %}"></script>
+<div class="header">
+    <img src="{% static "img/logo.svg" %}" alt="logo">
+    <h1>LE<span>SHOP</span></h1>
+</div>
+<div class="content">
+    <div class="left">
+        <img src="{% static "img/logo.svg" %}" alt="logo">
+        <h1>LE<span>SHOP</span></h1>
+        <p>Tempat belanja kebutuhan game No. 1<br>di Cibaduyut dan Cilembu</p>
+    </div>
+    <div class="right">
+        <form id="register-form" action="" method="post">
+            {% csrf_token %}
+            <div class="judul">
+                <p>Register</p>
+                <a href={% url 'login' %}>Login</a>
+            </div>
+            <div class="form">
+                <div id="phone-email">
+                    <label for="phone_number">Phone number</label>
+                    <input type="text" name="phone_number" placeholder="Enter your phone number" required>
+                    <label for="email">Email</label>
+                    <input type="email" name="email" placeholder="Enter your email" required>
+                </div>
+                <div id="fullname-username">
+                    <label for="full_name">Full name</label>
+                    <input type="text" name="full_name" placeholder="Enter your full name">
+                    <label for="username">Username</label>
+                    <input type="text" name="username" placeholder="Enter your username">
+                </div>
+                <div id="password">
+                    <label for="password">Password</label>
+                    <input type="password" name="password" placeholder="Enter password" required>
+                    <label for="password2">Confirm Password</label>
+                    <input type="password" name="password2" placeholder="Confirm password" required>
+                </div>
+            </div>
+            <div class="button">
+                <a id="previous-btn" href="#" class="hidden">Previous</a>
+                <input type="submit" id="next-btn" value="Next">
+                <input type="submit" id="submit-btn" value="Register" class="hidden">
+            </div>
+        </form>
+    </div>
+</div>
+<div class="background"></div>
 {% endblock content %}
