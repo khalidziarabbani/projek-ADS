@@ -162,15 +162,6 @@ form {
 
 .button {
     width: 100%;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    gap: 10px;
-}
-
-.button a,
-.button input {
-    flex: 1;
 }
 
 .button input {
