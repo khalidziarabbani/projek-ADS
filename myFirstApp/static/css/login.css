@@ -166,7 +166,8 @@ form {
 
 .button input {
     width: 100%;
-    padding: 12px;
+    height: 40px;
+    padding: 5px 10px;
     background-color: #C00;
     color: white;
     border: none;
