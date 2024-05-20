@@ -62,3 +62,6 @@ def register(request):
 
     elif request.method == 'GET':
         return render(request, 'register.html')
+    
+def product_detail(request):
+    return render(request, 'product_detail.html')
