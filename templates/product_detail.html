@@ -2,7 +2,112 @@
 {% block title %}Login{% endblock title %}
 {% block content %}
 {% load static %}
+<link rel="stylesheet" href="{% static 'css/product_description.css' %}">
 <div class="header">
     <img src="{% static "img/logo.svg" %}" alt="logo">
     <h1>LE<span>SHOP</span></h1>
+</div>
+<div class="atas">
+    <div class="kiri">
+        <img src="{% static "img/ps5.png" %}" alt="logo">
+        <div class="deskripsi">
+            <div class="nama">
+                <h1 class="produk">PS5 Console Slim Model</h1>
+                <h1 class="harga">$69.00</h1>
+            </div>
+            <div class="isi">
+                <div class="a">Deskripsi</div>
+                <div class="b">Spesifikasi</div>
+                <p class="des">Rasakan pengalaman gaming tanpa batas dengan PS5 terbaru, menampilkan grafis luar biasa, kecepatan pemuatan super cepat, dan inovasi kontroler DualSense yang imersif. Didesain untuk performa maksimal, siap bawa Anda ke level berikutnya</p>
+            </div> 
+        </div>
+    </div>
+    <div class="kanan">
+        <div class="set">SET ORDER</div>
+        <div class="total">
+            <div class="quantity">
+                <p>Product Quantity</p>
+                <div class="plus">
+                    <button>-</button>
+                    <p>1</p>
+                    <button>+</button>
+                </div>
+            </div>
+            <div class="stock">
+                <p>Stock: 29</p>
+            </div>
+        </div>
+        <div class="subtotal">
+            <div class="sub1">
+                <p class="tsub">Subtotal:</p>
+                <p class="harga_total">$69.00</p>
+            </div>
+            <div class="tomboladd">
+                <input type="submit" value="Add to Cart">
+            </div>
+            <div class="tombolbuy">
+                <input type="submit" value="Buy Now">
+            </div>
+        </div>
+    </div>
+</div>
+<div class="tengah">
+    Other Products
+</div>
+<div class="bawah">
+    <div class="p1">
+        <img src="{% static "img/ps5.png" %}" alt="logo">
+        <div class="penjelasan">
+            Product Name
+            <div class="hrg">
+                $69.00
+                <div class="tomboladd">
+                    <input type="submit" value="Add to Cart">
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="p1">
+        <img src="{% static "img/ps5.png" %}" alt="logo">
+        <div class="penjelasan">
+            Product Name
+            <div class="hrg">
+                $69.00
+                <div class="tomboladd">
+                    <input type="submit" value="Add to Cart">
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="p1">
+        <img src="{% static "img/ps5.png" %}" alt="logo">
+        <div class="penjelasan">
+            Product Name
+            <div class="hrg">
+                $69.00
+                <div class="tomboladd">
+                    <input type="submit" value="Add to Cart">
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="p1">
+        <img src="{% static "img/ps5.png" %}" alt="logo">
+        <div class="penjelasan">
+            Product Name
+            <div class="hrg">
+                $69.00
+                <div class="tomboladd">
+                    <input type="submit" value="Add to Cart">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="footer">
+    <div class="copyright">
+        <img src="{% static "img/cr.svg" %}" alt="logo">
+        2024 LESHOP. All rights reserved
+    </div>
+</div>
 {% endblock content %}
