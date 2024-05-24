@@ -2,11 +2,9 @@
 {% block title %}Login{% endblock title %}
 {% block content %}
 {% load static %}
-<link rel="stylesheet" href="{% static 'css/product_description.css' %}">
-<div class="header">
-    <img src="{% static "img/logo.svg" %}" alt="logo">
-    <h1>LE<span>SHOP</span></h1>
-</div>
+<link rel="stylesheet" href="{% static 'css/product_detail.css' %}">
+{% include 'navbar.html' %}
+<script src="{% static 'js/product_detail.js' %}"></script>
 <div class="atas">
     <div class="kiri">
         <img src="{% static "img/ps5.png" %}" alt="logo">
@@ -16,10 +14,18 @@
                 <h1 class="harga">$69.00</h1>
             </div>
             <div class="isi">
-                <div class="a">Deskripsi</div>
-                <div class="b">Spesifikasi</div>
-                <p class="des">Rasakan pengalaman gaming tanpa batas dengan PS5 terbaru, menampilkan grafis luar biasa, kecepatan pemuatan super cepat, dan inovasi kontroler DualSense yang imersif. Didesain untuk performa maksimal, siap bawa Anda ke level berikutnya</p>
-            </div> 
+                <button id="descriptionBtn" class="description-button active" onclick="toggleDescription(this)">Deskripsi</button>
+                <button id="specificationBtn" class="specification-button" onclick="toggleSpecification(this)">Spesifikasi</button>
+
+            
+                <div id="description" class="visible">
+                    <p>Deskripsi produk: Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+                </div>
+            
+                <div id="specification" class="hidden">
+                    <p>Spesifikasi produk : aksdjfakljsfklajsfldksajfh</p>
+                </div>
+            </div>
         </div>
     </div>
     <div class="kanan">
@@ -55,6 +61,78 @@
     Other Products
 </div>
 <div class="bawah">
+    <div class="p1">
+        <img src="{% static "img/ps5.png" %}" alt="logo">
+        <div class="penjelasan">
+            Product Name
+            <div class="hrg">
+                $69.00
+                <div class="tomboladd">
+                    <input type="submit" value="Add to Cart">
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="p1">
+        <img src="{% static "img/ps5.png" %}" alt="logo">
+        <div class="penjelasan">
+            Product Name
+            <div class="hrg">
+                $69.00
+                <div class="tomboladd">
+                    <input type="submit" value="Add to Cart">
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="p1">
+        <img src="{% static "img/ps5.png" %}" alt="logo">
+        <div class="penjelasan">
+            Product Name
+            <div class="hrg">
+                $69.00
+                <div class="tomboladd">
+                    <input type="submit" value="Add to Cart">
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="p1">
+        <img src="{% static "img/ps5.png" %}" alt="logo">
+        <div class="penjelasan">
+            Product Name
+            <div class="hrg">
+                $69.00
+                <div class="tomboladd">
+                    <input type="submit" value="Add to Cart">
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="p1">
+        <img src="{% static "img/ps5.png" %}" alt="logo">
+        <div class="penjelasan">
+            Product Name
+            <div class="hrg">
+                $69.00
+                <div class="tomboladd">
+                    <input type="submit" value="Add to Cart">
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="p1">
+        <img src="{% static "img/ps5.png" %}" alt="logo">
+        <div class="penjelasan">
+            Product Name
+            <div class="hrg">
+                $69.00
+                <div class="tomboladd">
+                    <input type="submit" value="Add to Cart">
+                </div>
+            </div>
+        </div>
+    </div>
     <div class="p1">
         <img src="{% static "img/ps5.png" %}" alt="logo">
         <div class="penjelasan">

@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+{% block title %}Login{% endblock title %}
+{% block content %}
+{% load static %}
+<link rel="stylesheet" href="{% static 'css/navbar.css' %}">
+<div class="navbar">
+    <div class="logo">
+        <img src="{% static "img/logo.svg" %}" alt="logo">
+        <h1>LE<span>SHOP</span></h1>
+    </div>
+    <div class="tombol">
+        <li><a href="{% url 'index' %}">Home</a></li>
+        <li><a href=>Categories</a></li>
+        </a></li>
+        <li><a href="#about">About</a></li>
+    </div>
+
+    <div class="user">
+        <button class="Cart">
+            <img src="{% static "img/Cart.svg" %}" alt="logo">
+        </button>
+        <div class="akun">
+            <img src="{% static "img/pp.svg" %}" alt="logo">
+            {% if request.user.is_anonymous %}
+            <li><a href="#user">User</a></li>>
+            {% elif request.user.is_authenticated %}
+            <li><a href="#user">{{ request.user.username }}</a></li>
+            {% endif %}
+        </div>
+    </div>
+
+</div>
+{% endblock content %}

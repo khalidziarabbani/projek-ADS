@@ -65,3 +65,6 @@ def register(request):
     
 def product_detail(request):
     return render(request, 'product_detail.html')
+
+def homepage(request):
+    return render(request, 'homepage.html')
