@@ -68,3 +68,6 @@ def product_detail(request):
 
 def homepage(request):
     return render(request, 'homepage.html')
+
+def user(request):
+    return render(request, 'user.html')

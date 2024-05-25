@@ -22,9 +22,9 @@
         <div class="akun">
             <img src="{% static "img/pp.svg" %}" alt="logo">
             {% if request.user.is_anonymous %}
-            <li><a href="#user">User</a></li>>
+            <li><a href="{% url 'user' %}">User</a></li>>
             {% elif request.user.is_authenticated %}
-            <li><a href="#user">{{ request.user.username }}</a></li>
+            <li><a href="{% url 'user' %}">{{ request.user.username }}</a></li>
             {% endif %}
         </div>
     </div>

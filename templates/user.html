@@ -1,0 +1,81 @@
+{% extends 'base.html' %}
+{% block title %}Login{% endblock title %}
+{% block content %}
+{% load static %}
+<link rel="stylesheet" href="{% static 'css/user.css' %}">
+{% include 'navbar.html' %}
+<div class="container">
+    <div class="kiri">
+            <div class="atas">
+                <img src="{% static "img/pp.svg" %}" alt="logo">
+                <div class="nama">
+                    <p1>Hello!</p1>
+                    <p2>user</p2>
+                </div>
+            </div>
+            <div class="bawah">
+                <div class="profile">
+                    <img src="{% static "img/prof.svg" %}" alt="logo">
+                    <span>Profile</span>
+                </div>
+                <div class="trans">
+                    <img src="{% static "img/trans.svg" %}" alt="logo">
+                    <span>Transaction List</span>
+                </div>
+                <div class="log">
+                    <img src="{% static "img/log.svg" %}" alt="logo">
+                    <span>Log Out</span>
+                </div>
+            </div>
+    </div>
+    <div class="kanan">
+        <div class="bio">
+            <h1>Profile</h1>
+            <div class="data">
+                <div class="isi">
+                    <label for="username">Username</label>
+                    <input type="text" name="user_name" placeholder="User" required>
+
+                    <label for="fullname">Full Name</label>
+                    <input type="text" name="full_name" placeholder="User" required>
+
+                    <label for="email">Email</label>
+                    <input type="text" name="email" placeholder="user@email.com" required>
+
+                    <label for="gender">Gender</label>
+                    <div class="form_gender">
+                        <label1 for="male">
+                            <input type="radio" id="male" name="gender" value="male">
+                            Male
+                        </label1><br>
+                        <label1 for="female">
+                            <input type="radio" id="female" name="gender" value="female">
+                            Female
+                        </label1><br>
+                    </div>
+                        
+                    <label for="phone">Phone Number</label>
+                    <input type="number" name="phone" placeholder="0812xxxxxxx" required>
+                       
+                    <label for="adress">Adress</label>
+                    <input type="text" name="adress" placeholder="Jalan Phh. Mustafa, Bandung, Jawa Barat, 40124, (022) 7104218" required>
+
+                    <label for="birth">Birth Date</label>
+                    <input type="date" id="birthdate" name="birthdate"><br><br>
+                </div>
+                <div class="save">
+                    <input type="submit" id="save" value="Save">
+                </div>
+            </div>
+        </div>
+        <div class="change_pp">
+            <img src="{% static "img/pp.svg" %}" alt="logo">
+            <div class="change_button">
+                <img src="{% static "img/change.svg" %}" alt="logo">
+                <input type="submit" id="change" value="Change Profile Picture">
+            </div>
+        </div>
+    </div>
+</div>
+{% include 'footer.html' %}
+{% endblock content %}
