@@ -3,12 +3,12 @@
 {% block content %}
 {% load static %}
 <style>
-    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap');
 
     * {
         margin: 0;
         padding: 0;
-        font-family: 'Inter', sans-serif;
+        font-family: "Poppins", sans-serif;
         text-decoration: none;
     }
 
@@ -24,7 +24,7 @@
         border-bottom: 0.56px solid var(--Secondary-sc_dark, #BFBFBF);
         background: var(--Secondary-sc_normal, #FFF);
         box-shadow: 0px 3px 4px 0px rgba(0, 0, 0, 0.15);
-        font-family: 'Inter', sans-serif;
+        font-family: 'Poppins', sans-serif; /* Ensure navbar also uses Poppins */
     }
 
     .logo{
@@ -64,13 +64,11 @@
 
     .tombol a{
         color: var(--Text-tx_normal, #281814);
-
-        font-family: 'Inter';
         font-size: 18px;
         font-style: normal;
         font-weight: 500;
-        line-height: 23px; /* 127.778% */
-        text-decoration: none;
+        line-height: 23px;
+        text-decoration: none; /* Ensure links have no text decoration */
     }
 
     .user{
@@ -100,18 +98,15 @@
         align-items: center;
         width: 30%;
         gap: 10%;
-        text-decoration: none;
     }
 
-    a{
+    .akun a {
         color: var(--Text-tx_normal, #281814);
-
-        font-family: 'Inter';
         font-size: 18px;
         font-style: normal;
         font-weight: 500;
-        line-height: 23px; /* 127.778% */
-        text-decoration: none;
+        line-height: 23px;
+        text-decoration: none; /* Ensure links have no text decoration */
     }
 </style>
 <div class="navbar">
@@ -121,24 +116,22 @@
     </div>
     <div class="tombol">
         <li><a href="{% url 'index' %}">Home</a></li>
-        <li><a href=>Categories</a></li>
-        </a></li>
+        <li><a href="#categories">Categories</a></li>
         <li><a href="#about">About</a></li>
     </div>
 
     <div class="user">
         <button class="Cart">
-            <img src="{% static "img/Cart.svg" %}" alt="logo">
+            <img src="{% static "img/Cart.svg" %}" alt="cart">
         </button>
         <div class="akun">
-            <img src="{% static "img/pp.svg" %}" alt="logo">
+            <img src="{% static "img/pp.svg" %}" alt="user profile">
             {% if request.user.is_anonymous %}
-            <li><a href="{% url 'user' %}">User</a></li>>
+            <li><a href="{% url 'user' %}">User</a></li>
             {% elif request.user.is_authenticated %}
             <li><a href="{% url 'user' %}">{{ request.user.username }}</a></li>
             {% endif %}
         </div>
     </div>
-
 </div>
 {% endblock content %}

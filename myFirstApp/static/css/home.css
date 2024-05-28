@@ -1,0 +1,309 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    font-family: 'Inter', sans-serif;
+    box-sizing: border-box;
+    text-decoration: none;
+}
+
+html,
+body {
+    height: 100%;
+    width: 100%;
+    scroll-behavior: smooth;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+}
+
+.banner {
+    background: url('../img/banner.svg');
+    background-size: cover;
+    background-position: center center;
+    width: 100%;
+    height: 100%;
+    box-shadow: 0px 3px 4px 0px rgba(0, 0, 0, 0.15), 0px 3px 4px 0px rgba(0, 0, 0, 0.15) inset;
+}
+
+.banner-text {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 50%;
+    height: 504px;
+}
+
+.banner-text h1 {
+    color: var(--Secondary-sc_normal, #FFF);
+    text-align: center;
+    text-shadow: 0px 3px 4px rgba(0, 0, 0, 0.15);
+    font-size: 36px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 46px;
+}
+
+.banner-text span {
+    font-size: 60px;
+    font-weight: 600;
+    line-height: 74px;
+}
+
+.banner-btn {
+    display: inline-flex;
+    height: 44px;
+    padding: 0px 16px;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    flex-shrink: 0;
+    border-radius: 4px;
+    border: 1px solid var(--Primary-pr_normal, #C00);
+    background: var(--Secondary-sc_normal, #FFF);
+    box-shadow: 0px 3px 4px 0px rgba(0, 0, 0, 0.15);
+    margin-top: 47.5px;
+}
+
+.banner-btn a {
+    color: #C00;
+    font-size: 18px;
+    font-weight: 600;
+    line-height: 23px;
+    text-decoration: none;
+}
+
+.categories {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin: 56px 98px;
+}
+
+.categories h3 {
+    font-size: 28px;
+    font-style: normal;
+    font-weight: 600;
+    color: #281814;
+    margin-bottom: 60px;
+}
+
+.category {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    grid-template-rows: repeat(2, minmax(0, 1fr));
+    justify-items: center;
+    gap: 50px 96px;
+}
+
+.category .category-item {
+    display: flex;
+    width: 284px;
+    padding: 16px 32px;
+    align-items: center;
+    border-radius: 12px;
+    background: var(--Secondary-sc_normal, #FFF);
+    box-shadow: 0px 1px 4px 0px rgba(0, 0, 0, 0.15) inset, 0px 1px 4px 0px rgba(0, 0, 0, 0.15);
+    transition: transform .2s;
+}
+
+.category .category-item:hover {
+    transform: scale(1.1);
+}
+
+.category-item img{
+    height: 42px;
+}
+
+.category-item h4 {
+    color: var(--Text-tx_normal, #281814);
+    font-size: 18px;
+    font-weight: 600;
+    line-height: 23px;
+    margin-left: 24px;
+    margin-bottom: 0;
+}
+
+.all-product {
+    display: flex;
+    width: 100%;
+    padding: 60px 0px;
+    flex-direction: column;
+    align-items: center;
+    gap: 60px;
+    background: #F9F9F9;
+}
+
+.all-product h1 {
+    color: var(--Text-tx_normal, #281814);
+    font-size: 28px;
+    font-weight: 600;
+    line-height: 38px;
+    margin-bottom: 0;
+}
+
+.all-product .product-container {
+    display: grid;
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    grid-template-rows: repeat(2, minmax(0, 1fr));
+    justify-items: center;
+    gap: 60px 32px;
+    padding: 0px auto;
+}
+
+.product-container .product-box {
+    width: 230px;
+    border-radius: 12px;
+    background: var(--Secondary-sc_normal, #FFF);
+    box-shadow: 0px 1px 4px 0px rgba(0, 0, 0, 0.15), 0px 1px 4px 0px rgba(0, 0, 0, 0.15);
+    transition: transform .2s;
+}
+
+.product-container .product-box:hover {
+    transform: scale(1.1);
+}
+
+.product-box img{
+    border-radius: 12px 12px 0px 0px;
+    width: 100%;
+    height: 230px;
+    object-fit: cover;
+}
+
+.product-box h4 {
+    color: var(--Text-tx_normal, #281814);
+    text-align: center;
+    font-size: 18px;
+    font-weight: 500;
+    line-height: 23px;
+    padding: 16px;
+    padding-bottom: 44px;
+    margin-bottom: 0;
+}
+
+.product-box .pay {
+    display: flex;
+    align-items: center;
+    justify-content:space-between;
+    flex-direction: row;
+    margin: 0px 16px 16px 16px;
+}
+
+.pay p {
+    color: var(--Text-tx_normal, #281814);
+    font-size: 16px;
+    font-weight: 600;
+    line-height: 20px;
+    margin-bottom: 0;
+}
+
+.pay .btn{
+    display: flex;
+    height: 28px;
+    padding: 0px 8px;
+    justify-content: center;
+    align-items: center;
+    gap: 4px;
+    border-radius: 4px;
+    background: var(--Primary-pr_normal, #C00);
+    box-shadow: 0px 3px 4px 0px rgba(0, 0, 0, 0.15);
+}
+
+.pay .btn:hover {
+    background: var(--Primary-pr_normal, #C00);
+}
+
+.pay .btn p {
+    color: var(--Secondary-sc_normal, #FFF);
+    font-size: 14px;
+    font-weight: 600;
+    line-height: 18px;
+    margin-bottom: 0;
+}
+
+.pay .btn img {
+    display: flex;
+    width: 16px;
+    height: 16px;
+    justify-content: center;
+    align-items: center;
+}
+
+.about {
+    display: flex;
+    width: 100%;
+    padding: 16px 24px;
+    margin: 80px 0;
+    flex-direction: column;
+    align-items: center;
+    gap: 56px;
+    background: #FFF;
+}
+
+.about h1 {
+    color: var(--Text-tx_normal, #281814);
+    text-align: center;
+    font-size: 28px;
+    font-weight: 600;
+    line-height: 38px;
+    margin-bottom: 0;
+}
+
+.about-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    gap: 96px;
+}
+
+.about-text {
+    width: 697px; /* Set the width of the about text container */
+    padding: 31px 0;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+.about-text p {
+    color: var(--Text-tx_normal, #281814);
+    font-size: 18px;
+    font-weight: 400;
+    line-height: 27px;
+    text-align: justify;
+    margin: 0;
+}
+
+.about-container span {
+    font-weight: 600;
+}
+
+.about-logo {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 36px;
+}
+
+.about-logo img {
+    height: 172px;
+    width: 196px;
+}
+
+.about-logo h1 {
+    color: var(--Primary-pr_normal, #C00);
+    font-size: 60px;
+    font-style: italic;
+    font-weight: 700;
+    line-height: 74px;
+}
+
+.about-logo span {
+    color: var(--Text-tx_normal, #281814);
+}
+

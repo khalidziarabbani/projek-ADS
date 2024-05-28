@@ -2,13 +2,183 @@
 {% block title %}My First App{% endblock title %}
 {% block content %}
 {% load static %}
-<link rel="stylesheet" href="{% static 'css/index.css' %}">
+<link rel="stylesheet" href="{% static 'css/home.css' %}">
 {% include 'navbar.html' %}
-    {% if request.user.is_anonymous %}
-    <h1>Gagal</h1>
-    {% elif request.user.is_authenticated %}
-    <h1>hello {{ request.user.username }}</h1>
-    <a href="{% url 'logout' %}">Logout</a>
-    {% endif %}
+<div class="banner">
+    <div class="banner-text">
+        <h1>ENJOY NEXT LEVEL OF<br><span>GAMING</span></h1>
+        <div class="banner-btn">
+            <a href="#all-product">EXPLORE</a>
+        </div>
+    </div>
+</div>
+<div class="categories" id="categories">
+    <h3>CATEGORIES</h3>
+    <div class="category">
+        <div class="category-item">
+            <img src="{% static 'img/cat1.png' %}" alt="PS4">
+            <h4>Game Console</h4>
+        </div>
+        <div class="category-item">
+            <img src="{% static 'img/cat1.png' %}" alt="PS4">
+            <h4>Game Console</h4>
+        </div>
+        <div class="category-item">
+            <img src="{% static 'img/cat1.png' %}" alt="PS4">
+            <h4>Game Console</h4>
+        </div>
+        <div class="category-item">
+            <img src="{% static 'img/cat1.png' %}" alt="PS4">
+            <h4>Game Console</h4>
+        </div>
+        <div class="category-item">
+            <img src="{% static 'img/cat1.png' %}" alt="PS4">
+            <h4>Game Console</h4>
+        </div>
+        <div class="category-item">
+            <img src="{% static 'img/cat1.png' %}" alt="PS4">
+            <h4>Game Console</h4>
+        </div>
+    </div>
+</div>
+<div class="all-product" id="all-product">
+    <h1>TOP PRODUCTS</h1>
+    <div class="product-container">
+        <div class="product-box">
+            <img src="{% static 'img/ps5.png' %}" alt="PS5">
+            <h4>PS5 Console Slim</h4>
+            <div class="pay">
+                <p>$69.00</p>
+                <div class="btn">
+                    <p>Add to Cart</p>
+                    <img src="{% static "img/cart-white.svg" %}" alt="cart">
+                </div>
+            </div>
+        </div>
+        
+        <div class="product-box">
+            <img src="{% static 'img/ps5.png' %}" alt="PS5">
+            <h4>PS5 Console Slim</h4>
+            <div class="pay">
+                <p>$69.00</p>
+                <div class="btn">
+                    <p>Add to Cart</p>
+                    <img src="{% static "img/cart-white.svg" %}" alt="cart">
+                </div>
+            </div>
+        </div>
+
+        <div class="product-box">
+            <img src="{% static 'img/ps5.png' %}" alt="PS5">
+            <h4>PS5 Console Slim</h4>
+            <div class="pay">
+                <p>$69.00</p>
+                <div class="btn">
+                    <p>Add to Cart</p>
+                    <img src="{% static "img/cart-white.svg" %}" alt="cart">
+                </div>
+            </div>
+        </div>
+
+        <div class="product-box">
+            <img src="{% static 'img/ps5.png' %}" alt="PS5">
+            <h4>PS5 Console Slim</h4>
+            <div class="pay">
+                <p>$69.00</p>
+                <div class="btn">
+                    <p>Add to Cart</p>
+                    <img src="{% static "img/cart-white.svg" %}" alt="cart">
+                </div>
+            </div>
+        </div>
+
+        <div class="product-box">
+            <img src="{% static 'img/ps5.png' %}" alt="PS5">
+            <h4>PS5 Console Slim</h4>
+            <div class="pay">
+                <p>$69.00</p>
+                <div class="btn">
+                    <p>Add to Cart</p>
+                    <img src="{% static "img/cart-white.svg" %}" alt="cart">
+                </div>
+            </div>
+        </div>
+
+        <div class="product-box">
+            <img src="{% static 'img/ps5.png' %}" alt="PS5">
+            <h4>PS5 Console Slim</h4>
+            <div class="pay">
+                <p>$69.00</p>
+                <div class="btn">
+                    <p>Add to Cart</p>
+                    <img src="{% static "img/cart-white.svg" %}" alt="cart">
+                </div>
+            </div>
+        </div>
+
+        <div class="product-box">
+            <img src="{% static 'img/ps5.png' %}" alt="PS5">
+            <h4>PS5 Console Slim</h4>
+            <div class="pay">
+                <p>$69.00</p>
+                <div class="btn">
+                    <p>Add to Cart</p>
+                    <img src="{% static "img/cart-white.svg" %}" alt="cart">
+                </div>
+            </div>
+        </div>
+
+        <div class="product-box">
+            <img src="{% static 'img/ps5.png' %}" alt="PS5">
+            <h4>PS5 Console Slim</h4>
+            <div class="pay">
+                <p>$69.00</p>
+                <div class="btn">
+                    <p>Add to Cart</p>
+                    <img src="{% static "img/cart-white.svg" %}" alt="cart">
+                </div>
+            </div>
+        </div>
+
+        <div class="product-box">
+            <img src="{% static 'img/ps5.png' %}" alt="PS5">
+            <h4>PS5 Console Slim</h4>
+            <div class="pay">
+                <p>$69.00</p>
+                <div class="btn">
+                    <p>Add to Cart</p>
+                    <img src="{% static "img/cart-white.svg" %}" alt="cart">
+                </div>
+            </div>
+        </div>
+
+        <div class="product-box">
+            <img src="{% static 'img/ps5.png' %}" alt="PS5">
+            <h4>PS5 Console Slim</h4>
+            <div class="pay">
+                <p>$69.00</p>
+                <div class="btn">
+                    <p>Add to Cart</p>
+                    <img src="{% static "img/cart-white.svg" %}" alt="cart">
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+<div class="about" id="about">
+    <h1>ABOUT US</h1>
+    <div class="about-container">
+        <div class="about-logo">
+            <img src="{% static 'img/logo.svg' %}" alt="logo">
+            <h1>LE<span>SHOP</span></h1>
+        </div>
+        <div class="about-text">
+            <p><span>LESHOP</span> is a trusted online game store offering games and accessories for various platforms like PC, game consoles, and mobile. We always strive to provide the latest and greatest games from different genres, ensuring a shopping experience that's easy, fast, and secure for our customers.</p>
+            <p>Our friendly and professional team is ready to help you choose the right games and give useful advice. Customer security and privacy are our top priorities, and we maintain strict security standards on our website. Thank you for trusting <span>LESHOP</span> with your gaming needs.</p>
+        </div>
+    </div>
+</div>
+
 {% include 'footer.html' %}
 {% endblock content %}
