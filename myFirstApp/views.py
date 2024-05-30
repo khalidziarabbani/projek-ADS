@@ -78,9 +78,11 @@ def user(request):
 
 def categoryPage(request, category_id):
     category = Category.objects.get(id=category_id)
+    categories = Category.objects.all()
     product = Product.objects.filter(category=category)
     context = {
         "category": category,
+        "categories": categories,
         "products": product,
         }
     return render(request, 'category.html', context)

@@ -9,10 +9,108 @@
     <img src="{{category.image.url}}" alt="">
     <h1>{{category.name}}</h1>
 </div>
-<div class="products">
+<div class="content">
     <p>
         Showing {% if category.products.count > 0 %}{{ category.products.count }}{% else %}0{% endif %} products for "{{ category.name }}"
     </p>
+    <div class="all-product">
+        <div class="product-box">
+            <img src="{% static 'img/ps5.png' %}" alt="PS5">
+            <h4>PS5 Console Slim</h4>
+            <div class="pay">
+                <p>$69.00</p>
+                <div class="btn">
+                    <p>Add to Cart</p>
+                    <img src="{% static "img/cart-white.svg" %}" alt="cart">
+                </div>
+            </div>
+        </div>
+        <div class="product-box">
+            <img src="{% static 'img/ps5.png' %}" alt="PS5">
+            <h4>PS5 Console Slim</h4>
+            <div class="pay">
+                <p>$69.00</p>
+                <div class="btn">
+                    <p>Add to Cart</p>
+                    <img src="{% static "img/cart-white.svg" %}" alt="cart">
+                </div>
+            </div>
+        </div>
+        <div class="product-box">
+            <img src="{% static 'img/ps5.png' %}" alt="PS5">
+            <h4>PS5 Console Slim</h4>
+            <div class="pay">
+                <p>$69.00</p>
+                <div class="btn">
+                    <p>Add to Cart</p>
+                    <img src="{% static "img/cart-white.svg" %}" alt="cart">
+                </div>
+            </div>
+        </div>
+        <div class="product-box">
+            <img src="{% static 'img/ps5.png' %}" alt="PS5">
+            <h4>PS5 Console Slim</h4>
+            <div class="pay">
+                <p>$69.00</p>
+                <div class="btn">
+                    <p>Add to Cart</p>
+                    <img src="{% static "img/cart-white.svg" %}" alt="cart">
+                </div>
+            </div>
+        </div>
+        <div class="product-box">
+            <img src="{% static 'img/ps5.png' %}" alt="PS5">
+            <h4>PS5 Console Slim</h4>
+            <div class="pay">
+                <p>$69.00</p>
+                <div class="btn">
+                    <p>Add to Cart</p>
+                    <img src="{% static "img/cart-white.svg" %}" alt="cart">
+                </div>
+            </div>
+        </div>
+        <div class="product-box">
+            <img src="{% static 'img/ps5.png' %}" alt="PS5">
+            <h4>PS5 Console Slim</h4>
+            <div class="pay">
+                <p>$69.00</p>
+                <div class="btn">
+                    <p>Add to Cart</p>
+                    <img src="{% static "img/cart-white.svg" %}" alt="cart">
+                </div>
+            </div>
+        </div>
+        <div class="product-box">
+            <img src="{% static 'img/ps5.png' %}" alt="PS5">
+            <h4>PS5 Console Slim</h4>
+            <div class="pay">
+                <p>$69.00</p>
+                <div class="btn">
+                    <p>Add to Cart</p>
+                    <img src="{% static "img/cart-white.svg" %}" alt="cart">
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="other-category">
+        <p>Other categories</p>
+        <div class="category">
+            {% for c in categories %}
+                {% if c.pk != category.pk %}
+                    <a href="{% url 'category' c.pk %}">
+                        <div class="category-item">
+                            {% if c.image %}
+                                <img src="{{ c.image.url }}" alt="">
+                            {% else %}
+                                <img src="" alt="">
+                            {% endif %}
+                            <h4>{{ c.name }}</h4>
+                        </div>
+                    </a>
+                {% endif %}
+            {% endfor %}
+        </div>        
+    </div>
 </div>
 
 {% comment %} <div class="products">
