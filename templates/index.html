@@ -15,30 +15,18 @@
 <div class="categories" id="categories">
     <h3>CATEGORIES</h3>
     <div class="category">
-        <div class="category-item">
-            <img src="{% static 'img/cat1.png' %}" alt="PS4">
-            <h4>Game Console</h4>
-        </div>
-        <div class="category-item">
-            <img src="{% static 'img/cat1.png' %}" alt="PS4">
-            <h4>Game Console</h4>
-        </div>
-        <div class="category-item">
-            <img src="{% static 'img/cat1.png' %}" alt="PS4">
-            <h4>Game Console</h4>
-        </div>
-        <div class="category-item">
-            <img src="{% static 'img/cat1.png' %}" alt="PS4">
-            <h4>Game Console</h4>
-        </div>
-        <div class="category-item">
-            <img src="{% static 'img/cat1.png' %}" alt="PS4">
-            <h4>Game Console</h4>
-        </div>
-        <div class="category-item">
-            <img src="{% static 'img/cat1.png' %}" alt="PS4">
-            <h4>Game Console</h4>
-        </div>
+        {% for c in categories %}
+        <a href="{% url 'category' c.pk %}">
+            <div class="category-item">
+                {% if c.image %}
+                <img src="{{c.image.url}}" alt="">
+                {% else %}
+                <img src="" alt="">
+                {% endif %}
+                <h4>{{c.name}}</h4>
+            </div>
+        </a>
+        {% endfor %}
     </div>
 </div>
 <div class="all-product" id="all-product">

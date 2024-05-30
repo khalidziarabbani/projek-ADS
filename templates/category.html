@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+{% block title %}Category{% endblock title %}
+{% block content %}
+{% load static %}
+<link rel="stylesheet" href="{% static 'css/category.css' %}">
+
+{% include 'navbar.html' %}
+<div class="header">
+    <img src="{{category.image.url}}" alt="">
+    <h1>{{category.name}}</h1>
+</div>
+<div class="products">
+    {% for product in products %}
+    <div class="product">
+        <a href="{% url 'product' product.id %}">
+            <img src="{{product.image.url}}" alt="">
+            <h2>{{product.name}}</h2>
+            <p>{{product.price}}$</p>
+        </a>
+    </div>
+    {% endfor %}
+</div>
+{% include 'footer.html' %}
+{% endblock content %}

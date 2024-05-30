@@ -4,10 +4,14 @@ from django.contrib.auth import login, authenticate, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 
-from .models import Profile
+from .models import Profile, Category, Product
 
 def index(request):
-    return render(request, 'index.html')
+    categories = Category.objects.all()
+    context = {
+        "categories": categories,
+    }
+    return render(request, 'index.html', context)
 
 def loginview(request):
     if request.method == 'POST':
@@ -71,3 +75,12 @@ def homepage(request):
 
 def user(request):
     return render(request, 'user.html')
+
+def categoryPage(request, category_id):
+    category = Category.objects.get(id=category_id)
+    product = Product.objects.filter(category=category)
+    context = {
+        "category": category,
+        "products": product,
+        }
+    return render(request, 'category.html', context)
