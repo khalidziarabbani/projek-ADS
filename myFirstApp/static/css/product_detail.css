@@ -3,22 +3,317 @@
 * {
     margin: 0;
     padding: 0;
-    font-family: 'Inter', sans-serif;
     text-decoration: none;
-    box-sizing: border-box;
 }
 
-html,
-body {
+html, body {
+    scroll-behavior: smooth;
     width: 100%;
-    height: 100%;
+    margin: 0;
+    padding: 0;
 }
 
-body {
+.bg {
+    background-color: #F9F9F9;
     display: flex;
+    gap: 80px;
+    padding: 80px;
     flex-direction: column;
 }
 
+.product {
+    display: flex;
+    flex-direction: row;
+    gap: 86px;
+    padding: 12px 16px;
+}
+
+.product img {
+    width: 17,632013888888888888888888888889%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.description .name h3{
+    color: var(--Text-tx_normal, #281814);
+    font-family: Inter;
+    font-size: 28px;
+    font-weight: 500;
+    margin-bottom: 12px;
+}
+
+.description .name p{
+    color: var(--Text-tx_normal, #281814);
+    font-family: Inter;
+    font-size: 28px;
+    font-weight: 600;
+    margin: 0;
+}
+
+button.description-button,
+button.specification-button {
+    border: none; /* Remove button borders */
+    background: none; /* Remove default background */
+    padding: 10px 10px 10px 0;
+    cursor: pointer;
+    font-size: 16px;
+    outline: none; /* Remove outline on focus */
+}
+
+button.description-button.active,
+button.specification-button.active {
+    color: red; /* Active button font color */
+    border-bottom: 2px solid red; /* Red underline for active button */
+}
+
+button.description-button:not(.active):hover,
+button.specification-button:not(.active):hover {
+    color: grey; /* Optional: hover color for inactive buttons */
+}
+
+/* Content visibility */
+/* Content visibility */
+#description,
+#specification {
+    display: none; /* Hide both sections initially */
+}
+
+#description.visible,
+#specification.visible {
+    display: block; /* Show the section with class 'visible' */
+}
+
+#description p {
+    margin: 5px 0;
+}
+
+/* Specification span styling */
+#specification p {
+    display: grid;
+    grid-template-columns: max-content 1fr;
+    gap: 5px;
+    align-items: center;
+    margin: 5px 0;
+}
+
+#specification p span {
+    color: var(--Text-tx_normal, #281814);
+    font-size: 16px;
+    font-weight: 600;
+}
+
+.set-order {
+    margin-left: auto;
+    display: flex;
+    padding: 24px 36px;
+    flex-direction: column;
+    align-items: center;
+    gap: 24px;
+
+    border-radius: 12px;
+    background: var(--Secondary-sc_normal, #FFF);
+    box-shadow: 0px 1px 4px 0px rgba(0, 0, 0, 0.15) inset, 0px 1px 4px 0px rgba(0, 0, 0, 0.15);
+}
+
+.set-order {
+    width: 100%;
+    max-width: 361px;
+}
+
+.set-order h3 {
+    color: var(--Text-tx_normal, #281814);
+    font-size: 28px;
+    font-weight: 600;
+    width: 100%;
+    text-align: center;
+    padding-bottom: 8px;
+    border-bottom: 0.56px solid var(--Secondary-sc_dark, #BFBFBF);
+    margin: 0;
+}
+
+.set-order .set-value p{
+    margin-bottom: 0;
+}
+
+.set-value {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    width: 100%;
+}
+
+.quantity {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.quantity p {
+    color: var(--Text-tx_normal, #281814);
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 20px;
+    margin: 0;
+}
+
+.quantity .btn {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    border-radius: 8px;
+    background: var(--secondary-sc-normal-hover, #E6E6E6);
+    padding: 5px;
+}
+
+.quantity .btn:hover {
+    background: var(--secondary-sc-normal-hover, #E6E6E6);
+}
+
+.quantity .btn button {
+    padding: 5px 10px;
+    font-size: 16px;
+    font-weight: bold;
+    border: none;
+    background: white;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.quantity .btn input {
+    color: var(--Text-tx_normal, #281814);
+    width: 40px;
+    text-align: center;
+    font-size: 16px;
+    border: none;
+    background: none;
+}
+
+.quantity .btn:hover button {
+    background: white;
+}
+
+.other-product {
+    display: flex;
+    flex-direction: column;
+    gap: 56px;
+}
+
+.other-product h1{
+    color: var(--Text-tx_normal, #281814);
+    font-size: 28px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 38px;
+    margin: 0;
+}
+
+.product-container {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    justify-items: center;
+    gap: 60px 32px;
+    padding: 0 auto;
+}
+
+.product-container .product-box {
+    text-decoration: none;
+    width: 230px;
+    border-radius: 12px;
+    background: var(--Secondary-sc_normal, #FFF);
+    box-shadow: 0px 1px 4px rgba(0, 0, 0, 0.15), 0px 1px 4px rgba(0, 0, 0, 0.15);
+    transition: transform .2s;
+}
+
+.product-container .product-box:hover {
+    transform: scale(1.1);
+}
+
+.product-box img {
+    border-radius: 12px 12px 0 0;
+    width: 100%;
+    height: 230px;
+    object-fit: cover;
+}
+
+.product-box h4 {
+    color: var(--Text-tx_normal, #281814);
+    text-align: center;
+    font-size: 18px;
+    font-weight: 500;
+    line-height: 23px;
+    padding: 16px;
+    padding-bottom: 44px;
+    margin-bottom: 0;
+}
+
+.product-box .pay {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-direction: row;
+    margin: 0 16px 16px 16px;
+}
+
+.pay p {
+    color: var(--Text-tx_normal, #281814);
+    font-size: 16px;
+    font-weight: 700;
+    line-height: 20px;
+    margin-bottom: 0;
+}
+
+.pay .btn {
+    display: flex;
+    height: 28px;
+    padding: 0 8px;
+    justify-content: center;
+    align-items: center;
+    gap: 4px;
+    border-radius: 4px;
+    background: var(--Primary-pr_normal, #C00);
+    box-shadow: 0px 3px 4px rgba(0, 0, 0, 0.15);
+}
+
+.pay .btn:hover {
+    background: var(--Primary-pr_normal, #C00);
+}
+
+.pay .btn p {
+    color: var(--Secondary-sc_normal, #FFF);
+    font-size: 14px;
+    font-weight: 600;
+    line-height: 18px;
+    margin-bottom: 0;
+}
+
+.pay .btn img {
+    display: flex;
+    width: 16px;
+    height: 16px;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Media queries for smaller screens */
+@media (max-width: 1300px) {
+    .product-container {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+@media (max-width: 900px) {
+    .product-container {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 600px) {
+    .product-container {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* 
 .header {
     height: 14.0625%;
     background: white;
@@ -88,26 +383,26 @@ body {
     color: var(--Text-tx_normal, #281814);
     text-align: center;
 
-    /* Heading/h3/Medium */
+
     font-family: Inter;
     font-size: 28px;
     font-style: normal;
     font-weight: 500;
     line-height: 38px;
-    /* 135.714% */
+
 }
 
 .harga {
     color: var(--Text-tx_normal, #281814);
     text-align: center;
 
-    /* Heading/h3/Semi Bold */
+
     font-family: Inter;
     font-size: 28px;
     font-style: normal;
     font-weight: 600;
     line-height: 38px;
-    /* 135.714% */
+
 }
 
 .isi {
@@ -170,13 +465,13 @@ body {
 .set {
     color: var(--Text-tx_normal, #281814);
 
-    /* Heading/h3/Semi Bold */
+
     font-family: Inter;
     font-size: 28px;
     font-style: normal;
     font-weight: 600;
     line-height: 38px;
-    /* 135.714% */
+
 }
 
 .total {
@@ -206,13 +501,13 @@ body {
 .stock {
     color: var(--Text-tx_normal, #281814);
 
-    /* Label/l16/Regular */
+
     font-family: Inter;
     font-size: 16px;
     font-style: normal;
     font-weight: 600;
     line-height: 20px;
-    /* 125% */
+
 }
 
 .subtotal {
@@ -242,26 +537,26 @@ body {
     flex: 1 0 0;
     color: var(--Text-tx_normal, #281814);
 
-    /* Label/l16/Regular */
+
     font-family: Inter;
     font-size: 16px;
     font-style: normal;
     font-weight: 400;
     line-height: 20px;
-    /* 125% */
+
 }
 
 .harga_total {
     color: var(--Text-tx_normal, #281814);
     text-align: center;
 
-    /* Label/l18/Semi Bold */
+
     font-family: Inter;
     font-size: 18px;
     font-style: normal;
     font-weight: 600;
     line-height: 23px;
-    /* 127.778% */
+
 }
 
 .tomboladd {
@@ -357,11 +652,10 @@ body {
     align-self: stretch;
     color: var(--Text-tx_normal, #281814);
 
-    /* Label/l18/Semi Bold */
     font-family: Inter;
     font-size: 18px;
     font-style: normal;
     font-weight: 600;
     line-height: 23px;
-    /* 127.778% */
-}
+
+} */

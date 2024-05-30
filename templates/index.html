@@ -1,5 +1,5 @@
 {% extends 'base.html' %}
-{% block title %}My First App{% endblock title %}
+{% block title %}Home{% endblock title %}
 {% block content %}
 {% load static %}
 <link rel="stylesheet" href="{% static 'css/home.css' %}">
@@ -32,7 +32,7 @@
 <div class="all-product" id="all-product">
     <h1>TOP PRODUCTS</h1>
     <div class="product-container">
-        <div class="product-box">
+        <a href="{% url 'product_detail' %}" class="product-box">
             <img src="{% static 'img/ps5.png' %}" alt="PS5">
             <h4>PS5 Console Slim</h4>
             <div class="pay">
@@ -42,9 +42,9 @@
                     <img src="{% static "img/cart-white.svg" %}" alt="cart">
                 </div>
             </div>
-        </div>
+        </a>
         
-        <div class="product-box">
+        <a href="{% url 'product_detail' %}" class="product-box">
             <img src="{% static 'img/ps5.png' %}" alt="PS5">
             <h4>PS5 Console Slim</h4>
             <div class="pay">
@@ -54,9 +54,9 @@
                     <img src="{% static "img/cart-white.svg" %}" alt="cart">
                 </div>
             </div>
-        </div>
+        </a>
 
-        <div class="product-box">
+        <a href="{% url 'product_detail' %}" class="product-box">
             <img src="{% static 'img/ps5.png' %}" alt="PS5">
             <h4>PS5 Console Slim</h4>
             <div class="pay">
@@ -66,9 +66,9 @@
                     <img src="{% static "img/cart-white.svg" %}" alt="cart">
                 </div>
             </div>
-        </div>
+        </a>
 
-        <div class="product-box">
+        <a href="{% url 'product_detail' %}" class="product-box">
             <img src="{% static 'img/ps5.png' %}" alt="PS5">
             <h4>PS5 Console Slim</h4>
             <div class="pay">
@@ -78,9 +78,9 @@
                     <img src="{% static "img/cart-white.svg" %}" alt="cart">
                 </div>
             </div>
-        </div>
+        </a>
 
-        <div class="product-box">
+        <a href="{% url 'product_detail' %}" class="product-box">
             <img src="{% static 'img/ps5.png' %}" alt="PS5">
             <h4>PS5 Console Slim</h4>
             <div class="pay">
@@ -90,9 +90,9 @@
                     <img src="{% static "img/cart-white.svg" %}" alt="cart">
                 </div>
             </div>
-        </div>
+        </a>
 
-        <div class="product-box">
+        <a href="{% url 'product_detail' %}" class="product-box">
             <img src="{% static 'img/ps5.png' %}" alt="PS5">
             <h4>PS5 Console Slim</h4>
             <div class="pay">
@@ -102,55 +102,7 @@
                     <img src="{% static "img/cart-white.svg" %}" alt="cart">
                 </div>
             </div>
-        </div>
-
-        <div class="product-box">
-            <img src="{% static 'img/ps5.png' %}" alt="PS5">
-            <h4>PS5 Console Slim</h4>
-            <div class="pay">
-                <p>$69.00</p>
-                <div class="btn">
-                    <p>Add to Cart</p>
-                    <img src="{% static "img/cart-white.svg" %}" alt="cart">
-                </div>
-            </div>
-        </div>
-
-        <div class="product-box">
-            <img src="{% static 'img/ps5.png' %}" alt="PS5">
-            <h4>PS5 Console Slim</h4>
-            <div class="pay">
-                <p>$69.00</p>
-                <div class="btn">
-                    <p>Add to Cart</p>
-                    <img src="{% static "img/cart-white.svg" %}" alt="cart">
-                </div>
-            </div>
-        </div>
-
-        <div class="product-box">
-            <img src="{% static 'img/ps5.png' %}" alt="PS5">
-            <h4>PS5 Console Slim</h4>
-            <div class="pay">
-                <p>$69.00</p>
-                <div class="btn">
-                    <p>Add to Cart</p>
-                    <img src="{% static "img/cart-white.svg" %}" alt="cart">
-                </div>
-            </div>
-        </div>
-
-        <div class="product-box">
-            <img src="{% static 'img/ps5.png' %}" alt="PS5">
-            <h4>PS5 Console Slim</h4>
-            <div class="pay">
-                <p>$69.00</p>
-                <div class="btn">
-                    <p>Add to Cart</p>
-                    <img src="{% static "img/cart-white.svg" %}" alt="cart">
-                </div>
-            </div>
-        </div>
+        </a>
 
     </div>
 </div>

@@ -8,42 +8,30 @@
     
     .footer {
         width: 100%;
-        height: 10%;
+        height: 82px;
+        display: flex;
         justify-content: center;
         align-items: center;
-        flex-shrink: 1;
         background: var(--Primary-pr_normal, #C00);
     }
     
-    .copyright {
+    .footer p{
+        padding: 12px 0;
         display: flex;
-        width: 100%;
-        height: 100%;
         justify-content: center;
         align-items: center;
         flex-shrink: 0;
-        gap: 0.5%;
-    
-        color: var(--Secondary-sc_normal, #FFF);
+        margin: 0;
         text-align: center;
-    
-        font-family: Inter;
         font-size: 16px;
-        font-style: normal;
         font-weight: 500;
         line-height: 23px;
-    }
-    
-    .copyright img {
-        width: 1.5%;
+        color: var(--Secondary-sc_normal, #FFF);
     }
 </style>
 {% block content %}
 {% load static %}
 <div class="footer">
-    <div class="copyright">
-        <img src="{% static "img/cr.svg" %}" alt="logo">
-        2024 LESHOP. All rights reserved
-    </div>
+    <p>© 2024 LESHOP. All rights reserved</p>
 </div>
 {% endblock content %}

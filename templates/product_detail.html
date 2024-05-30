@@ -1,11 +1,127 @@
 {% extends 'base.html' %}
-{% block title %}Login{% endblock title %}
+{% block title %}Product Name{% endblock title %}
 {% block content %}
 {% load static %}
 <link rel="stylesheet" href="{% static 'css/product_detail.css' %}">
 {% include 'navbar.html' %}
 <script src="{% static 'js/product_detail.js' %}"></script>
-<div class="atas">
+<div class="bg">
+    <div class="product">
+        <img src="{% static "img/ps5.png" %}" alt="logo">
+        <div class="description">
+            <div class="name">
+                <h3>PS5 Console Slim Model</h3>
+                <p>$69.00</p>
+            </div>
+            <div class="content">
+                <button id="descriptionBtn" class="description-button active" onclick="toggleDescription(this)">Description</button>
+                <button id="specificationBtn" class="specification-button" onclick="toggleSpecification(this)">Specification</button>
+                <div id="description" class="visible">
+                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+                </div>
+                <div id="specification" class="hidden">
+                    <p>Brand: <span>Lorem</span></p>
+                    <p>Year of Release: <span>Lorem</span></p>
+                    <p>Warranty type: <span>Lorem</span></p>
+                </div>
+            </div>            
+        </div>
+
+        <div class="set-order">
+            <h3>SET ORDER</h3>
+            <div class="set-value">
+                <div class="quantity">
+                    <p>Product Quantity</p>
+                    <div class="btn">
+                        <button onclick="decreaseQuantity()">-</button>
+                        <input type="number" id="quantityInput" value="1" min="1">
+                        <button onclick="increaseQuantity()">+</button>
+                    </div>
+                </div>
+                <p>Stock: <span>29</span></p>
+            </div>            
+        </div>
+    </div>
+
+    <div class="other-product">
+        <h1>Other Products</h1>
+        <div class="product-container">
+            <a href="{% url 'product_detail' %}" class="product-box">
+                <img src="{% static 'img/ps5.png' %}" alt="PS5">
+                <h4>PS5 Console Slim</h4>
+                <div class="pay">
+                    <p>$69.00</p>
+                    <div class="btn">
+                        <p>Add to Cart</p>
+                        <img src="{% static "img/cart-white.svg" %}" alt="cart">
+                    </div>
+                </div>
+            </a>
+            
+            <a href="{% url 'product_detail' %}" class="product-box">
+                <img src="{% static 'img/ps5.png' %}" alt="PS5">
+                <h4>PS5 Console Slim</h4>
+                <div class="pay">
+                    <p>$69.00</p>
+                    <div class="btn">
+                        <p>Add to Cart</p>
+                        <img src="{% static "img/cart-white.svg" %}" alt="cart">
+                    </div>
+                </div>
+            </a>
+    
+            <a href="{% url 'product_detail' %}" class="product-box">
+                <img src="{% static 'img/ps5.png' %}" alt="PS5">
+                <h4>PS5 Console Slim</h4>
+                <div class="pay">
+                    <p>$69.00</p>
+                    <div class="btn">
+                        <p>Add to Cart</p>
+                        <img src="{% static "img/cart-white.svg" %}" alt="cart">
+                    </div>
+                </div>
+            </a>
+    
+            <a href="{% url 'product_detail' %}" class="product-box">
+                <img src="{% static 'img/ps5.png' %}" alt="PS5">
+                <h4>PS5 Console Slim</h4>
+                <div class="pay">
+                    <p>$69.00</p>
+                    <div class="btn">
+                        <p>Add to Cart</p>
+                        <img src="{% static "img/cart-white.svg" %}" alt="cart">
+                    </div>
+                </div>
+            </a>
+    
+            <a href="{% url 'product_detail' %}" class="product-box">
+                <img src="{% static 'img/ps5.png' %}" alt="PS5">
+                <h4>PS5 Console Slim</h4>
+                <div class="pay">
+                    <p>$69.00</p>
+                    <div class="btn">
+                        <p>Add to Cart</p>
+                        <img src="{% static "img/cart-white.svg" %}" alt="cart">
+                    </div>
+                </div>
+            </a>
+    
+            <a href="{% url 'product_detail' %}" class="product-box">
+                <img src="{% static 'img/ps5.png' %}" alt="PS5">
+                <h4>PS5 Console Slim</h4>
+                <div class="pay">
+                    <p>$69.00</p>
+                    <div class="btn">
+                        <p>Add to Cart</p>
+                        <img src="{% static "img/cart-white.svg" %}" alt="cart">
+                    </div>
+                </div>
+            </a>
+    
+        </div>
+    </div>
+</div>
+{% comment %} <div class="atas">
     <div class="kiri">
         <img src="{% static "img/ps5.png" %}" alt="logo">
         <div class="deskripsi">
@@ -181,6 +297,6 @@
             </div>
         </div>
     </div>
-</div>
+</div> {% endcomment %}
 {% include 'footer.html' %}
 {% endblock content %}

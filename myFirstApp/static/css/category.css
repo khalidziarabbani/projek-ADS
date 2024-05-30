@@ -57,6 +57,7 @@ html {
 }
 
 .all-product .product-box {
+    text-decoration: none;
     width: 230px;
     border-radius: 12px;
     background: var(--Secondary-sc_normal, #FFF);
@@ -97,7 +98,7 @@ html {
 .pay p {
     color: var(--Text-tx_normal, #281814);
     font-size: 16px;
-    font-weight: 600;
+    font-weight: 700;
     line-height: 20px;
     margin-bottom: 0;
 }
