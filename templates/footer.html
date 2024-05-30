@@ -1,7 +1,3 @@
-{% extends 'base.html' %}
-{% block title %}Login{% endblock title %}
-{% block content %}
-{% load static %}
 <style>
     * {
         margin: 0;
@@ -11,8 +7,6 @@
     }
     
     .footer {
-        display: inline;
-        position: relative;
         width: 100%;
         height: 10%;
         justify-content: center;
@@ -44,7 +38,8 @@
         width: 1.5%;
     }
 </style>
-
+{% block content %}
+{% load static %}
 <div class="footer">
     <div class="copyright">
         <img src="{% static "img/cr.svg" %}" alt="logo">

@@ -34,11 +34,15 @@ html {
 .header h1 {
     color: var(--Secondary-sc_normal, #FFF);
     text-align: center;
-    /* Display/Semi Bold */
-    font-family: Inter;
     font-size: 60px;
     font-style: normal;
     font-weight: 600;
     margin-bottom: 0;
     max-width: 432px;
+}
+
+.products {
+    padding: 80px;
+    display: flex;
+    gap: 64px;
 }

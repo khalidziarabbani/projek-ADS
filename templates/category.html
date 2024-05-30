@@ -10,6 +10,12 @@
     <h1>{{category.name}}</h1>
 </div>
 <div class="products">
+    <p>
+        Showing {% if category.products.count > 0 %}{{ category.products.count }}{% else %}0{% endif %} products for "{{ category.name }}"
+    </p>
+</div>
+
+{% comment %} <div class="products">
     {% for product in products %}
     <div class="product">
         <a href="{% url 'product' product.id %}">
@@ -19,6 +25,6 @@
         </a>
     </div>
     {% endfor %}
-</div>
+</div> {% endcomment %}
 {% include 'footer.html' %}
 {% endblock content %}
