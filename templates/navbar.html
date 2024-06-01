@@ -36,12 +36,14 @@
         color: #281814;
         font-style: italic;
         margin: 0;
+        font-family: Poppins;
     }
 
     .logo span{
         font-size: 28px;
         font-weight: 700;
         color: #C00;
+        font-family: Poppins;
     }
 
     .tombol{
@@ -55,6 +57,7 @@
     }
 
     .tombol a{
+        font-family: Poppins;
         color: var(--Text-tx_normal, #281814);
         font-size: 18px;
         font-style: normal;
@@ -92,13 +95,37 @@
         gap: 10%;
     }
 
-    .akun a {
+    .user-name {
         color: var(--Text-tx_normal, #281814);
         font-size: 18px;
         font-style: normal;
         font-weight: 500;
         line-height: 23px;
-        text-decoration: none; /* Ensure links have no text decoration */
+        text-decoration: none;
+        font-family: Poppins;
+    }
+
+    .login-btn{
+        color: var(--Secondary-sc_normal, #FFF);
+        font-family: Poppins;
+        font-size: 18px;
+        font-style: normal;
+        font-weight: 500;
+        line-height: 23px;
+        display: flex;
+        padding: 0px 16px;
+        justify-content: center;
+        align-items: center;
+        border-radius: 4px;
+        background: var(--Primary-pr_normal, #C00);
+        box-shadow: 0px 3px 4px 0px rgba(0, 0, 0, 0.15);
+        text-decoration: none;
+        height: 44px;
+    }
+
+    .login-btn:hover{
+        background: var(--Primary-pr_dark, #8C0000);
+        color: var(--Text-tx_normal, #FFF);
     }
 </style>
 {% block content %}
@@ -115,15 +142,19 @@
     </div>
 
     <div class="user">
+        {% if request.user.is_authenticated %}
         <button class="Cart">
             <img src="{% static "img/Cart.svg" %}" alt="cart">
         </button>
+        {% endif %}
         <div class="akun">
+            {% if request.user.is_authenticated %}
             <img src="{% static "img/pp.svg" %}" alt="user profile">
+            {% endif %}
             {% if request.user.is_anonymous %}
-            <li><a href="{% url 'user' %}">User</a></li>
+            <li><a class="login-btn" href="{% url 'login' %}">Login</a></li>
             {% elif request.user.is_authenticated %}
-            <li><a href="{% url 'user' %}">{{ request.user.username }}</a></li>
+            <li><a class="user-name" href="{% url 'user' %}">{{ request.user.username }}</a></li>
             {% endif %}
         </div>
     </div>

@@ -1,4 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200; 1.300;1.400;1.500;1.600;1.700;1.800;1.900&display=swap'); 
 
 * {
     margin: 0;
@@ -54,7 +55,8 @@ button.description-button,
 button.specification-button {
     border: none; /* Remove button borders */
     background: none; /* Remove default background */
-    padding: 10px 10px 10px 0;
+    padding: 10px 0 5px 0;
+    margin-right: 10px;
     cursor: pointer;
     font-size: 16px;
     outline: none; /* Remove outline on focus */
@@ -102,13 +104,20 @@ button.specification-button:not(.active):hover {
     font-weight: 600;
 }
 
+/* Untuk browser Webkit (Chrome, Safari, Opera) */
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
 .set-order {
     margin-left: auto;
     display: flex;
     padding: 24px 36px;
     flex-direction: column;
     align-items: center;
-    gap: 24px;
+    gap: 36px;
 
     border-radius: 12px;
     background: var(--Secondary-sc_normal, #FFF);
@@ -132,7 +141,15 @@ button.specification-button:not(.active):hover {
 }
 
 .set-order .set-value p{
-    margin-bottom: 0;
+    color: var(--Text-tx_normal, #281814);
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 20px;
+    margin: 0;
+}
+
+.set-value span {
+    font-weight: 600;
 }
 
 .set-value {
@@ -140,6 +157,8 @@ button.specification-button:not(.active):hover {
     flex-direction: column;
     gap: 10px;
     width: 100%;
+    padding-bottom: 8px;
+    border-bottom: 0.56px solid var(--Secondary-sc_dark, #BFBFBF);
 }
 
 .quantity {
@@ -177,6 +196,7 @@ button.specification-button:not(.active):hover {
     background: white;
     border-radius: 4px;
     cursor: pointer;
+    width: 30px;
 }
 
 .quantity .btn input {
@@ -190,6 +210,70 @@ button.specification-button:not(.active):hover {
 
 .quantity .btn:hover button {
     background: white;
+}
+
+.set-order .sub-total {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.sub-total label {
+    color: var(--Text-tx_normal, #281814);
+    font-size: 16px;
+    font-weight: 400;
+}
+
+.sub-total span {
+    color: var(--Text-tx_normal, #281814);
+    font-size: 16px;
+    font-weight: 600;
+}
+
+.add-to-cart-btn {
+    display: flex;
+    width: 100%;
+    margin-top: auto;
+}
+
+.add-to-cart-btn button {
+    border-radius: 4px;
+    background: var(--Primary-pr_normal, #C00);
+    box-shadow: 0px 3px 4px 0px rgba(0, 0, 0, 0.15);
+    display: flex;
+    height: 44px;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+    text-decoration: none;
+
+    color: var(--Secondary-sc_normal, #FFF);
+    font-family: Poppins;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 23px;
+    border: none;
+
+}
+
+.add-to-cart-btn a {
+    border-radius: 4px;
+    background: var(--Primary-pr_normal, #C00);
+    box-shadow: 0px 3px 4px 0px rgba(0, 0, 0, 0.15);
+    display: flex;
+    height: 44px;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+    text-decoration: none;
+
+    color: var(--Secondary-sc_normal, #FFF);
+    font-family: Poppins;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 23px;
 }
 
 .other-product {

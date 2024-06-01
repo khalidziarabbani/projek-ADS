@@ -1,6 +1,3 @@
-// user.js
-
-// Function to toggle between profile and transaction list
 function toggleProfile(button) {
     // Get the elements to toggle
     var profileDiv = document.getElementById('profile_div');
@@ -34,7 +31,6 @@ function toggleProfile(button) {
     }
 }
 
-// Add event listeners to the buttons for toggling
 document.addEventListener('DOMContentLoaded', function () {
     var profileButton = document.getElementById('profile-btn');
     var transactionListButton = document.getElementById('transaction_list');
@@ -55,3 +51,11 @@ document.addEventListener('DOMContentLoaded', function () {
         toggleProfile(this);
     });
 });
+
+var textElement = document.getElementById('text');
+var maxLength = 10;
+
+if (textElement.textContent.length > maxLength) {
+    var truncatedText = textElement.textContent.substring(0, maxLength) + '...';
+    textElement.textContent = truncatedText;
+}

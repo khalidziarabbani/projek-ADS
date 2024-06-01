@@ -154,7 +154,7 @@ form {
 
 .button input {
     width: 100%;
-    padding: 12px;
+    padding: 5px 10px;
     background-color: #C00;
     color: white;
     border: none;
@@ -174,12 +174,13 @@ form {
 }
 
 #previous-btn {
-    color: #FFF;
     background-color: white;
     color: #900;
     box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.15);
-    padding: 10px;
     border-radius: 4px;
+    padding: 5px 10px;
+    border: 1px solid var(--Primary-pr_normal, #C00);
+    box-shadow: 0px 3px 4px 0px rgba(0, 0, 0, 0.15);
 }
 
 #previous-btn.disabled {

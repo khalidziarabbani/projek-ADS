@@ -1,126 +1,120 @@
-    {% extends 'base.html' %}
-    {% block title %}Account{% endblock title %}
-    {% block content %}
-    {% load static %}
-    <link rel="stylesheet" href="{% static 'css/user_profile.css' %}">
-    {% include 'navbar.html' %}
-    <script src="{% static 'js/user.js' %}"></script>
-    <div class="container">
-        <div class="kiri">
-                <div class="atas">
-                    <img src="{% static "img/pp.svg" %}" alt="logo">
-                    <div class="nama">
-                        <p1>Hello!</p1>
-                        <p2>user</p2>
-                    </div>
-                </div>
-                <div class="bawah">
-                    <div class="prof">
-                        <img src="{% static "img/iconpp.svg" %}" alt="logo">
-                        <button id="profile-btn" class="profile-button active" onclick="toggleProfile(this)">Profile</button>
-                    </div>
-                    <div class="trans">
-                        <img src="{% static "img/trans.svg" %}" alt="logo">
-                        <button id="transaction_list" class="transaction_list-button-active" onclick="toggleList(this)">Transaction List</button>
-                    </div>
-                    <div class="log">
-                        <img src="{% static "img/log.svg" %}" alt="logo">
-                        <div class="Logout">
-                                <a href="{% url 'logout' %}">Log Out</a>
-                            </form>
-                        </div>
-                    </div>
-                </div>
+{% extends 'base.html' %}
+{% block title %}Account{% endblock title %}
+{% block content %}
+{% load static %}
+<link rel="stylesheet" href="{% static 'css/user_profile.css' %}">
+{% include 'navbar.html' %}
+<script src="{% static 'js/user.js' %}"></script>
+<div class="container">
+    <div class="kiri">
+        <div class="atas">
+            <img src="{% static "img/user-default.svg" %}" alt="logo">
+            <div class="nama">
+                <h5>Hello!</h5>
+                <p id="text">ishowspeedshowmeatzzzzzzzzzzzzzzzz</p>
+            </div>
         </div>
-        <div class="kanan">
-            <div id="profile_div" class="visible">
-                <div class="bio">
-                    <h1>Profile</h1>
-                    <div class="data">
-                        <div class="isi">
-                            <label for="username">Username</label>
-                            <input type="text" name="user_name" placeholder="User" required>
-        
-                            <label for="fullname">Full Name</label>
-                            <input type="text" name="full_name" placeholder="User" required>
-        
-                            <label for="email">Email</label>
-                            <input type="text" name="email" placeholder="user@email.com" required>
-        
-                            <label for="gender">Gender</label>
-                            <div class="form_gender">
-                                <label1 for="male">
-                                    <input type="radio" id="male" name="gender" value="male">
-                                    Male
-                                </label1><br>
-                                <label1 for="female">
-                                    <input type="radio" id="female" name="gender" value="female">
-                                    Female
-                                </label1><br>
-                            </div>
-                                
-                            <label for="phone">Phone Number</label>
-                            <input type="number" name="phone" placeholder="0812xxxxxxx" required>
-                            
-                            <label for="adress">Adress</label>
-                            <input type="text" name="adress" placeholder="Jalan Phh. Mustafa, Bandung, Jawa Barat, 40124, (022) 7104218" required>
-        
-                            <label for="birth">Birth Date</label>
-                            <input type="date" id="birthdate" name="birthdate"><br><br>
-                        </div>
-                        <div class="save">
-                            <input type="submit" id="save" value="Save">
-                        </div>
-                    </div>
-                </div>
-                <div class="change_pp">
-                    <img src="{% static "img/pp.svg" %}" alt="logo">
-                    <div class="change_button">
-                        <img src="{% static "img/change.svg" %}" alt="logo">
-                        <input type="submit" id="change" value="Change Profile Picture">
-                    </div>
+        <div class="bawah">
+            <div class="prof">
+                <img src="{% static "img/user-kecil.svg" %}" alt="logo">
+                <button id="profile-btn" class="profile-button active" onclick="toggleProfile(this)">Profile</button>
+            </div>
+            <div class="trans">
+                <img src="{% static "img/trans.svg" %}" alt="logo">
+                <button id="transaction_list" class="transaction_list-button-active" onclick="toggleList(this)">Transaction List</button>
+            </div>
+            <div class="log">
+                <img src="{% static "img/log.svg" %}" alt="logo">
+                <div class="Logout">
+                    <a href="{% url 'logout' %}">Log Out</a>
                 </div>
             </div>
+        </div>
+    </div>
+    <div class="kanan">
+        <div id="profile_div" class="visible">
+            <div class="bio">
+                <h1>Profile</h1>
+                <div class="isi">
+                    <label for="username">Username</label>
+                    <input type="text" name="user_name" placeholder="User" required>
 
-            <div id="transaction_list_div" class="hidden">
-                <div class="form">
-                    <div class="transaction">
-                        <p>Transaction List</p>
-                        <h1>Success</h1>  
+                    <label for="fullname">Full Name</label>
+                    <input type="text" name="full_name" placeholder="User" required>
+
+                    <label for="email">Email</label>
+                    <input type="text" name="email" placeholder="user@email.com" required>
+
+                    <label for="gender">Gender</label>
+                    <div class="form_gender">
+                        <input type="radio" id="male" name="gender" value="male">
+                        <label for="male">
+                            Male
+                        </label><br>
+                        <input type="radio" id="female" name="gender" value="female">
+                        <label for="female">
+                            Female
+                        </label><br>
                     </div>
-                    <div class="list">
-                        <div class="items">
-                            <div class="barang">
-                                <div class="barang1">
-                                    <img src="{% static "img/ps5.png" %}" alt="logo">
-                                    <div class="desc_item">
-                                        <div class="nama_item">
-                                            <p>ITEM 1</p>
-                                        </div>
-                                        <div class="harga_item">
-                                            <p>$69.00</p>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="barang1">
-                                    <img src="{% static "img/ps5.png" %}" alt="logo">
-                                    <div class="desc_item">
-                                        <div class="nama_item">
-                                            <p>ITEM 1</p>
-                                        </div>
-                                        <div class="harga_item">
-                                            <p>$69.00</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <a>Total : <span>$91.00</span></a>
+                        
+                    <label for="phone">Phone Number</label>
+                    <input type="number" name="phone" placeholder="0812xxxxxxx" required>
+                    
+                    <label for="adress">Address</label>
+                    <input class="address" type="text" name="adress" placeholder="Jalan Phh. Mustafa, Bandung, Jawa Barat, 40124, (022) 7104218" required>
+
+                    <label for="birth">Birth Date</label>
+                    <input type="date" id="birthdate" name="birthdate"><br><br>
+                </div>
+                <div class="save">
+                    <input type="submit" id="save" value="Save">
+                </div>
+            </div>
+            <div class="change_pp">
+                <img src="{% static "img/user-default-gray.svg" %}" alt="image-user">
+                <div class="btn">
+                    <img src="{% static "img/change.svg" %}" alt="logo">
+                    <input type="submit" id="change" value="Change Profile Picture">
+                </div>
+            </div>
+        </div>
+
+        <div id="transaction_list_div" class="hidden">
+            <div class="form">
+                <div class="transaction">
+                    <h1>Transaction List</h1>
+                    <p>Success</p>  
+                </div>
+                <div class="list">
+                    <div class="item">
+                        <img src="{% static "img/ps5.png" %}" alt="PS5">
+                        <div class="product">
+                            <h4>PS5 Console Slim</h4>
+                            <p>$69.00</p>
                         </div>
-                        <input type="submit" value="Buy Again">
+                    </div>
+
+                    <div class="item">
+                        <img src="{% static "img/headset.jpeg" %}" alt="PS5">
+                        <div class="product">
+                            <h4>Headphone Kabel JETE HB2</h4>
+                            <p>$12.00</p>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-    {% include 'footer.html' %}
-    {% endblock content %}
+</div>
+
+<script>
+    var textElement = document.getElementById('text');
+    var maxLength = 10;
+
+    if (textElement.textContent.length > maxLength) {
+        var truncatedText = textElement.textContent.substring(0, maxLength) + '...';
+        textElement.textContent = truncatedText;
+    }
+</script>
+{% include 'footer.html' %}
+{% endblock content %}
