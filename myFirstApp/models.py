@@ -28,6 +28,7 @@ class Product(models.Model):
     condition = models.CharField(max_length=200, help_text='Enter condition of the product', null=True, blank=True)
     image = models.ImageField(upload_to='images/product/', null=True, blank=True)
     category = models.ForeignKey(Category, on_delete=models.CASCADE, null=True)
+    stock = models.IntegerField(default=0)
     
     def __str__(self):
         return self.name

@@ -137,14 +137,14 @@
     </div>
     <div class="tombol">
         <li><a href="{% url 'index' %}">Home</a></li>
-        <li><a href="#categories">Categories</a></li>
-        <li><a href="#about">About</a></li>
+        <li><a href="{% url 'index' %}#categories">Categories</a></li>
+        <li><a href="{% url 'index' %}#about">About</a></li>
     </div>
 
     <div class="user">
         {% if request.user.is_authenticated %}
         <button class="Cart">
-            <img src="{% static "img/Cart.svg" %}" alt="cart">
+            <a href="{% url 'cart' %}"><img src="{% static "img/Cart.svg" %}" alt="cart"></a>
         </button>
         {% endif %}
         <div class="akun">

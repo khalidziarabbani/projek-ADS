@@ -89,3 +89,6 @@ def categoryPage(request, category_id):
 
 def delivery(request):
     return render(request, 'delivery.html')
+
+def cart(request):
+    return render(request, 'cart.html')

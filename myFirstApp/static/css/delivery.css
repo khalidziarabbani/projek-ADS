@@ -4,6 +4,8 @@
     margin: 0;
     padding: 0;
     text-decoration: none;
+    font-family: Inter;
+    font-style: normal;
 }
 
 html, body {
@@ -13,61 +15,61 @@ html, body {
     padding: 0;
 }
 
-.container{
+.bg{
     display: flex;
-    width: 100%;
     justify-content: space-between;
-    align-items: flex-start;
     flex-direction: column;
-    padding-top: 3%;
-    gap: 40px;
-
+    gap: 64px;
+    width: 100%;
+    margin: 0;
+    padding: 80px;
+    background: #F9F9F9;
 }
 
-.h1{
+.bg h1{
     color: var(--Text-tx_normal, #281814);
-
-    /* Heading/h1/Semi Bold */
-    font-family: 'Inter';
+    font-family: Inter;
     font-size: 44px;
     font-style: normal;
     font-weight: 600;
-    line-height: 58px; /* 131.818% */
+    line-height: 58px;
+    margin-bottom: 0;
 }
 
 .isi{
     display: flex;
     width: 100%;
-    align-items: flex-start;
+    justify-content: space-between;
     gap: 238px;
-    padding-bottom: 10%;
 }
 
 .kiri{
     display: flex;
     flex-direction: column;
-    align-items: flex-start;
-    gap: 28px;
-    flex: 1 0 0;
+    gap: 60px;
 }
 
 .kiri h1 {
     color: var(--Text-tx_normal, #281814);
-
-    /* Heading/h4/Semi Bold */
     font-family: 'Inter';
     font-size: 24px;
     font-style: normal;
     font-weight: 600;
-    line-height: 32px; /* 133.333% */
+    line-height: 32px;
 }
-.border-produk{
+
+.summary {
+    display: flex;
+    flex-direction: column;
+    gap: 28px;
+}
+
+.produk-box{
     display: flex;
     padding: 24px;
     flex-direction: column;
     justify-content: center;
-    align-items: flex-start;
-    gap: 24px;
+    gap: 20px;
     border-radius: 8px;
     border: 0.8px solid var(--Secondary-sc_dark, #BFBFBF);
     background: var(--Secondary-sc_normal, #FFF);
@@ -75,28 +77,40 @@ html, body {
 
 .produk{
     display: flex;
-    width: 582px;
     align-items: center;
+    flex-direction: row;
     gap: 24px;
 }
 
 .produk img{
-    display: flex;
     width: 82px;
     height: 82px;
-    justify-content: center;
-    align-items: center;
-    flex-shrink: 0;
+    border-radius: 12px;
+    object-fit: cover;
 }
 
 .detail{
     display: flex;
-    width: 290px;
-    height: 81px;
     flex-direction: column;
-    justify-content: center;
-    align-items: flex-start;
-    flex-shrink: 0;
+    justify-content: space-between;
+    height: 100%;
+}
+
+.detail p {
+    color: var(--Text-tx_normal, #281814);
+    font-size: 18px;
+    font-weight: 400;
+    line-height: 23px;
+    margin: 0;
+}
+
+.detail h3 {
+    color: var(--Text-tx_normal, #281814);
+    font-size: 24px;
+    font-weight: 600;
+    line-height: 32px;
+    margin-top: auto;
+    margin-bottom: 0;
 }
 
 .item{
@@ -127,8 +141,6 @@ html, body {
 .kanan{
     display: flex;
     flex-direction: column;
-    justify-content: center;
-    align-items: flex-start;
     gap: 28px;
     width: 100%;
 }
@@ -149,7 +161,7 @@ html, body {
     flex-direction: column;
     align-items: center;
     gap: 56px;
-
+    background: var(--Secondary-sc_normal, #FFF);
     border-radius: 8px;
     border: 0.8px solid var(--Secondary-sc_dark, #BFBFBF);
 }
@@ -159,7 +171,7 @@ html, body {
     flex-direction: column;
     justify-content: center;
     align-items: flex-start;
-    gap: 18px;
+    gap: 24px;
     border-radius: 8px;
     background: var(--Secondary-sc_normal, #FFF);
     width: 364px;
@@ -173,13 +185,14 @@ html, body {
     gap: 24px;
     color: var(--Text-tx_normal, #281814);
     width: 100%;
+    padding-bottom: 10px;
 
-    /* Label/l18/Semi Bold */
     font-family: 'Inter';
     font-size: 18px;
     font-style: normal;
     font-weight: 600;
-    line-height: 23px; /* 127.778% */
+    line-height: 23px; 
+    border-bottom: 0.56px solid var(--Secondary-sc_dark, #BFBFBF);
 }
 
 .totprice, .delfee, .insurance{
@@ -190,10 +203,6 @@ html, body {
     justify-content: space-between;
 }
 
-.rincian hr{
-    width: 364px;
-    height: 0.8px;
-}
 .border-price span{
     align-items: end;
 }
@@ -260,9 +269,16 @@ html, body {
     display: flex;
     flex-direction: column;
     justify-content: center;
-    align-items: flex-start;
     gap: 12px;
     align-self: stretch;
+}
+
+.rumah p {
+    color: var(--Text-tx_normal, #281814);
+    font-size: 18px;
+    font-weight: 400;
+    line-height: 23px;
+    margin: 0;
 }
 
 .loc{
@@ -340,7 +356,7 @@ html, body {
     gap: 8px;
 }
 
-h2{
+.nama h2{
     color: var(--Text-tx_normal, #281814);
 
     /* Label/l18/Semi Bold */
@@ -355,4 +371,14 @@ h2{
     display: flex;
     align-items: flex-end;
     gap: 12px;
+}
+
+.pick h2{
+    color: var(--Text-tx_normal, #281814);
+    font-family: Inter;
+    font-size: 18px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 23px;
+    margin-bottom: 0;
 }
