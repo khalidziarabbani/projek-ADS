@@ -1,0 +1,121 @@
+{% extends 'base.html' %}
+{% block title %}Home{% endblock title %}
+{% block content %}
+{% load static %}
+<link rel="stylesheet" href="{% static 'css/delivery.css' %}">
+{% include 'navbar.html' %}
+
+<div class="container">
+    <h1>Delivery</h1>
+    <div class="isi">
+        <div class="kiri">
+            <div class="summary">
+                <h1>SUMMARY ORDER</h1>
+            </div>
+            <div class="border-produk">
+                <div class="produk">
+                    <img src="{% static "img/ps5.png" %}" alt="logo">
+                    <div class="detail">
+                        <div class="item">
+                            item 1
+                        </div>
+                        <div class="harga">
+                            $69.00
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="address">
+                <h1>DELIVERY ADDRESS</h1>
+                <div class="alamat">
+                    <div class="rumah">
+                        <div class="loc">
+                            <img src="{% static "img/loc.svg" %}" alt="cart">
+                            <h1>Home</h1>
+                        </div>
+                        <a>Jalan Phh. Mustafa, Bandung, Jawa Barat, 40124, (022) 7104218</a>
+                    </div>
+                    <div class="change">
+                        <input type="submit" value="Change Address">
+                    </div>
+                </div>
+            </div>
+            <div class="ship">
+                <h1>AVAILABLE SHIPPING METHOD</h1>
+                <div class="border-ship">
+                    <div class="shipping">
+                        <div class="ekspedisi">
+                            <img src="{% static "img/jnt.png" %}" alt="logo">
+                            <div class="nama">
+                                <h2>J&T</h2>
+                                <a>Delivery: 4 - 5 days work</a>
+                            </div>
+                        </div>
+                        <div class="pick">
+                            <h2>$3.00</h2>
+                            <img src="{% static "img/pick.svg" %}" alt="logo">
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="shipping">
+                        <div class="ekspedisi">
+                            <img src="{% static "img/jne.png" %}" alt="logo">
+                            <div class="nama">
+                                <h2>JNE Express</h2>
+                                <a>Delivery: 2 - 3 days work</a>
+                            </div>
+                        </div>
+                        <div class="pick">
+                            <h2>$3.00</h2>
+                            <img src="{% static "img/pick.svg" %}" alt="logo">
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="shipping">
+                        <div class="ekspedisi">
+                            <img src="{% static "img/fed.png" %}" alt="logo">
+                            <div class="nama">
+                                <h2>FedEdx</h2>
+                                <a>Delivery: 3 - 5 days work</a>
+                            </div>
+                        </div>
+                        <div class="pick">
+                            <h2>$3.00</h2>
+                            <img src="{% static "img/pick.svg" %}" alt="logo">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="kanan">
+            <h1>Shopping Summary</h1>
+            <div class="border-price">
+                <div class="price">
+                    <div class="rincian">
+                        <div class="totprice">
+                            <a>Total Price</a>
+                            <span>$69.00</span>
+                        </div>
+                        <div class="delfee">
+                            <a>Total Delivery Fee</a>
+                            <span>$9.00</span>
+                        </div>
+                        <div class="insurance">
+                            <a>Total Delivery Insurance</a>
+                            <span>$1.00</span>
+                        </div>
+                        <hr>
+                    </div>
+                    <div class="total">
+                        <a>Total</a>
+                        <span>$79.00</span>
+                    </div>
+                </div>
+            <input type="submit" value="Select Payment">
+            </div>
+        </div>
+    </div>
+</div>
+
+{% include 'footer.html' %}
+{% endblock content %}

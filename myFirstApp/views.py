@@ -86,3 +86,6 @@ def categoryPage(request, category_id):
         "products": product,
         }
     return render(request, 'category.html', context)
+
+def delivery(request):
+    return render(request, 'delivery.html')
