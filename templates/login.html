@@ -7,6 +7,15 @@
     <img src="{% static "img/logo.svg" %}" alt="logo">
     <h1>LE<span>SHOP</span></h1>
 </div>
+
+<div class="messages" id="popupMessage">
+    {% if messages %}
+        {% for message in messages %}
+            <div class="message {{ message.tags }}">{{ message }}</div>
+        {% endfor %}
+    {% endif %}
+</div>
+
 <div class="content">
     <div class="left">
         <img src="{% static "img/float-stick.svg" %}" alt="logo">
@@ -34,4 +43,16 @@
 <div class="footer">
     <p>© 2024 LESHOP. All rights reserved</p>
 </div>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        const popupMessage = document.getElementById("popupMessage");
+        if (popupMessage && popupMessage.children.length > 0) {
+            popupMessage.style.display = "block";
+            setTimeout(function() {
+                popupMessage.style.display = "none";
+            }, 3000);  // Sembunyikan setelah 3 detik
+        }
+    });
+</script>
 {% endblock content %}

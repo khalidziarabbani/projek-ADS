@@ -30,9 +30,14 @@ html, body {
 }
 
 .product img {
-    width: 17,632013888888888888888888888889%;
-    height: 100%;
+    width: 253.901px;
+    height: fit-content;
     object-fit: cover;
+}
+
+.description .content {
+    max-width: 458.099px;
+    min-height: 380px;
 }
 
 .description .name h3{
@@ -73,7 +78,6 @@ button.specification-button:not(.active):hover {
     color: grey; /* Optional: hover color for inactive buttons */
 }
 
-/* Content visibility */
 /* Content visibility */
 #description,
 #specification {
@@ -127,6 +131,7 @@ input[type="number"]::-webkit-inner-spin-button {
 .set-order {
     width: 100%;
     max-width: 361px;
+    max-height: 361px;
 }
 
 .set-order h3 {

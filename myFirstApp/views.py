@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.models import User
 from django.contrib.auth import login, authenticate, logout
 from django.contrib.auth.decorators import login_required
@@ -8,8 +8,10 @@ from .models import Profile, Category, Product
 
 def index(request):
     categories = Category.objects.all()
+    products = Product.objects.all()
     context = {
         "categories": categories,
+        "products": products,
     }
     return render(request, 'index.html', context)
 
@@ -67,8 +69,15 @@ def register(request):
     elif request.method == 'GET':
         return render(request, 'register.html')
     
-def product_detail(request):
-    return render(request, 'product_detail.html')
+def product_detail(request, product_id):
+    product = get_object_or_404(Product, id=product_id)
+    other_products = Product.objects.exclude(id=product_id)[:10]
+
+    context = {
+        'product': product,
+        'other_products': other_products,
+    }
+    return render(request, 'product_detail.html', context)
 
 def homepage(request):
     return render(request, 'homepage.html')
@@ -79,11 +88,11 @@ def user(request):
 def categoryPage(request, category_id):
     category = Category.objects.get(id=category_id)
     categories = Category.objects.all()
-    product = Product.objects.filter(category=category)
+    products = Product.objects.filter(category=category)
     context = {
         "category": category,
         "categories": categories,
-        "products": product,
+        "products": products,
         }
     return render(request, 'category.html', context)
 
@@ -91,4 +100,8 @@ def delivery(request):
     return render(request, 'delivery.html')
 
 def cart(request):
-    return render(request, 'cart.html')
+    products = Product.objects.all()
+    context = {
+        "products": products,
+    }
+    return render(request, 'cart.html', context)

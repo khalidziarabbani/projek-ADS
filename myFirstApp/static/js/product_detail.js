@@ -21,13 +21,40 @@ function toggleSpecification(button) {
 function increaseQuantity() {
     const quantityInput = document.getElementById('quantityInput');
     let currentValue = parseInt(quantityInput.value);
-    quantityInput.value = currentValue + 1;
+    const maxValue = parseInt(quantityInput.max);
+    if (currentValue < maxValue) {
+        quantityInput.value = currentValue + 1;
+        updateSubtotal();
+    }
 }
 
 function decreaseQuantity() {
     const quantityInput = document.getElementById('quantityInput');
     let currentValue = parseInt(quantityInput.value);
-    if (currentValue > 1) {
+    const minValue = parseInt(quantityInput.min);
+    if (currentValue > minValue) {
         quantityInput.value = currentValue - 1;
+        updateSubtotal();
     }
+}
+
+function validateQuantity() {
+    const quantityInput = document.getElementById('quantityInput');
+    let currentValue = parseInt(quantityInput.value);
+    const maxValue = parseInt(quantityInput.max);
+    const minValue = parseInt(quantityInput.min);
+    if (currentValue > maxValue) {
+        quantityInput.value = maxValue;
+    } else if (currentValue < minValue) {
+        quantityInput.value = minValue;
+    }
+    updateSubtotal();
+}
+
+function updateSubtotal() {
+    const quantityInput = document.getElementById('quantityInput');
+    const currentValue = parseInt(quantityInput.value);
+    const productPrice = parseFloat(document.getElementById('productPrice').innerText.replace('$', ''));
+    const subtotal = currentValue * productPrice;
+    document.getElementById('subtotal').innerText = `$${subtotal.toFixed(2)}`;
 }

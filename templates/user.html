@@ -45,7 +45,7 @@
                     <label for="email">Email</label>
                     <input type="text" name="email" placeholder="user@email.com" required>
 
-                    <label for="gender">Gender</label>
+                    {% comment %} <label for="gender">Gender</label>
                     <div class="form_gender">
                         <input type="radio" id="male" name="gender" value="male">
                         <label for="male">
@@ -55,7 +55,7 @@
                         <label for="female">
                             Female
                         </label><br>
-                    </div>
+                    </div> {% endcomment %}
                         
                     <label for="phone">Phone Number</label>
                     <input type="number" name="phone" placeholder="0812xxxxxxx" required>
@@ -63,8 +63,8 @@
                     <label for="adress">Address</label>
                     <input class="address" type="text" name="adress" placeholder="Jalan Phh. Mustafa, Bandung, Jawa Barat, 40124, (022) 7104218" required>
 
-                    <label for="birth">Birth Date</label>
-                    <input type="date" id="birthdate" name="birthdate"><br><br>
+                    {% comment %} <label for="birth">Birth Date</label>
+                    <input type="date" id="birthdate" name="birthdate"><br><br> {% endcomment %}
                 </div>
                 <div class="save">
                     <input type="submit" id="save" value="Save">

@@ -46,6 +46,44 @@ body {
     color: #C00;
 }
 
+.messages {
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: rgba(0, 0, 0, 0.8);
+    color: white;
+    padding: 20px;
+    border-radius: 10px;
+    z-index: 1000;
+    text-align: center;
+}
+
+.message {
+    padding: 10px;
+    border-radius: 4px;
+    font-size: 14px;
+    font-weight: 500;
+}
+
+.message.error {
+    background-color: #C00;
+}
+
+.message.success {
+    background-color: #4CAF50;
+}
+
+.message.warning {
+    background-color: #FFC107;
+}
+
+.message.info {
+    background-color: #2196F3;
+}
+
+
 
 .content {
     height: 85.9375%;

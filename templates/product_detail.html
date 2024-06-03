@@ -7,24 +7,23 @@
 <script src="{% static 'js/product_detail.js' %}"></script>
 <div class="bg">
     <div class="product">
-        <img src="{% static "img/ps5.png" %}" alt="logo">
+        <img src="{{product.image.url}}" alt="logo">
         <div class="description">
             <div class="name">
-                <h3>PS5 Console Slim Model</h3>
-                <p>$69.00</p>
+                <h3>{{product.detail_name}}</h3>
+                <p id="productPrice">${{product.price}}</p>
             </div>
             <div class="content">
                 <button id="descriptionBtn" class="description-button active" onclick="toggleDescription(this)">Description</button>
                 <button id="specificationBtn" class="specification-button" onclick="toggleSpecification(this)">Specification</button>
                 <div id="description" class="visible">
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+                    <p>{{product.description}}</p>
                 </div>
                 <div id="specification" class="hidden">
-                    <p>Brand: <span>Lorem</span></p>
-                    <p>Year of Release: <span>Lorem</span></p>
-                    <p>Warranty type: <span>Lorem</span></p>
-                    <p>Warranty type: <span>Lorem</span></p>
-                    <p>Warranty type: <span>Lorem</span></p>
+                    <p>Brand: <span>{{product.brand}}</span></p>
+                    <p>Year of Release: <span>{{product.year_released}}</span></p>
+                    <p>Condition: <span>{{product.condition}}</span></p>
+                    <p>Category: <span>{{product.category}}</span></p>
                 </div>
             </div>            
         </div>
@@ -36,16 +35,16 @@
                     <p>Product Quantity</p>
                     <div class="btn">
                         <button onclick="decreaseQuantity()">-</button>
-                        <input type="number" id="quantityInput" value="1" min="1">
+                        <input type="number" id="quantityInput" value="1" min="1" max="{{product.stock}}" onchange="validateQuantity()">
                         <button onclick="increaseQuantity()">+</button>
                     </div>
                 </div>
-                <p>Stock: <span>29</span></p>
+                <p>Stock: <span>{{product.stock}}</span></p>
             </div>            
             <div class="sub-total">
                 <label for="total_price">Subtotal</label>
                 <input type="hidden" name="total_price" id="total-price-input" class="total-input">
-                <span>$69.00</span>
+                <span id="subtotal">${{ product.price }}</span>
             </div>
             <div class="add-to-cart-btn">
                 {% if user.is_authenticated %}
@@ -60,257 +59,22 @@
     <div class="other-product">
         <h1>Other Products</h1>
         <div class="product-container">
-            <a href="{% url 'product_detail' %}" class="product-box">
-                <img src="{% static 'img/ps5.png' %}" alt="PS5">
-                <h4>PS5 Console Slim</h4>
+            {% for p in other_products %}
+            <a href="{% url 'product_detail' p.id %}" class="product-box">
+                <img src="{{p.image.url}}" alt="{{p.name}}">
+                <h4>{{p.name}}</h4>
                 <div class="pay">
-                    <p>$69.00</p>
+                    <p>${{p.price}}</p>
                     <div class="btn">
                         <p>Add to Cart</p>
                         <img src="{% static "img/cart-white.svg" %}" alt="cart">
                     </div>
                 </div>
             </a>
-            
-            <a href="{% url 'product_detail' %}" class="product-box">
-                <img src="{% static 'img/ps5.png' %}" alt="PS5">
-                <h4>PS5 Console Slim</h4>
-                <div class="pay">
-                    <p>$69.00</p>
-                    <div class="btn">
-                        <p>Add to Cart</p>
-                        <img src="{% static "img/cart-white.svg" %}" alt="cart">
-                    </div>
-                </div>
-            </a>
-    
-            <a href="{% url 'product_detail' %}" class="product-box">
-                <img src="{% static 'img/ps5.png' %}" alt="PS5">
-                <h4>PS5 Console Slim</h4>
-                <div class="pay">
-                    <p>$69.00</p>
-                    <div class="btn">
-                        <p>Add to Cart</p>
-                        <img src="{% static "img/cart-white.svg" %}" alt="cart">
-                    </div>
-                </div>
-            </a>
-    
-            <a href="{% url 'product_detail' %}" class="product-box">
-                <img src="{% static 'img/ps5.png' %}" alt="PS5">
-                <h4>PS5 Console Slim</h4>
-                <div class="pay">
-                    <p>$69.00</p>
-                    <div class="btn">
-                        <p>Add to Cart</p>
-                        <img src="{% static "img/cart-white.svg" %}" alt="cart">
-                    </div>
-                </div>
-            </a>
-    
-            <a href="{% url 'product_detail' %}" class="product-box">
-                <img src="{% static 'img/ps5.png' %}" alt="PS5">
-                <h4>PS5 Console Slim</h4>
-                <div class="pay">
-                    <p>$69.00</p>
-                    <div class="btn">
-                        <p>Add to Cart</p>
-                        <img src="{% static "img/cart-white.svg" %}" alt="cart">
-                    </div>
-                </div>
-            </a>
-    
-            <a href="{% url 'product_detail' %}" class="product-box">
-                <img src="{% static 'img/ps5.png' %}" alt="PS5">
-                <h4>PS5 Console Slim</h4>
-                <div class="pay">
-                    <p>$69.00</p>
-                    <div class="btn">
-                        <p>Add to Cart</p>
-                        <img src="{% static "img/cart-white.svg" %}" alt="cart">
-                    </div>
-                </div>
-            </a>
-    
+            {% endfor %}
         </div>
     </div>
 </div>
-{% comment %} <div class="atas">
-    <div class="kiri">
-        <img src="{% static "img/ps5.png" %}" alt="logo">
-        <div class="deskripsi">
-            <div class="nama">
-                <h1 class="produk">PS5 Console Slim Model</h1>
-                <h1 class="harga">$69.00</h1>
-            </div>
-            <div class="isi">
-                <button id="descriptionBtn" class="description-button active" onclick="toggleDescription(this)">Deskripsi</button>
-                <button id="specificationBtn" class="specification-button" onclick="toggleSpecification(this)">Spesifikasi</button>
 
-            
-                <div id="description" class="visible">
-                    <p>Deskripsi produk: Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-                </div>
-            
-                <div id="specification" class="hidden">
-                    <p>Spesifikasi produk : aksdjfakljsfklajsfldksajfh</p>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="kanan">
-        <div class="set">SET ORDER</div>
-        <div class="total">
-            <div class="quantity">
-                <p>Product Quantity</p>
-                <div class="plus">
-                    <button>-</button>
-                    <p>1</p>
-                    <button>+</button>
-                </div>
-            </div>
-            <div class="stock">
-                <p>Stock: 29</p>
-            </div>
-        </div>
-        <div class="subtotal">
-            <div class="sub1">
-                <p class="tsub">Subtotal:</p>
-                <p class="harga_total">$69.00</p>
-            </div>
-            <div class="tomboladd">
-                <input type="submit" value="Add to Cart">
-            </div>
-            <div class="tombolbuy">
-                <input type="submit" value="Buy Now">
-            </div>
-        </div>
-    </div>
-</div>
-<div class="tengah">
-    Other Products
-</div>
-<div class="bawah">
-    <div class="p1">
-        <img src="{% static "img/ps5.png" %}" alt="logo">
-        <div class="penjelasan">
-            Product Name
-            <div class="hrg">
-                $69.00
-                <div class="tomboladd">
-                    <input type="submit" value="Add to Cart">
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="p1">
-        <img src="{% static "img/ps5.png" %}" alt="logo">
-        <div class="penjelasan">
-            Product Name
-            <div class="hrg">
-                $69.00
-                <div class="tomboladd">
-                    <input type="submit" value="Add to Cart">
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="p1">
-        <img src="{% static "img/ps5.png" %}" alt="logo">
-        <div class="penjelasan">
-            Product Name
-            <div class="hrg">
-                $69.00
-                <div class="tomboladd">
-                    <input type="submit" value="Add to Cart">
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="p1">
-        <img src="{% static "img/ps5.png" %}" alt="logo">
-        <div class="penjelasan">
-            Product Name
-            <div class="hrg">
-                $69.00
-                <div class="tomboladd">
-                    <input type="submit" value="Add to Cart">
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="p1">
-        <img src="{% static "img/ps5.png" %}" alt="logo">
-        <div class="penjelasan">
-            Product Name
-            <div class="hrg">
-                $69.00
-                <div class="tomboladd">
-                    <input type="submit" value="Add to Cart">
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="p1">
-        <img src="{% static "img/ps5.png" %}" alt="logo">
-        <div class="penjelasan">
-            Product Name
-            <div class="hrg">
-                $69.00
-                <div class="tomboladd">
-                    <input type="submit" value="Add to Cart">
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="p1">
-        <img src="{% static "img/ps5.png" %}" alt="logo">
-        <div class="penjelasan">
-            Product Name
-            <div class="hrg">
-                $69.00
-                <div class="tomboladd">
-                    <input type="submit" value="Add to Cart">
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="p1">
-        <img src="{% static "img/ps5.png" %}" alt="logo">
-        <div class="penjelasan">
-            Product Name
-            <div class="hrg">
-                $69.00
-                <div class="tomboladd">
-                    <input type="submit" value="Add to Cart">
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="p1">
-        <img src="{% static "img/ps5.png" %}" alt="logo">
-        <div class="penjelasan">
-            Product Name
-            <div class="hrg">
-                $69.00
-                <div class="tomboladd">
-                    <input type="submit" value="Add to Cart">
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="p1">
-        <img src="{% static "img/ps5.png" %}" alt="logo">
-        <div class="penjelasan">
-            Product Name
-            <div class="hrg">
-                $69.00
-                <div class="tomboladd">
-                    <input type="submit" value="Add to Cart">
-                </div>
-            </div>
-        </div>
-    </div>
-</div> {% endcomment %}
 {% include 'footer.html' %}
 {% endblock content %}

@@ -32,77 +32,19 @@
 <div class="all-product" id="all-product">
     <h1>TOP PRODUCTS</h1>
     <div class="product-container">
-        <a href="{% url 'product_detail' %}" class="product-box">
-            <img src="{% static 'img/ps5.png' %}" alt="PS5">
-            <h4>PS5 Console Slim</h4>
+        {% for p in products %}
+        <a href="{% url 'product_detail' p.id %}" class="product-box">
+            <img src="{{p.image.url}}" alt="{{p.name}}">
+            <h4>{{p.name}}</h4>
             <div class="pay">
-                <p>$69.00</p>
+                <p>${{p.price}}</p>
                 <div class="btn">
                     <p>Add to Cart</p>
                     <img src="{% static "img/cart-white.svg" %}" alt="cart">
                 </div>
             </div>
         </a>
-        
-        <a href="{% url 'product_detail' %}" class="product-box">
-            <img src="{% static 'img/ps5.png' %}" alt="PS5">
-            <h4>PS5 Console Slim</h4>
-            <div class="pay">
-                <p>$69.00</p>
-                <div class="btn">
-                    <p>Add to Cart</p>
-                    <img src="{% static "img/cart-white.svg" %}" alt="cart">
-                </div>
-            </div>
-        </a>
-
-        <a href="{% url 'product_detail' %}" class="product-box">
-            <img src="{% static 'img/ps5.png' %}" alt="PS5">
-            <h4>PS5 Console Slim</h4>
-            <div class="pay">
-                <p>$69.00</p>
-                <div class="btn">
-                    <p>Add to Cart</p>
-                    <img src="{% static "img/cart-white.svg" %}" alt="cart">
-                </div>
-            </div>
-        </a>
-
-        <a href="{% url 'product_detail' %}" class="product-box">
-            <img src="{% static 'img/ps5.png' %}" alt="PS5">
-            <h4>PS5 Console Slim</h4>
-            <div class="pay">
-                <p>$69.00</p>
-                <div class="btn">
-                    <p>Add to Cart</p>
-                    <img src="{% static "img/cart-white.svg" %}" alt="cart">
-                </div>
-            </div>
-        </a>
-
-        <a href="{% url 'product_detail' %}" class="product-box">
-            <img src="{% static 'img/ps5.png' %}" alt="PS5">
-            <h4>PS5 Console Slim</h4>
-            <div class="pay">
-                <p>$69.00</p>
-                <div class="btn">
-                    <p>Add to Cart</p>
-                    <img src="{% static "img/cart-white.svg" %}" alt="cart">
-                </div>
-            </div>
-        </a>
-
-        <a href="{% url 'product_detail' %}" class="product-box">
-            <img src="{% static 'img/ps5.png' %}" alt="PS5">
-            <h4>PS5 Console Slim</h4>
-            <div class="pay">
-                <p>$69.00</p>
-                <div class="btn">
-                    <p>Add to Cart</p>
-                    <img src="{% static "img/cart-white.svg" %}" alt="cart">
-                </div>
-            </div>
-        </a>
+        {% endfor %}
 
     </div>
 </div>
