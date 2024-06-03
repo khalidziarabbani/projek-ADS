@@ -4,7 +4,7 @@ from django.contrib.auth import login, authenticate, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 
-from .models import Profile, Category, Product
+from .models import Profile, Category, Product, Expedition, Payment_method, Order, OrderItem
 
 def index(request):
     categories = Category.objects.all()
@@ -32,7 +32,7 @@ def loginview(request):
 
 def logoutview(request):
     logout(request)
-    return redirect('login')
+    return redirect('index')
 
 def register(request):
     if request.method == 'POST':
@@ -70,17 +70,37 @@ def register(request):
         return render(request, 'register.html')
     
 def product_detail(request, product_id):
-    product = get_object_or_404(Product, id=product_id)
-    other_products = Product.objects.exclude(id=product_id)[:10]
+    if request.method == 'POST':
+        product = Product.objects.get(id=product_id)
+        user = request.user
+        order = Order.objects.get_or_create(user=user, total_cost=product.price, delivery_address=user.profile.address)
+        quantity = int(request.POST['quantity', 1])
+        
+                # Check if an order item with the same product and order already exists
+        order_item = OrderItem.objects.filter(order=order, product=product).first()
+        if order_item:
+            # Order item already exists, update the quantity
+            order_item.quantity += quantity
+            order_item.save()
+        else:
+            # Create a new order item
+            order_item = OrderItem.objects.create(
+                order=order,
+                product=product,
+                quantity=quantity,
+            )
 
-    context = {
-        'product': product,
-        'other_products': other_products,
-    }
-    return render(request, 'product_detail.html', context)
+        return redirect('cart')
+    elif request.method == 'GET':
+        product = get_object_or_404(Product, id=product_id)
+        other_products = Product.objects.exclude(id=product_id)[:10]
 
-def homepage(request):
-    return render(request, 'homepage.html')
+        context = {
+            'product': product,
+            'other_products': other_products,
+        }
+        return render(request, 'product_detail.html', context)
+
 
 def user(request):
     return render(request, 'user.html')
@@ -99,6 +119,8 @@ def categoryPage(request, category_id):
 def delivery(request):
     return render(request, 'delivery.html')
 
+
+@login_required(login_url='login')
 def cart(request):
     products = Product.objects.all()
     context = {

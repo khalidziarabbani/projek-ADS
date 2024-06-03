@@ -18,14 +18,16 @@ function toggleSpecification(button) {
     document.getElementById('descriptionBtn').classList.remove('active');
 }
 
+const productPrice = parseFloat("{{ product.price }}"); // Get product price from Django template
+
 function increaseQuantity() {
     const quantityInput = document.getElementById('quantityInput');
     let currentValue = parseInt(quantityInput.value);
     const maxValue = parseInt(quantityInput.max);
     if (currentValue < maxValue) {
         quantityInput.value = currentValue + 1;
-        updateSubtotal();
     }
+    updateSubtotal();
 }
 
 function decreaseQuantity() {
@@ -34,8 +36,8 @@ function decreaseQuantity() {
     const minValue = parseInt(quantityInput.min);
     if (currentValue > minValue) {
         quantityInput.value = currentValue - 1;
-        updateSubtotal();
     }
+    updateSubtotal();
 }
 
 function validateQuantity() {
@@ -53,8 +55,12 @@ function validateQuantity() {
 
 function updateSubtotal() {
     const quantityInput = document.getElementById('quantityInput');
-    const currentValue = parseInt(quantityInput.value);
-    const productPrice = parseFloat(document.getElementById('productPrice').innerText.replace('$', ''));
-    const subtotal = currentValue * productPrice;
-    document.getElementById('subtotal').innerText = `$${subtotal.toFixed(2)}`;
+    const quantity = parseInt(quantityInput.value);
+    const subtotal = productPrice * quantity;
+    document.getElementById('subtotal').textContent = `$${subtotal.toFixed(2)}`;
+    document.getElementById('total-price-input').value = subtotal;
 }
+
+document.addEventListener("DOMContentLoaded", function() {
+    updateSubtotal(); // Initialize subtotal on page load
+});

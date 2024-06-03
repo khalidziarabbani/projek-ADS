@@ -7,7 +7,7 @@
 <script src="{% static 'js/product_detail.js' %}"></script>
 <div class="bg">
     <div class="product">
-        <img src="{{product.image.url}}" alt="logo">
+        <img src="{{product.image.url}}" alt="{{product.name}}">
         <div class="description">
             <div class="name">
                 <h3>{{product.detail_name}}</h3>
@@ -28,15 +28,16 @@
             </div>            
         </div>
 
-        <div class="set-order">
+        <form action="{% url 'product_detail' product.id %}" method="post" class="set-order">
+            {% csrf_token %}
             <h3>SET ORDER</h3>
             <div class="set-value">
                 <div class="quantity">
                     <p>Product Quantity</p>
                     <div class="btn">
-                        <button onclick="decreaseQuantity()">-</button>
-                        <input type="number" id="quantityInput" value="1" min="1" max="{{product.stock}}" onchange="validateQuantity()">
-                        <button onclick="increaseQuantity()">+</button>
+                        <button type="button" onclick="decreaseQuantity()">-</button>
+                        <input type="number" name="quantity" id="quantityInput" value="1" min="1" max="{{product.stock}}" onchange="validateQuantity()">
+                        <button type="button" onclick="increaseQuantity()">+</button>
                     </div>
                 </div>
                 <p>Stock: <span>{{product.stock}}</span></p>
@@ -53,7 +54,7 @@
                     <a href="{% url 'login' %}">Login to Add to Cart</a>
                 {% endif %}
             </div>
-        </div>
+        </form>        
     </div>
 
     <div class="other-product">
