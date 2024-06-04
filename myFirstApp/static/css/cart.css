@@ -95,9 +95,9 @@ html, body {
     flex-direction: row;
     gap: 16px;
     margin-top: auto;
+    margin-left: auto;
     justify-content: center;
     align-items: center;
-    margin-left: auto;
 }
 
 .btn-item button {
@@ -154,12 +154,6 @@ html, body {
     background: white;
 }
 
-/* Untuk browser Webkit (Chrome, Safari, Opera) */
-input[type="number"]::-webkit-outer-spin-button,
-input[type="number"]::-webkit-inner-spin-button {
-    -webkit-appearance: none;
-    margin: 0;
-}
 
 .summary {
     display: flex;

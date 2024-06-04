@@ -21,9 +21,9 @@
                 <div class="btn-item">
                     <button data-product="{{item.id}}" class="delete-btn updateItem" data-action="delete" ><img src="{% static 'img/trash.svg' %}" alt="del"></button>
                     <div class="item-quantity">
-                        <button data-product="{{item.id}}" class="qty-btn updateItem" data-action="remove" onclick="decreaseQty(this)">-</button>
+                        <button data-product="{{item.id}}" class="qty-btn updateItem" data-action="remove" >-</button>
                         <input id="qtyInput" class="qtyInput" type="text" min="1" value="{{item.quantity}}" readonly>
-                        <button data-product="{{item.id}}" class="qty-btn updateItem" data-action="add" onclick="increaseQty(this)">+</button>
+                        <button data-product="{{item.id}}" class="qty-btn updateItem" data-action="add" >+</button>
                     </div>
                 </div>
             </div>
@@ -66,7 +66,7 @@
 {% include 'footer.html' %}
 
 <script>
-    const qtyInput = document.getElementById('qtyInput');
+    var qtyInput = document.getElementById('qtyInput');
     
         function decreaseQty() {
         let currentValue = parseInt(qtyInput.value);
