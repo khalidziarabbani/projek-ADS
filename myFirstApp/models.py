@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
+from django.utils.crypto import get_random_string
 import random
 
 class Profile(models.Model):
@@ -52,6 +53,7 @@ class Order(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
     date_ordered = models.DateTimeField(auto_now_add=True, blank=True)
     order_number = models.CharField(max_length=10, unique=True, null=True, default=None)
+    complete = models.BooleanField(default=False, null=True, blank=True)
     total_cost = models.FloatField(default=0, null=True, blank=True)
     virtual_account = models.CharField(max_length=12, null=True, blank=True)
     delivery_address = models.TextField(max_length=1000, help_text='Enter delivery address', null=True, blank=True)
@@ -59,19 +61,27 @@ class Order(models.Model):
     payment_method = models.ForeignKey(Payment_method, on_delete=models.CASCADE, null=True, blank=True)
 
     def __str__(self):
-        return self.user.username + ' - ' + self.product.name
-    
+        return f"{self.user.username} - Order #{self.order_number}"
+
     @property
     def get_total_cost(self):
         orderitems = self.orderitem_set.all()
         total = sum([item.quantity * item.product.price for item in orderitems])
         return total
-    
+
     @property
     def get_total_quantity(self):
         orderitems = self.orderitem_set.all()
         total = sum([item.quantity for item in orderitems])
         return total
+
+    def generate_random_number(self):
+        return get_random_string(10)
+
+    def save(self, *args, **kwargs):
+        if not self.order_number:
+            self.order_number = self.generate_random_number()
+        super().save(*args, **kwargs)
 
 class OrderItem(models.Model):
     product = models.ForeignKey(Product, on_delete=models.CASCADE, null=True)

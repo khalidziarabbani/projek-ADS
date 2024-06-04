@@ -4,26 +4,26 @@
 {% load static %}
 <link rel="stylesheet" href="{% static 'css/product_detail.css' %}">
 {% include 'navbar.html' %}
-<script src="{% static 'js/product_detail.js' %}"></script>
+
 <div class="bg">
     <div class="product">
-        <img src="{{product.image.url}}" alt="{{product.name}}">
+        <img src="{{ product.image.url }}" alt="{{ product.name }}">
         <div class="description">
             <div class="name">
-                <h3>{{product.detail_name}}</h3>
-                <p id="productPrice">${{product.price}}</p>
+                <h3>{{ product.detail_name }}</h3>
+                <p id="productPrice">${{ product.price }}</p>
             </div>
             <div class="content">
                 <button id="descriptionBtn" class="description-button active" onclick="toggleDescription(this)">Description</button>
                 <button id="specificationBtn" class="specification-button" onclick="toggleSpecification(this)">Specification</button>
                 <div id="description" class="visible">
-                    <p>{{product.description}}</p>
+                    <p>{{ product.description }}</p>
                 </div>
                 <div id="specification" class="hidden">
-                    <p>Brand: <span>{{product.brand}}</span></p>
-                    <p>Year of Release: <span>{{product.year_released}}</span></p>
-                    <p>Condition: <span>{{product.condition}}</span></p>
-                    <p>Category: <span>{{product.category}}</span></p>
+                    <p>Brand: <span>{{ product.brand }}</span></p>
+                    <p>Year of Release: <span>{{ product.year_released }}</span></p>
+                    <p>Condition: <span>{{ product.condition }}</span></p>
+                    <p>Category: <span>{{ product.category }}</span></p>
                 </div>
             </div>            
         </div>
@@ -36,11 +36,11 @@
                     <p>Product Quantity</p>
                     <div class="btn">
                         <button type="button" onclick="decreaseQuantity()">-</button>
-                        <input type="number" name="quantity" id="quantityInput" value="1" min="1" max="{{product.stock}}" onchange="validateQuantity()">
+                        <input type="number" name="quantity" id="quantityInput" value="1" min="1" max="{{ product.stock }}" onchange="validateQuantity()">
                         <button type="button" onclick="increaseQuantity()">+</button>
                     </div>
                 </div>
-                <p>Stock: <span>{{product.stock}}</span></p>
+                <p>Stock: <span>{{ product.stock }}</span></p>
             </div>            
             <div class="sub-total">
                 <label for="total_price">Subtotal</label>
@@ -62,13 +62,13 @@
         <div class="product-container">
             {% for p in other_products %}
             <a href="{% url 'product_detail' p.id %}" class="product-box">
-                <img src="{{p.image.url}}" alt="{{p.name}}">
-                <h4>{{p.name}}</h4>
+                <img src="{{ p.image.url }}" alt="{{ p.name }}">
+                <h4>{{ p.name }}</h4>
                 <div class="pay">
-                    <p>${{p.price}}</p>
+                    <p>${{ p.price }}</p>
                     <div class="btn">
                         <p>Add to Cart</p>
-                        <img src="{% static "img/cart-white.svg" %}" alt="cart">
+                        <img src="{% static 'img/cart-white.svg' %}" alt="cart">
                     </div>
                 </div>
             </a>
@@ -78,4 +78,73 @@
 </div>
 
 {% include 'footer.html' %}
+
+<script>
+function toggleDescription(button) {
+    document.getElementById('description').classList.add('visible');
+    document.getElementById('description').classList.remove('hidden');
+    document.getElementById('specification').classList.add('hidden');
+    document.getElementById('specification').classList.remove('visible');
+    
+    button.classList.add('active');
+    document.getElementById('specificationBtn').classList.remove('active');
+}
+
+function toggleSpecification(button) {
+    document.getElementById('specification').classList.add('visible');
+    document.getElementById('specification').classList.remove('hidden');
+    document.getElementById('description').classList.add('hidden');
+    document.getElementById('description').classList.remove('visible');
+    
+    button.classList.add('active');
+    document.getElementById('descriptionBtn').classList.remove('active');
+}
+
+const productPrice = parseFloat("{{ product.price }}"); // Get product price from Django template
+
+function increaseQuantity() {
+    const quantityInput = document.getElementById('quantityInput');
+    let currentValue = parseInt(quantityInput.value);
+    const maxValue = parseInt(quantityInput.max);
+    if (currentValue < maxValue) {
+        quantityInput.value = currentValue + 1;
+    }
+    updateSubtotal();
+}
+
+function decreaseQuantity() {
+    const quantityInput = document.getElementById('quantityInput');
+    let currentValue = parseInt(quantityInput.value);
+    const minValue = parseInt(quantityInput.min);
+    if (currentValue > minValue) {
+        quantityInput.value = currentValue - 1;
+    }
+    updateSubtotal();
+}
+
+function validateQuantity() {
+    const quantityInput = document.getElementById('quantityInput');
+    let currentValue = parseInt(quantityInput.value);
+    const maxValue = parseInt(quantityInput.max);
+    const minValue = parseInt(quantityInput.min);
+    if (currentValue > maxValue) {
+        quantityInput.value = maxValue;
+    } else if (currentValue < minValue) {
+        quantityInput.value = minValue;
+    }
+    updateSubtotal();
+}
+
+function updateSubtotal() {
+    const quantityInput = document.getElementById('quantityInput');
+    const quantity = parseInt(quantityInput.value);
+    const subtotal = productPrice * quantity;
+    document.getElementById('subtotal').textContent = `$${subtotal.toFixed(2)}`;
+    document.getElementById('total-price-input').value = subtotal;
+}
+
+document.addEventListener("DOMContentLoaded", function() {
+    updateSubtotal(); // Initialize subtotal on page load
+});
+</script>
 {% endblock content %}

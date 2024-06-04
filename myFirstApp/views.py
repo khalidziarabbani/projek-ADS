@@ -3,6 +3,10 @@ from django.contrib.auth.models import User
 from django.contrib.auth import login, authenticate, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
+import random
+from django.views.decorators.csrf import csrf_exempt
+from django.http import JsonResponse
+import json
 
 from .models import Profile, Category, Product, Expedition, Payment_method, Order, OrderItem
 
@@ -69,14 +73,15 @@ def register(request):
     elif request.method == 'GET':
         return render(request, 'register.html')
     
+@login_required
 def product_detail(request, product_id):
     if request.method == 'POST':
-        product = Product.objects.get(id=product_id)
+        product = get_object_or_404(Product, id=product_id)
         user = request.user
-        order = Order.objects.get_or_create(user=user, total_cost=product.price, delivery_address=user.profile.address)
-        quantity = int(request.POST['quantity', 1])
+        order, created = Order.objects.get_or_create(user=user, complete=False)
+        quantity = int(request.POST.get('quantity', 1))
         
-                # Check if an order item with the same product and order already exists
+        # Check if an order item with the same product and order already exists
         order_item = OrderItem.objects.filter(order=order, product=product).first()
         if order_item:
             # Order item already exists, update the quantity
@@ -91,9 +96,10 @@ def product_detail(request, product_id):
             )
 
         return redirect('cart')
+    
     elif request.method == 'GET':
         product = get_object_or_404(Product, id=product_id)
-        other_products = Product.objects.exclude(id=product_id)[:10]
+        other_products = Product.objects.exclude(id=product_id).order_by('?')[:10]
 
         context = {
             'product': product,
@@ -120,10 +126,93 @@ def delivery(request):
     return render(request, 'delivery.html')
 
 
-@login_required(login_url='login')
+@login_required
 def cart(request):
-    products = Product.objects.all()
+    user = request.user
+    # Ensure only one active (incomplete) order per user
+    orders = Order.objects.filter(user=user, complete=False)
+    if orders.exists():
+        if orders.count() > 1:
+            # Handle multiple incomplete orders: keep the most recent and mark others as complete or merge them
+            main_order = orders.order_by('-date_ordered').first()
+            for order in orders.exclude(id=main_order.id):
+                # Optionally merge items or just mark them complete
+                order.complete = True
+                order.save()
+        else:
+            main_order = orders.first()
+    else:
+        main_order = Order.objects.create(user=user, complete=False)
+
+    items = main_order.orderitem_set.all()
+    subtotal = main_order.get_total_cost
+
+    # Get product IDs in the current order
+    product_ids_in_cart = items.values_list('product_id', flat=True)
+
+    # Get products not in the current order
+    other_products = Product.objects.exclude(id__in=product_ids_in_cart)
+
+    # Randomly select 10 products from the available products not in the cart
+    other_products = random.sample(list(other_products), min(len(other_products), 10))
+
     context = {
-        "products": products,
+        "items": items,
+        "subtotal": subtotal,
+        "order": main_order,
+        "other_products": other_products,
     }
     return render(request, 'cart.html', context)
+
+@login_required(login_url='login')
+def add_to_cart(request, product_id):
+    if request.method == 'POST':
+        product = Product.objects.get(id=product_id)
+        user = request.user
+        order = Order.objects.get_or_create(user=user, complete=False)
+        quantity = int(request.POST['quantity', 1])
+        
+                # Check if an order item with the same product and order already exists
+        order_item = OrderItem.objects.filter(order=order, product=product).first()
+        if order_item:
+            # Order item already exists, update the quantity
+            order_item.quantity += quantity
+            order_item.save()
+        else:
+            # Create a new order item
+            order_item = OrderItem.objects.create(
+                order=order,
+                product=product,
+                quantity=quantity,
+            )
+
+        return redirect('cart')
+    elif request.method == 'GET':
+        product = Product.objects.get(id=product_id)
+        context = {
+            "product": product,
+        }
+        return render(request, 'cart.html', context)
+
+def updateItem(request):
+    data = json.loads(request.body)
+    itemId = data['productId']
+    action = data['action']
+    
+    user = request.user
+    orderItem = OrderItem.objects.get(id=itemId)
+    product = orderItem.product
+    order, created = Order.objects.get_or_create(user=user, complete=False)
+    orderItem, created = OrderItem.objects.get_or_create(order=order, product=product)
+
+    if action == 'add':
+        orderItem.quantity = (orderItem.quantity + 1)
+        orderItem.save()
+    elif action == 'remove':
+        orderItem.quantity = (orderItem.quantity - 1)
+        orderItem.save()  
+    elif action == 'delete':
+        orderItem.delete()
+    if orderItem.quantity <= 0:
+        orderItem.delete()
+    return JsonResponse('Item was added', safe=False)

@@ -169,19 +169,15 @@ html, body {
 .price{
     display: flex;
     flex-direction: column;
-    justify-content: center;
-    align-items: flex-start;
     gap: 24px;
     border-radius: 8px;
     background: var(--Secondary-sc_normal, #FFF);
-    width: 364px;
+    width: 100%;
 }
 
 .rincian{
     display: flex;
     flex-direction: column;
-    justify-content: center;
-    align-items: flex-start;
     gap: 24px;
     color: var(--Text-tx_normal, #281814);
     width: 100%;
@@ -198,7 +194,6 @@ html, body {
 .totprice, .delfee, .insurance{
     display: flex;
     flex-direction: row;
-    align-items: center;
     width: 100%;
     justify-content: space-between;
 }

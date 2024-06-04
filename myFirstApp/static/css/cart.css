@@ -45,11 +45,11 @@ html, body {
 
 .prod {
     display: flex;
-    align-items: center;
     flex-direction: column;
     border-radius: 8px;
     background: var(--Secondary-sc_normal, #FFF);
     height: 100%;
+    width: 717px;
 }
 
 .item {
@@ -69,6 +69,7 @@ html, body {
 .item-detail {
     display: flex;
     flex-direction: column;
+    width: 100%;
 }
 
 .item-detail p {
@@ -96,6 +97,7 @@ html, body {
     margin-top: auto;
     justify-content: center;
     align-items: center;
+    margin-left: auto;
 }
 
 .btn-item button {
