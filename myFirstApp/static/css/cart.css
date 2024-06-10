@@ -229,6 +229,70 @@ html, body {
     background: var(--Primary-pr_normal-hover, rgb(181, 1, 1));
 }
 
+/* hidden content */
+.empty-cart {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 36px;
+    gap: 48px;
+}
+
+.econtent {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.econtent img {
+    width: 240px;
+    height: 240px;
+    margin-bottom: 36px;
+}
+
+.econtent h1 {
+    color: var(--Text-tx_normal, #281814);
+    font-family: Inter;
+    font-size: 28px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 38px;
+}
+
+.econtent p {
+    color: var(--Text-tx_normal, #281814);
+    font-family: Inter;
+    font-size: 18px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 23px;
+}
+
+.empty-cart a {
+    display: flex;
+    height: 44px;
+    padding: 0px 16px;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    border-radius: 4px;
+    background: var(--Primary-pr_normal, #C00);
+    box-shadow: 0px 3px 4px 0px rgba(0, 0, 0, 0.15);
+    color: var(--Secondary-sc_normal, #FFF);
+    font-family: Inter;
+    font-size: 18px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 23px;
+    text-decoration: none;
+}
+
+.empty-cart a:hover {
+    box-shadow: 3px 3px 10px rgba(40, 24, 20, 0.5); /* Memberikan bayangan yang lebih besar dengan sedikit transparansi */
+    transition: box-shadow 0.3s ease-in-out; /* Menambahkan transisi agar efek bayangan lebih halus */
+}
 
 .other-product {
     display: flex;

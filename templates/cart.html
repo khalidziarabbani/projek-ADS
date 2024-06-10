@@ -7,6 +7,7 @@
 
 <div class="bg">
     <h1>Cart</h1>
+    {% if items %}
     <div class="total-box">
         <div class="prod">
             {% for item in items %}
@@ -21,9 +22,9 @@
                 <div class="btn-item">
                     <button data-product="{{item.id}}" class="delete-btn updateItem" data-action="delete" ><img src="{% static 'img/trash.svg' %}" alt="del"></button>
                     <div class="item-quantity">
-                        <button data-product="{{item.id}}" class="qty-btn updateItem" data-action="remove" >-</button>
-                        <input id="qtyInput" class="qtyInput" type="text" min="1" value="{{item.quantity}}" readonly>
-                        <button data-product="{{item.id}}" class="qty-btn updateItem" data-action="add" >+</button>
+                        <button data-product="{{item.id}}" class="qty-btn updateItem" data-action="remove">-</button>
+                        <input class="qtyInput" type="text" min="1" value="{{item.quantity}}" readonly>
+                        <button data-product="{{item.id}}" class="qty-btn updateItem" data-action="add">+</button>
                     </div>
                 </div>
             </div>
@@ -43,6 +44,16 @@
             </div>
         </div>
     </div>
+    {% else %}
+    <div class="empty-cart">
+        <div class="econtent">
+            <img src="{% static 'img/cart_empty.svg' %}" alt="empty-cart">
+            <h1>Your Cart is Empty</h1>
+            <p>Want something? Add it to your cart now!</p>
+        </div>
+        <a href="{% url 'index' %}#all-product">Start Shopping</a>
+    </div>
+    {% endif %}
     <div class="other-product">
         <h1>Let's Checkout Other Products</h1>
         <div class="product-container">
@@ -66,62 +77,61 @@
 {% include 'footer.html' %}
 
 <script>
-    var qtyInput = document.getElementById('qtyInput');
-    
-        function decreaseQty() {
-        let currentValue = parseInt(qtyInput.value);
-        if (currentValue > 1) {
-            currentValue--;
-            qtyInput.value = currentValue;
-        }
-        }
-    
-        function increaseQty() {
-        let currentValue = parseInt(qtyInput.value);
-        currentValue++;
-        qtyInput.value = currentValue;
-        }
-</script>
-
-<script>
-    var update = document.getElementsByClassName('updateItem')
-    for(var i = 0; i < update.length; i++){
-        update[i].addEventListener('click', function(){
-            var productId  = this.dataset.product
-            var action = this.dataset.action
-            console.log('productId:', productId, 'Action:', action)
-            console.log('USER:', user)
-            if(user == 'AnonymousUser'){
-                console.log('Not logged in')
-                alert('You need to login first to add items to your cart.')
-            }else{
-                updateUserOrder(productId, action)
+    function getCookie(name) {
+        var cookieValue = null;
+        if (document.cookie && document.cookie !== '') {
+            var cookies = document.cookie.split(';');
+            for (var i = 0; i < cookies.length; i++) {
+                var cookie = cookies[i].trim();
+                if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                    break;
+                }
             }
-        })
+        }
+        return cookieValue;
     }
+    var csrftoken = getCookie('csrftoken');
 
-    function updateUserOrder(productId, action){
-        console.log('User is logged in, sending data...')
+    document.addEventListener('DOMContentLoaded', function() {
+        var updateBtns = document.querySelectorAll('.updateItem');
+        updateBtns.forEach(function(btn) {
+            btn.addEventListener('click', function() {
+                var productId = this.dataset.product;
+                var action = this.dataset.action;
+                console.log('productId:', productId, 'action:', action);
 
-        var url = '/updateItem/'
+                var user = "{{ request.user }}";
+                if (user == 'AnonymousUser') {
+                    console.log('Not logged in');
+                    alert('You need to login first to add items to your cart.');
+                } else {
+                    updateUserOrder(productId, action);
+                }
+            });
+        });
+    });
+
+    function updateUserOrder(productId, action) {
+        console.log('User is logged in, sending data...');
+
+        var url = '/updateItem/';
 
         fetch(url, {
-            method:'POST',
-            headers:{
-                'Content-Type':'application/json',
-                'X-CSRFToken':csrftoken,
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRFToken': csrftoken,
             },
-            body:JSON.stringify({'productId':productId, 'action':action})
+            body: JSON.stringify({'productId': productId, 'action': action})
         })
-
         .then((response) => {
-            return response.json()
+            return response.json();
         })
-
-        .then((response) => {
-            console.log('data:', response)
-            location.reload()
-        })
+        .then((data) => {
+            console.log('data:', data);
+            location.reload();
+        });
     }
 </script>
 

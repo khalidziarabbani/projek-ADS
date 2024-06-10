@@ -8,7 +8,7 @@ from django.views.decorators.csrf import csrf_exempt
 from django.http import JsonResponse
 import json
 
-from .models import Profile, Category, Product, Expedition, Payment_method, Order, OrderItem
+from .models import Profile, Category, Product, Expedition, Payment_method, Order, OrderItem, Wishlist
 
 def index(request):
     categories = Category.objects.all()
@@ -72,8 +72,8 @@ def register(request):
 
     elif request.method == 'GET':
         return render(request, 'register.html')
-    
-@login_required
+
+
 def product_detail(request, product_id):
     if request.method == 'POST':
         product = get_object_or_404(Product, id=product_id)
@@ -216,3 +216,18 @@ def updateItem(request):
     if orderItem.quantity <= 0:
         orderItem.delete()
     return JsonResponse('Item was added', safe=False)
+
+@login_required(login_url='login')
+def add_to_wishlist(request, product_id):
+    if request.method == 'POST':
+        product = get_object_or_404(Product, id=product_id)
+        wishlist, created = Wishlist.objects.get_or_create(user=request.user)
+
+        if product in wishlist.products.all():
+            wishlist.products.remove(product)
+            messages.error(request, 'Product removed from wishlist.')
+        else:
+            wishlist.products.add(product)
+            messages.success(request, 'Product added to wishlist.')
+
+    return redirect('user')

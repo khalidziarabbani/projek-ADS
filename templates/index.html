@@ -35,12 +35,28 @@
         {% for p in products %}
         <a href="{% url 'product_detail' p.id %}" class="product-box">
             <img src="{{p.image.url}}" alt="{{p.name}}">
-            <h4>{{p.name}}</h4>
-            <div class="pay">
-                <p>${{p.price}}</p>
-                <div class="btn">
-                    <p>Add to Cart</p>
-                    <img src="{% static "img/cart-white.svg" %}" alt="cart">
+            <div class="product-overlay">
+                <div class="txt">
+                    <h4>{{p.name}}</h4>
+                    <p>{{p.price}}</p>
+                </div>
+                <div class="pay">
+                    <form method="POST" action="{% url 'add_to_cart' p.id %}" class="btn">
+                        {% csrf_token %}
+                        <button type="submit">
+                        <p>Add to Cart</p>
+                        <input type="hidden" name="quantity" value="1">
+                        <img src="{% static "img/cart-white2.svg" %}" alt="cart">
+                        </button>
+                    </form>
+                    <form method="POST" action="{% url 'add_to_wishlist' p.id %}" class="wishlist">
+                        {% csrf_token %}
+                        {% if request.user.is_authenticated and p in request.user.wishlist.products.all %}
+                            <button type="submit" class="wishlist-button wishlist-added"></button>
+                        {% else %}
+                            <button type="submit" class="wishlist-button"></button>
+                        {% endif %}
+                    </form>                    
                 </div>
             </div>
         </a>

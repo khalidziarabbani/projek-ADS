@@ -96,3 +96,21 @@ class OrderItem(models.Model):
     def get_total(self):
         total = self.product.price * self.quantity
         return total
+
+class Wishlist(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    products = models.ManyToManyField(Product)
+    
+    def __str__(self):
+        return self.user.username + "'s wishlist"
+
+    def add_to_wishlist(self, product):
+        self.products.add(product)
+
+    def remove_from_wishlist(self, product):
+        self.products.remove(product)
+        
+    @classmethod
+    def remove_from_wishlist2(cls, user, product):
+        wishlist, created = cls.objects.get_or_create(user=user)
+        wishlist.products.remove(product)
