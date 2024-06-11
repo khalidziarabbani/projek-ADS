@@ -1,3 +1,4 @@
+<!-- navbar.html -->
 <style>
     @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap');
 
@@ -8,7 +9,7 @@
         text-decoration: none;
     }
 
-    .navbar{
+    .navbar {
         display: flex;
         width: 100%;
         justify-content: space-between;
@@ -19,18 +20,19 @@
         font-family: 'Poppins', sans-serif; /* Ensure navbar also uses Poppins */
     }
 
-    .logo{
+    .logo {
         display: flex;
         align-items: center;
         justify-content: center;
         width: 30%;
     }
-    .logo img{
+
+    .logo img {
         width: 57px;
         height: 50px;
     }
 
-    .logo h1{
+    .logo h1 {
         font-size: 28px;
         font-weight: 700;
         color: #281814;
@@ -39,24 +41,24 @@
         font-family: Poppins;
     }
 
-    .logo span{
+    .logo span {
         font-size: 28px;
         font-weight: 700;
         color: #C00;
         font-family: Poppins;
     }
 
-    .tombol{
+    .tombol {
         list-style: none;
         display: flex;
         justify-content: center;
         align-items: center;
         width: 30%;
         gap: 10%;
-        text-decoration: none;
+        position: relative; /* For dropdown positioning */
     }
 
-    .tombol a{
+    .tombol a {
         font-family: Poppins;
         color: var(--Text-tx_normal, #281814);
         font-size: 18px;
@@ -66,15 +68,41 @@
         text-decoration: none; /* Ensure links have no text decoration */
     }
 
-    .user{
+    .tombol a:hover {
+        color: var(--Primary-pr_normal, #C00);
+    }
+
+    .dropdown {
+        position: absolute;
+        top: 100%;
+        left: 10%;
+        display: none;
+        flex-direction: column;
+        background: white;
+        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+        z-index: 1;
+    }
+
+    .dropdown a {
+        padding: 10px 20px;
+        text-align: left;
+    }
+
+    .tombol li:hover .dropdown {
+        display: flex;
+        color: var(--Primary-pr_normal, #C00);
+    }
+
+    .user {
         display: flex;
         justify-content: center;
         align-items: center;
         gap: 10%;
         width: 30%;
+        position: relative; /* For dropdown positioning */
     }
 
-    .Cart{
+    .Cart {
         display: flex;
         width: 24px;
         height: 24px;
@@ -86,7 +114,7 @@
         cursor: pointer;
     }
 
-    .akun{
+    .akun {
         list-style: none;
         display: flex;
         justify-content: center;
@@ -103,9 +131,47 @@
         line-height: 23px;
         text-decoration: none;
         font-family: Poppins;
+        cursor: pointer;
+        text-decoration: none;
     }
 
-    .login-btn{
+    a.user-name:hover {
+        text-decoration: none;
+        color: var(--Primary-pr_normal, #C00);
+    }
+
+    .user-dropdown {
+        position: absolute;
+        top: 100%;
+        right: 5%;
+        display: none;
+        flex-direction: column;
+        background: white;
+        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+        z-index: 1;
+    }
+
+    .user-dropdown a {
+        padding: 10px 20px;
+        text-align: left;
+        font-size: 18px;
+        text-decoration: none;
+        color: var(--Text-tx_normal, #281814);
+        font-family: Poppins;
+        font-size: 18px;
+        font-style: normal;
+        font-weight: 500;
+    }
+
+    .user-dropdown a:hover {
+        color: var(--Primary-pr_normal, #C00);
+    }
+    .akun:hover .user-dropdown {
+        display: flex;
+        color: var(--Primary-pr_normal, #C00);
+    }
+
+    .login-btn {
         color: var(--Secondary-sc_normal, #FFF);
         font-family: Poppins;
         font-size: 18px;
@@ -123,10 +189,10 @@
         height: 44px;
     }
 
-    .login-btn:hover{
+    .login-btn:hover {
         background: var(--Primary-pr_dark, #8C0000);
         color: var(--Text-tx_normal, #FFF);
-    }
+    }    
 </style>
 {% block content %}
 {% load static %}
@@ -136,9 +202,20 @@
         <h1>LE<span>SHOP</span></h1>
     </div>
     <div class="tombol">
-        <li><a href="{% url 'index' %}">Home</a></li>
-        <li><a href="{% url 'index' %}#categories">Categories</a></li>
-        <li><a href="{% url 'index' %}#about">About</a></li>
+        <li>
+            <a href="{% url 'index' %}">Home</a>
+        </li>
+        <li>
+            <a href="{% url 'index' %}#categories">Categories</a>
+            <div class="dropdown">
+                {% for category in categories %}
+                    <a href="{% url 'category' category.id %}">{{ category.name }}</a>
+                {% endfor %}
+            </div>
+        </li>
+        <li>
+            <a href="{% url 'index' %}#about">About</a>
+        </li>
     </div>
 
     <div class="user">
@@ -154,7 +231,13 @@
             {% if request.user.is_anonymous %}
             <li><a class="login-btn" href="{% url 'login' %}">Login</a></li>
             {% elif request.user.is_authenticated %}
-            <li><a class="user-name" href="{% url 'user' %}">{{ request.user.username }}</a></li>
+            <li>
+                <a class="user-name" href="#">{{ request.user.username }}</a>
+                <div class="user-dropdown">
+                    <a href="{% url 'user' %}">My Profile</a>
+                    <a href="#">Transaction List</a>
+                </div>
+            </li>
             {% endif %}
         </div>
     </div>

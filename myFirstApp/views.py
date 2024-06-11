@@ -167,12 +167,12 @@ def cart(request):
 @login_required(login_url='login')
 def add_to_cart(request, product_id):
     if request.method == 'POST':
-        product = Product.objects.get(id=product_id)
+        product = get_object_or_404(Product, id=product_id)
         user = request.user
-        order = Order.objects.get_or_create(user=user, complete=False)
-        quantity = int(request.POST['quantity', 1])
+        order, created = Order.objects.get_or_create(user=user, complete=False)
+        quantity = int(request.POST.get('quantity', 1))
         
-                # Check if an order item with the same product and order already exists
+        # Check if an order item with the same product and order already exists
         order_item = OrderItem.objects.filter(order=order, product=product).first()
         if order_item:
             # Order item already exists, update the quantity
@@ -180,7 +180,7 @@ def add_to_cart(request, product_id):
             order_item.save()
         else:
             # Create a new order item
-            order_item = OrderItem.objects.create(
+            OrderItem.objects.create(
                 order=order,
                 product=product,
                 quantity=quantity,
@@ -188,7 +188,7 @@ def add_to_cart(request, product_id):
 
         return redirect('cart')
     elif request.method == 'GET':
-        product = Product.objects.get(id=product_id)
+        product = get_object_or_404(Product, id=product_id)
         context = {
             "product": product,
         }
@@ -230,4 +230,14 @@ def add_to_wishlist(request, product_id):
             wishlist.products.add(product)
             messages.success(request, 'Product added to wishlist.')
 
-    return redirect('user')
+    return redirect('index')
+
+def edit_image(request):
+    if request.method == 'POST':
+        if 'profile_image' in request.FILES:
+            profile = Profile.objects.get(User=request.user)
+            profile.image = request.FILES['profile_image']
+            profile.save()
+            return redirect('user')
+
+    return render(request, 'user.html')

@@ -27,34 +27,48 @@
                 </div>
             </div>            
         </div>
-
-        <form action="{% url 'product_detail' product.id %}" method="post" class="set-order">
-            {% csrf_token %}
-            <h3>SET ORDER</h3>
-            <div class="set-value">
-                <div class="quantity">
-                    <p>Product Quantity</p>
-                    <div class="btn">
-                        <button type="button" onclick="decreaseQuantity()">-</button>
-                        <input type="number" name="quantity" id="quantityInput" value="1" min="1" max="{{ product.stock }}" onchange="validateQuantity()">
-                        <button type="button" onclick="increaseQuantity()">+</button>
+        <div class="set-order">
+            <form action="{% url 'product_detail' product.id %}" method="post" class="add-form">
+                {% csrf_token %}
+                <h3>SET ORDER</h3>
+                <div class="set-value">
+                    <div class="quantity">
+                        <p>Product Quantity</p>
+                        <div class="btn">
+                            <button type="button" onclick="decreaseQuantity()">-</button>
+                            <input type="number" name="quantity" id="quantityInput" value="1" min="1" max="{{ product.stock }}" onchange="validateQuantity()">
+                            <button type="button" onclick="increaseQuantity()">+</button>
+                        </div>
                     </div>
+                    <p>Stock: <span>{{ product.stock }}</span></p>
+                </div>            
+                <div class="sub-total">
+                    <label for="total_price">Subtotal</label>
+                    <input type="hidden" name="total_price" id="total-price-input" class="total-input">
+                    <span id="subtotal">${{ product.price }}</span>
                 </div>
-                <p>Stock: <span>{{ product.stock }}</span></p>
-            </div>            
-            <div class="sub-total">
-                <label for="total_price">Subtotal</label>
-                <input type="hidden" name="total_price" id="total-price-input" class="total-input">
-                <span id="subtotal">${{ product.price }}</span>
-            </div>
-            <div class="add-to-cart-btn">
-                {% if user.is_authenticated %}
-                    <button type="submit">Add to Cart</button>
+                <div class="add-to-cart-btn">
+                    {% if user.is_authenticated %}
+                        <button type="submit">Add to Cart</button>
+                    {% else %}
+                        <a href="{% url 'login' %}">Login for Add to Cart</a>
+                    {% endif %}
+                </div>
+            </form>
+            <form method="POST" action="{% url 'add_to_wishlist' product.id %}" class="wishlist-form">
+                {% csrf_token %}
+                {% if request.user.is_authenticated %}
+                    {% if product in request.user.wishlist.products.all %}
+                        <button type="submit" class="wishlist-btn">Remove from Wishlist</button>
+                    {% else %}
+                        <button type="submit" class="wishlist-btn">Add to wishlist</button>
+                    {% endif %}
                 {% else %}
-                    <a href="{% url 'login' %}">Login to Add to Cart</a>
+                    <button type="submit" class="wishlist-btn">Login for Add to wishlist</button>
                 {% endif %}
-            </div>
-        </form>        
+            </form>
+        </div>
+        
     </div>
 
     <div class="other-product">
@@ -62,13 +76,29 @@
         <div class="product-container">
             {% for p in other_products %}
             <a href="{% url 'product_detail' p.id %}" class="product-box">
-                <img src="{{ p.image.url }}" alt="{{ p.name }}">
-                <h4>{{ p.name }}</h4>
-                <div class="pay">
-                    <p>${{ p.price }}</p>
-                    <div class="btn">
-                        <p>Add to Cart</p>
-                        <img src="{% static 'img/cart-white.svg' %}" alt="cart">
+                <img src="{{p.image.url}}" alt="{{p.name}}">
+                <div class="product-overlay">
+                    <div class="txt">
+                        <h4>{{p.name}}</h4>
+                        <p>{{p.price}}</p>
+                    </div>
+                    <div class="pay">
+                        <form method="POST" action="{% url 'add_to_cart' p.id %}" class="btn">
+                            {% csrf_token %}
+                            <button type="submit">
+                            <p>Add to Cart</p>
+                            <input type="hidden" name="quantity" value="1">
+                            <img src="{% static "img/cart-white2.svg" %}" alt="cart">
+                            </button>
+                        </form>
+                        <form method="POST" action="{% url 'add_to_wishlist' p.id %}" class="wishlist">
+                            {% csrf_token %}
+                            {% if request.user.is_authenticated and p in request.user.wishlist.products.all %}
+                                <button type="submit" class="wishlist-button wishlist-added"></button>
+                            {% else %}
+                                <button type="submit" class="wishlist-button"></button>
+                            {% endif %}
+                        </form>                    
                     </div>
                 </div>
             </a>

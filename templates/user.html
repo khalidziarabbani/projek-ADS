@@ -2,149 +2,153 @@
 {% block title %}Account{% endblock title %}
 {% block content %}
 {% load static %}
-<link rel="stylesheet" href="{% static 'css/user_profile.css' %}">
+<link rel="stylesheet" href="{% static 'css/user.css' %}">
 {% include 'navbar.html' %}
-<script src="{% static 'js/user.js' %}"></script>
+
 <div class="container">
-    <div class="kiri">
-        <div class="atas">
-            <img src="{% static "img/user-default.svg" %}" alt="logo">
-            <div class="nama">
-                <h5>Hello!</h5>
-                <p id="text">ishowspeedshowmeatzzzzzzzzzzzzzzzz</p>
+    <div class="option-bar">
+        <div class="header">
+            <img src="{% static 'img/user-default.svg' %}" alt="user">
+            <div class="name">
+                <p>Hello!</p>
+                <h2 id="text">UserNamesssssssssssssssssss</h2>
             </div>
         </div>
-        <div class="bawah">
-            <div class="prof">
-                <img src="{% static "img/user-kecil.svg" %}" alt="logo">
-                <button id="profile-btn" class="profile-button active" onclick="toggleProfile(this)">Profile</button>
-            </div>
-            <div class="trans">
-                <img src="{% static "img/trans.svg" %}" alt="logo">
-                <button id="transaction_list" class="transaction_list-button-active" onclick="toggleList(this)">Transaction List</button>
-            </div>
-            <div class="log">
-                <img src="{% static "img/log.svg" %}" alt="logo">
-                <div class="Logout">
-                    <a href="{% url 'logout' %}" id="logout-link">Log Out</a>
-                </div>
-            </div>
+        <div class="options">
+            <button class="option active" id="profileBtn" onclick="toggleContent(this, 'profileContent')"><img src="{% static 'img/user-kecil.svg' %}">Profile</button>
+            <button class="option" id="wishlistBtn" onclick="toggleContent(this, 'wishlistContent')"><img src="{% static 'img/heart-option.svg' %}">Wishlist</button>
+            <button class="option" id="changePasswordBtn" onclick="toggleContent(this, 'changePasswordContent')"><img src="{% static 'img/gembok.svg' %}">Change Password</button>
+            <button class="option" id="deleteAccountBtn" onclick="toggleContent(this, 'deleteAccountContent')"><img src="{% static 'img/trash-op.svg' %}">Delete Account</button>
+            <a href="{% url 'logout' %}"><button class="option" id="logoutBtn" onclick="toggleContent(this, 'logoutContent')"><img src="{% static 'img/log.svg' %}">Logout</button></a>
         </div>
     </div>
-    <div class="kanan">
-        <div id="profile_div" class="visible">
-            <div class="bio">
-                <h1>Profile</h1>
-                <div class="isi">
-                    <label for="username">Username</label>
-                    <input type="text" name="user_name" placeholder="User" required>
-
-                    <label for="fullname">Full Name</label>
-                    <input type="text" name="full_name" placeholder="User" required>
-
-                    <label for="email">Email</label>
-                    <input type="text" name="email" placeholder="user@email.com" required>
-
-                    {% comment %} <label for="gender">Gender</label>
-                    <div class="form_gender">
-                        <input type="radio" id="male" name="gender" value="male">
-                        <label for="male">
-                            Male
-                        </label><br>
-                        <input type="radio" id="female" name="gender" value="female">
-                        <label for="female">
-                            Female
-                        </label><br>
-                    </div> {% endcomment %}
-                        
-                    <label for="phone">Phone Number</label>
-                    <input type="number" name="phone" placeholder="0812xxxxxxx" required>
-                    
-                    <label for="adress">Address</label>
-                    <input class="address" type="text" name="adress" placeholder="Jalan Phh. Mustafa, Bandung, Jawa Barat, 40124, (022) 7104218" required>
-
-                    {% comment %} <label for="birth">Birth Date</label>
-                    <input type="date" id="birthdate" name="birthdate"><br><br> {% endcomment %}
-                </div>
-                <div class="save">
-                    <input type="submit" id="save" value="Save">
-                </div>
-            </div>
-            <div class="change_pp">
-                <img src="{% static "img/user-default-gray.svg" %}" alt="image-user">
-                <div class="btn">
-                    <img src="{% static "img/change.svg" %}" alt="logo">
-                    <input type="submit" id="change" value="Change Profile Picture">
-                </div>
-            </div>
-        </div>
-
-        <div id="transaction_list_div" class="hidden">
+    <div class="content">
+        <div class="profile" id="profileContent">
             <div class="form">
-                <div class="transaction">
-                    <h1>Transaction List</h1>
-                    <p>Success</p>  
-                </div>
-                <div class="list">
-                    <div class="item">
-                        <img src="{% static "img/ps5.png" %}" alt="PS5">
-                        <div class="product">
-                            <h4>PS5 Console Slim</h4>
-                            <p>$69.00</p>
-                        </div>
+                <h1>Profile</h1>
+                <form action="" class="pform">
+                    <div class="input">
+                        <label for="name">Username</label>
+                        <input type="text" name="name" id="name">
                     </div>
-
-                    <div class="item">
-                        <img src="{% static "img/headset.jpeg" %}" alt="PS5">
-                        <div class="product">
-                            <h4>Headphone Kabel JETE HB2</h4>
-                            <p>$12.00</p>
-                        </div>
+                    <div class="input">
+                        <label for="name">Fullname</label>
+                        <input type="text" name="username" id="username">
                     </div>
-                </div>
+                    <div class="input">
+                        <label for="email">Email</label>
+                        <input type="email" name="email" id="email">
+                    </div>
+                    <div class="input">
+                        <label for="phone">Phone</label>
+                        <input type="text" name="phone" id="phone">
+                    </div>
+                    <div class="input">
+                        <label for="address">Address</label>
+                        <input type="text" name="address" id="address">
+                    </div>
+                    <button type="submit">Save</button>
+                </form>
             </div>
+            <form action="{% url 'edit_image' %}" method="POST" enctype="multipart/form-data" id="editForm" class="photo">
+                {% csrf_token %}
+                <img src="{% if user.profile.image.url and user.profile.image %}{{ user.profile.image.url }}{% else %}{% static "img/user-default-gray.svg" %}{% endif %}" alt="">
+                <p id="fileName" style="display: none;"></p>
+                <div class="ph-btn">
+                    <img src="{% static 'img/change.svg' %}" alt="user">
+                    <input type="file" name="profile_image" id="profilImage" style="display: none;">
+                    <input type="button" id="editButton" value="Change Profile Picture" onclick="enableEdit()">
+                    <input type="submit" id="saveButton" value="Save" style="display: none;">
+                    <input type="button" id="cancelButton" value="Cancel" style="display: none;">
+                </div>
+            </form>
+        </div>
+        <div class="wishlist" id="wishlistContent" style="display: none">
+            kotnsda
+        </div>
+        <div class="change-password" id="changePasswordContent" style="display: none;">
+            sdadsadsa
+        </div>
+        <div class="delete-account" id="deleteAccountContent" style="display: none;">
+            sdaasda
         </div>
     </div>
 </div>
-
 <script>
     var textElement = document.getElementById('text');
-    var maxLength = 10;
+var maxLength = 10;
 
-    if (textElement.textContent.length > maxLength) {
-        var truncatedText = textElement.textContent.substring(0, maxLength) + '...';
-        textElement.textContent = truncatedText;
+if (textElement.textContent.length > maxLength) {
+    var truncatedText = textElement.textContent.substring(0, maxLength) + '...';
+    textElement.textContent = truncatedText;
+};
+
+function toggleContent(button, contentId) {
+    var contentDivs = document.querySelectorAll('.content > div');
+    var buttons = document.querySelectorAll('.option');
+
+    // Sembunyikan semua konten
+    for (var i = 0; i < contentDivs.length; i++) {
+        contentDivs[i].style.display = 'none';
     }
 
-    // Logout confirmation
-    var logoutLink = document.getElementById('logout-link');
-    logoutLink.addEventListener('click', function(event) {
-        event.preventDefault(); // Prevent the default link behavior
-        var confirmation = confirm('Are you sure you want to log out?');
-        if (confirmation) {
-            window.location.href = this.href; // Proceed with the logout if confirmed
-        }
-    });
-
-    function toggleProfile(button) {
-        document.getElementById('profile_div').classList.add('visible');
-        document.getElementById('profile_div').classList.remove('hidden');
-        document.getElementById('transaction_list_div').classList.add('hidden');
-        document.getElementById('transaction_list_div').classList.remove('visible');
-        
-        button.classList.add('active');
-        document.getElementById('transaction_list').classList.remove('active');
+    // Hapus class 'active' dari semua button
+    for (var i = 0; i < buttons.length; i++) {
+        buttons[i].classList.remove('active');
     }
 
-    function toggleList(button) {
-        document.getElementById('transaction_list_div').classList.add('visible');
-        document.getElementById('transaction_list_div').classList.remove('hidden');
-        document.getElementById('profile_div').classList.add('hidden');
-        document.getElementById('profile_div').classList.remove('visible');
-        
+    // Tampilkan konten yang sesuai dan tambahkan class 'active' pada button yang diklik
+    var contentDiv = document.getElementById(contentId);
+    if (contentDiv) {
+        contentDiv.style.display = 'flex'; // Mengubah display menjadi 'flex'
         button.classList.add('active');
-        document.getElementById('profile-btn').classList.remove('active');
+    };
+}
+</script>
+
+<script>
+    function showFileName() {
+        var fileInput = document.getElementById('profileImage');
+        var fileNameDisplay = document.getElementById('fileName');
+    
+        fileNameDisplay.innerText = fileInput.files[0].name;
+        fileNameDisplay.style.display = 'block';
+    }
+
+    function enableEdit() {
+        var profileImageInput = document.getElementById('profileImage');
+        profileImageInput.style.display = 'block';
+        
+        var editButton = document.getElementById('editButton');
+        editButton.style.display = 'none';
+        
+        var saveButton = document.getElementById('saveButton');
+        saveButton.style.display = 'block';
+        
+        var cancelButton = document.getElementById('cancelButton');
+        cancelButton.style.display = 'block';
+    }
+
+    function cancelEdit() {
+        var profileImageInput = document.getElementById('profileImage');
+        var fileNameDisplay = document.getElementById('fileName');
+    
+        profileImageInput.style.display = 'none';
+        fileNameDisplay.style.display = 'none';
+    
+        var editButton = document.getElementById('editButton');
+        editButton.style.display = 'block';
+    
+        var saveButton = document.getElementById('saveButton');
+        saveButton.style.display = 'none';
+    
+        var cancelButton = document.getElementById('cancelButton');
+        cancelButton.style.display = 'none';
+    
+        // Reset input file value (optional)
+        profileImageInput.value = '';
     }
 </script>
+
 {% include 'footer.html' %}
 {% endblock content %}

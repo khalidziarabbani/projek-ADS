@@ -43,10 +43,10 @@
                 <div class="pay">
                     <form method="POST" action="{% url 'add_to_cart' p.id %}" class="btn">
                         {% csrf_token %}
-                        <button type="submit">
-                        <p>Add to Cart</p>
                         <input type="hidden" name="quantity" value="1">
-                        <img src="{% static "img/cart-white2.svg" %}" alt="cart">
+                        <button type="submit">
+                            <p>Add to Cart</p>
+                            <img src="{% static 'img/cart-white2.svg' %}" alt="cart">
                         </button>
                     </form>
                     <form method="POST" action="{% url 'add_to_wishlist' p.id %}" class="wishlist">
@@ -56,12 +56,11 @@
                         {% else %}
                             <button type="submit" class="wishlist-button"></button>
                         {% endif %}
-                    </form>                    
+                    </form>
                 </div>
             </div>
         </a>
         {% endfor %}
-
     </div>
 </div>
 <div class="about" id="about">

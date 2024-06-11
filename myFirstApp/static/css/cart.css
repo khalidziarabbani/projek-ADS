@@ -327,7 +327,9 @@ html, body {
 }
 
 .product-container .product-box:hover {
+    cursor: default;
     transform: scale(1.1);
+    box-shadow: 3px 3px 10px rgba(40, 24, 20, 0.5); /* Memberikan bayangan yang lebih besar dengan sedikit transparansi */
 }
 
 .product-box img {
@@ -337,14 +339,29 @@ html, body {
     object-fit: cover;
 }
 
-.product-box h4 {
+.product-overlay {
+    display: flex;
+    padding: 12px 16px;
+    gap: 24px;
+    flex-direction: column;
+}
+
+.product-overlay .txt h4 {
     color: var(--Text-tx_normal, #281814);
-    text-align: center;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 20px;
+    margin-bottom: 8px;
+}
+
+.product-overlay .txt p {
+    color: var(--Text-tx_normal, #281814);
+    font-family: Inter;
     font-size: 18px;
-    font-weight: 500;
+    font-style: normal;
+    font-weight: 600;
     line-height: 23px;
-    padding: 16px;
-    padding-bottom: 44px;
     margin-bottom: 0;
 }
 
@@ -353,47 +370,72 @@ html, body {
     align-items: center;
     justify-content: space-between;
     flex-direction: row;
-    margin: 0 16px 16px 16px;
 }
 
-.pay p {
-    color: var(--Text-tx_normal, #281814);
-    font-size: 16px;
-    font-weight: 700;
-    line-height: 20px;
-    margin-bottom: 0;
+.btn {
+    padding: 0;
 }
 
-.pay .btn {
+form.btn button {
+    border: none;
     display: flex;
-    height: 28px;
-    padding: 0 8px;
-    justify-content: center;
     align-items: center;
-    gap: 4px;
+    justify-content: space-between;
     border-radius: 4px;
     background: var(--Primary-pr_normal, #C00);
-    box-shadow: 0px 3px 4px rgba(0, 0, 0, 0.15);
+    box-shadow: 0px 3px 4px 0px rgba(0, 0, 0, 0.15);
+    padding: 0px 8px;
+    height: 28px;
+    gap: 8px;
 }
 
-.pay .btn:hover {
-    background: var(--Primary-pr_normal, #C00);
+form.btn button:hover {
+    box-shadow: 3px 3px 10px rgba(40, 24, 20, 0.5); /* Memberikan bayangan yang lebih besar dengan sedikit transparansi */
+    transition: box-shadow 0.3s ease-in-out;
 }
 
-.pay .btn p {
+
+form.btn p {
     color: var(--Secondary-sc_normal, #FFF);
-    font-size: 14px;
-    font-weight: 600;
-    line-height: 18px;
+    font-family: Poppins;
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 14px;
     margin-bottom: 0;
 }
 
-.pay .btn img {
+form.btn img {
     display: flex;
     width: 16px;
     height: 16px;
     justify-content: center;
     align-items: center;
+}
+
+
+button.wishlist-button {
+    font-size: 28px;
+    height: 28px;
+    width: 28px;
+    border: none;
+    background-image: url('/static/img/heart.png');
+    background-size: cover;
+    background-repeat: no-repeat;
+    cursor: pointer;
+    background-color: transparent;
+}
+
+button.wishlist-button:hover {
+    background-image: url('/static/img/heartfill.png');
+}
+
+button.wishlist-added {
+    background-image: url('/static/img/heartfill.png') !important;
+}
+
+button.wishlist-added:hover {
+    background-image: url('/static/img/heart.png') !important;
 }
 
 /* Media queries for smaller screens */

@@ -66,6 +66,11 @@ html, body {
     margin-top: 47.5px;
 }
 
+.banner-btn:hover {
+    box-shadow: 3px 3px 10px rgba(40, 24, 20, 0.5); /* Memberikan bayangan yang lebih besar dengan sedikit transparansi */
+    transition: box-shadow 0.3s ease-in-out;
+}
+
 .banner-btn a {
     color: #C00;
     font-size: 18px;
