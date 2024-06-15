@@ -3,12 +3,14 @@ from django.contrib.auth.models import User
 from django.contrib.auth import login, authenticate, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
+from django import forms
 import random
-from django.views.decorators.csrf import csrf_exempt
 from django.http import JsonResponse
 import json
 
 from .models import Profile, Category, Product, Expedition, Payment_method, Order, OrderItem, Wishlist
+
+# homepage
 
 def index(request):
     categories = Category.objects.all()
@@ -18,6 +20,8 @@ def index(request):
         "products": products,
     }
     return render(request, 'index.html', context)
+
+# login, logout, register
 
 def loginview(request):
     if request.method == 'POST':
@@ -73,6 +77,7 @@ def register(request):
     elif request.method == 'GET':
         return render(request, 'register.html')
 
+# product detail
 
 def product_detail(request, product_id):
     if request.method == 'POST':
@@ -107,9 +112,38 @@ def product_detail(request, product_id):
         }
         return render(request, 'product_detail.html', context)
 
+# user
 
+@login_required(login_url='login')
 def user(request):
-    return render(request, 'user.html')
+    if request.method == 'POST':
+        user = request.user
+        username = request.POST['username']
+        full_name = request.POST['full_name']
+        email = request.POST['email']
+        phone_number = request.POST['phone_number']
+        address = request.POST['address']
+        profile = Profile.objects.get(user=user)
+        user.username = username
+        profile.full_name = full_name
+        user.email = email
+        profile.address = address
+        profile.phone_number = phone_number
+        user.save()
+        profile.save()
+        return redirect('user')
+    elif request.method == 'GET':
+        user = request.user
+        try:
+            wishlist = Wishlist.objects.get(user=user)
+        except Wishlist.DoesNotExist:
+            wishlist = None
+        context = {
+            "wishlist": wishlist.products.all() if wishlist else [],
+        }
+        return render(request, 'user.html', context)
+
+# category page
 
 def categoryPage(request, category_id):
     category = Category.objects.get(id=category_id)
@@ -125,6 +159,7 @@ def categoryPage(request, category_id):
 def delivery(request):
     return render(request, 'delivery.html')
 
+# cart
 
 @login_required
 def cart(request):
@@ -164,6 +199,8 @@ def cart(request):
     }
     return render(request, 'cart.html', context)
 
+# add to cart
+
 @login_required(login_url='login')
 def add_to_cart(request, product_id):
     if request.method == 'POST':
@@ -194,6 +231,8 @@ def add_to_cart(request, product_id):
         }
         return render(request, 'cart.html', context)
 
+# update item quantity product
+
 def updateItem(request):
     data = json.loads(request.body)
     itemId = data['productId']
@@ -217,6 +256,8 @@ def updateItem(request):
         orderItem.delete()
     return JsonResponse('Item was added', safe=False)
 
+# add wishlist
+
 @login_required(login_url='login')
 def add_to_wishlist(request, product_id):
     if request.method == 'POST':
@@ -230,14 +271,61 @@ def add_to_wishlist(request, product_id):
             wishlist.products.add(product)
             messages.success(request, 'Product added to wishlist.')
 
-    return redirect('index')
+    return redirect('user')
+
+# edit image
 
 def edit_image(request):
     if request.method == 'POST':
         if 'profile_image' in request.FILES:
-            profile = Profile.objects.get(User=request.user)
-            profile.image = request.FILES['profile_image']
-            profile.save()
-            return redirect('user')
+            try:
+                profile = Profile.objects.get(user=request.user)
+                profile.image = request.FILES['profile_image']
+                profile.save()
+                return redirect('user')  # Replace 'user' with the name of your user profile view
+            except Profile.DoesNotExist:
+                # Handle the case where the profile for the user does not exist
+                pass  # You may want to create a new profile instance here
 
+    return render(request, 'user.html')
+
+# change passowrd
+
+class ChangePasswordForm(forms.Form):
+    old_password = forms.CharField(widget=forms.PasswordInput)
+    new_password = forms.CharField(widget=forms.PasswordInput)
+    confirm_password = forms.CharField(widget=forms.PasswordInput)
+
+def change_password(request):
+    if request.method == 'POST':
+        form = ChangePasswordForm(request.POST)
+        if form.is_valid():
+            old_password = form.cleaned_data['old_password']
+            new_password = form.cleaned_data['new_password']
+            confirm_password = form.cleaned_data['confirm_password']
+            user = request.user
+            if user.check_password(old_password):
+                if new_password == confirm_password:
+                    user.set_password(new_password)
+                    user.save()
+                    messages.success(request, 'Password changed successfully')
+                    return redirect('user')
+                else:
+                    messages.error(request, 'New passwords do not match')
+            else:
+                messages.error(request, 'Invalid old password')
+        else:
+            messages.error(request, 'Invalid form submission')
+    else:
+        form = ChangePasswordForm()
+    return render(request, 'user.html', {'form': form})
+
+# delete account
+
+def delete_account(request):
+    if request.method == 'POST':
+        user = request.user
+        user.delete()
+        logout(request)
+        return redirect('index')
     return render(request, 'user.html')

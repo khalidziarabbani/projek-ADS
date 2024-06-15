@@ -1,3 +1,4 @@
+/* Existing CSS */
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200; 1.300;1.400;1.500;1.600;1.700;1.800;1.900&display=swap'); 
 
@@ -72,12 +73,12 @@ html, body {
     font-style: normal;
     font-weight: 600;
     line-height: 32px;
-    width: 100%;
     margin-bottom: 0;
     margin-top: auto;
     overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
+    width: 131.01px;
 }
 
 .options {
@@ -131,6 +132,26 @@ html, body {
     text-decoration: none;
 }
 
+.options form {
+    display: flex;
+    flex-direction: row;
+    gap: 24px;
+    align-items: center;
+    text-align: left;
+
+    font-family: Inter;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 20px;
+    color: #281814;
+
+    background-color: #FFF;
+    border: none;
+    transition: color 0.3s ease; /* Menambahkan transisi pada perubahan warna */
+    text-decoration: none;
+}
+
 
 .profile {
     display: flex;
@@ -141,7 +162,7 @@ html, body {
     border-radius: 12px;
     border: 1px solid var(--secondary-sc-normal-hover, #E6E6E6);
     background: var(--Secondary-sc_normal, #FFF);
-    width: 54,791666666666666666666666666667;
+    width: 54,791666666666666666666666666667%;
     box-sizing: border-box;
 }
 
@@ -222,10 +243,6 @@ form.pform {
     border: 1px solid var(--Primary-pr_normal, #C00);
 }
 
-#address {
-    height: 72px;
-}
-
 .pform button {
     border-radius: 4px;
     background: var(--Primary-pr_normal, #C00);
@@ -253,7 +270,6 @@ form.pform {
 }
 
 /* photo */
-
 .photo img {
     width: 206px;
     height: 206px;
@@ -261,7 +277,16 @@ form.pform {
     border-radius: 50%;
 }
 
-.photo button {
+/* Updated button styles for profile image change */
+.photo .ph-btn {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    gap: 10px;
+}
+
+.photo .ph-btn input[type="button"],
+.photo .ph-btn input[type="submit"] {
     color: var(--secondary-sc-dark-active, #737373);
     /* Label/l16/Medium */
     font-family: Inter;
@@ -269,19 +294,328 @@ form.pform {
     font-style: normal;
     font-weight: 500;
     line-height: 20px;
-
     border: none;
     background-color: #FFF;
-    display: flex;
     height: 44px;
     justify-content: center;
     align-items: center;
     gap: 8px;
     flex-direction: row;
-    width: 100%;
+    cursor: pointer;
 }
 
-.photo button img {
-    width: 24px;
-    height: 24px;
+.photo .ph-btn input[type="button"]:hover,
+.photo .ph-btn input[type="submit"]:hover {
+    background-color: var(--secondary-sc-normal-hover, #E6E6E6);
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.15); /* Intensified shadow on hover */
+}
+
+p#fileName {
+    margin: 0;
+    width: 100%;
+    text-align: center;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+.photo .ph-btn input[type="file"] {
+    display: none;
+}
+
+.photo .ph-btn label[for="profilImage"] {
+    color: var(--secondary-sc-dark-active, #737373);
+    font-family: Inter;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 20px;
+    border: none;
+    background-color: #FFF;
+    height: 44px;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    flex-direction: row;
+    cursor: pointer;
+    display: inline-block;
+    padding: 10px 20px;
+}
+
+.photo .ph-btn label[for="profilImage"]:hover {
+    background-color: var(--secondary-sc-normal-hover, #E6E6E6);
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+.photo .ph-btn input[type="file"] {
+    color: var(--secondary-sc-dark-active, #737373);
+    font-family: Inter;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 20px;
+    border: none;
+    background-color: #FFF;
+    height: 44px;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    flex-direction: row;
+    cursor: pointer;
+    display: inline-block;
+    padding: 10px 20px;
+    position: relative;
+    overflow: hidden;
+}
+
+.photo .ph-btn input[type="file"]::before {
+    content: 'Choose File';
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #FFF;
+    color: var(--secondary-sc-dark-active, #737373);
+    border-radius: 4px;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s ease, box-shadow 0.3s ease; /* Add transitions */
+}
+
+.photo .ph-btn input[type="file"]:hover::before {
+    background-color: var(--secondary-sc-normal-hover, #E6E6E6);
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.15);  /* Add shadow on hover */
+}
+
+.photo .ph-btn input[type="file"]::-webkit-file-upload-button {
+    visibility: hidden;
+}
+
+/* wishlist */
+
+.wishlist-content {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    justify-items: center;
+    gap: 60px 32px;
+    padding: 0 auto;
+}
+
+.product-box {
+    text-decoration: none;
+    width: 230px;
+    border-radius: 12px;
+    background: var(--Secondary-sc_normal, #FFF);
+    box-shadow: 0px 1px 4px rgba(0, 0, 0, 0.15), 0px 1px 4px rgba(0, 0, 0, 0.15);
+    transition: transform .2s;
+}
+
+.product-container .product-box:hover {
+    cursor: default;
+    transform: scale(1.1);
+    box-shadow: 3px 3px 10px rgba(40, 24, 20, 0.5); /* Memberikan bayangan yang lebih besar dengan sedikit transparansi */
+}
+
+.product-box img {
+    border-radius: 12px 12px 0 0;
+    width: 100%;
+    height: 230px;
+    object-fit: cover;
+}
+
+.product-overlay {
+    display: flex;
+    padding: 12px 16px;
+    gap: 24px;
+    flex-direction: column;
+}
+
+.product-overlay .txt h4 {
+    color: var(--Text-tx_normal, #281814);
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 20px;
+    margin-bottom: 8px;
+}
+
+.product-overlay .txt p {
+    color: var(--Text-tx_normal, #281814);
+    font-family: Inter;
+    font-size: 18px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 23px;
+    margin-bottom: 0;
+}
+
+.product-box .pay {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-direction: row;
+}
+
+.btn {
+    padding: 0;
+}
+
+form.btn button {
+    border: none;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-radius: 4px;
+    background: var(--Primary-pr_normal, #C00);
+    box-shadow: 0px 3px 4px 0px rgba(0, 0, 0, 0.15);
+    padding: 0px 8px;
+    height: 28px;
+    gap: 8px;
+}
+
+form.btn button:hover {
+    box-shadow: 3px 3px 10px rgba(40, 24, 20, 0.5); /* Memberikan bayangan yang lebih besar dengan sedikit transparansi */
+    transition: box-shadow 0.3s ease-in-out;
+}
+
+
+form.btn p {
+    color: var(--Secondary-sc_normal, #FFF);
+    font-family: Poppins;
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 14px;
+    margin-bottom: 0;
+}
+
+form.btn img {
+    display: flex;
+    width: 16px;
+    height: 16px;
+    justify-content: center;
+    align-items: center;
+}
+
+
+button.wishlist-button {
+    font-size: 28px;
+    height: 28px;
+    width: 28px;
+    border: none;
+    background-image: url('/static/img/heartfill.png');
+    background-size: cover;
+    background-repeat: no-repeat;
+    cursor: pointer;
+    background-color: transparent;
+}
+
+button.wishlist-button:hover {
+    background-image: url('/static/img/heart.png');
+}
+
+/* change passowrd */
+
+.change-password {
+    display: flex;
+    flex-direction: row;
+    gap: 28px;
+    padding: 36px;
+    border-radius: 12px;
+    border: 1px solid var(--secondary-sc-normal-hover, #E6E6E6);
+    background: var(--Secondary-sc_normal, #FFF);
+}
+
+.form-change-password {
+    display: flex;
+    flex-direction: column;
+    gap: 28px;
+}
+
+.form-change-password h1 {
+    color: var(--Text-tx_normal, #281814);
+    font-family: Inter;
+    font-size: 28px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 38px;
+    margin: 0;
+}
+
+.form-change-password form {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+.form-change-password .c-input {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    max-width: 338px;
+}
+
+.c-input label {
+    color: var(--Text-tx_normal, #281814);
+    font-family: Inter;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 20px;
+    margin: 0;
+}
+
+.c-input input {
+    width: 338px;
+    padding: 12px 16px;
+    justify-content: flex-end;
+    align-items: center;
+    margin: 0;
+
+    border-radius: 8px;
+    border: 1px solid var(--secondary-sc-dark-active, #737373);
+    background: var(--Secondary-sc_normal, #FFF);
+}
+
+.c-input input:focus {
+    border: 1px solid var(--Primary-pr_normal, #C00);
+}
+
+.form-change-password button {
+    margin-top: 20px;
+    border-radius: 4px;
+    background: var(--Primary-pr_normal, #C00);
+    box-shadow: 0px 3px 4px 0px rgba(0, 0, 0, 0.15);
+
+    height: 44px;
+    padding: 0px 16px;
+    justify-content: center;
+    align-items: center;
+
+    color: var(--Secondary-sc_normal, #FFF);
+    font-family: Inter;
+    font-size: 15px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 23px;
+    border: none;
+    width: 200px;
+}
+
+.form-change-password button:hover {
+    box-shadow: 3px 3px 10px rgba(40, 24, 20, 0.5);
+    transition: box-shadow 0.3s ease-in-out;
+}
+
+.change-password img {
+    width: 351px;
+    height: 351px;
+    object-fit: cover;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }

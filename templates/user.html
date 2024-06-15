@@ -11,41 +11,51 @@
             <img src="{% static 'img/user-default.svg' %}" alt="user">
             <div class="name">
                 <p>Hello!</p>
-                <h2 id="text">UserNamesssssssssssssssssss</h2>
+                <h2 id="text">{{ user.username }}</h2>
             </div>
         </div>
         <div class="options">
             <button class="option active" id="profileBtn" onclick="toggleContent(this, 'profileContent')"><img src="{% static 'img/user-kecil.svg' %}">Profile</button>
             <button class="option" id="wishlistBtn" onclick="toggleContent(this, 'wishlistContent')"><img src="{% static 'img/heart-option.svg' %}">Wishlist</button>
             <button class="option" id="changePasswordBtn" onclick="toggleContent(this, 'changePasswordContent')"><img src="{% static 'img/gembok.svg' %}">Change Password</button>
-            <button class="option" id="deleteAccountBtn" onclick="toggleContent(this, 'deleteAccountContent')"><img src="{% static 'img/trash-op.svg' %}">Delete Account</button>
-            <a href="{% url 'logout' %}"><button class="option" id="logoutBtn" onclick="toggleContent(this, 'logoutContent')"><img src="{% static 'img/log.svg' %}">Logout</button></a>
+            <form action="{% url 'delete_account' %}" method="POST" id="deleteAccountForm">
+                {% csrf_token %}
+                <button type="submit" class="option" id="deleteAccountBtn" onclick="confirmDelete(event)">
+                    <img src="{% static 'img/trash-op.svg' %}"> Delete Account
+                </button>
+            </form>
+            <a href="{% url 'logout' %}" onclick="return confirm('Are you sure you want to logout?')">
+                <button class="option" id="logoutBtn" onclick="toggleContent(this, 'logoutContent')">
+                    <img src="{% static 'img/log.svg' %}"> Logout
+                </button>
+            </a>            
         </div>
     </div>
     <div class="content">
         <div class="profile" id="profileContent">
             <div class="form">
                 <h1>Profile</h1>
-                <form action="" class="pform">
+                <form action=""method="POST" class="pform">
+                    {% csrf_token %}
                     <div class="input">
                         <label for="name">Username</label>
-                        <input type="text" name="name" id="name">
+                        <input type="text" name="username" id="username" value="{{ user.username }}">
                     </div>
                     <div class="input">
-                        <label for="name">Fullname</label>
-                        <input type="text" name="username" id="username">
+                        <label for="full_name">Fullname</label>
+                        <input type="text" name="full_name" id="full_name" value="{{ user.profile.full_name }}">
                     </div>
                     <div class="input">
                         <label for="email">Email</label>
-                        <input type="email" name="email" id="email">
+                        <input type="email" name="email" id="email" value="{{ user.email }}">
                     </div>
                     <div class="input">
-                        <label for="phone">Phone</label>
-                        <input type="text" name="phone" id="phone">
+                        <label for="phone_number">Phone</label>
+                        <input type="text" name="phone_number" id="phone_number" value="{{ user.profile.phone_number }}">
                     </div>
                     <div class="input">
                         <label for="address">Address</label>
-                        <input type="text" name="address" id="address">
+                        <input type="text" name="address" id="address" value="{{ user.profile.address }}">
                     </div>
                     <button type="submit">Save</button>
                 </form>
@@ -53,21 +63,79 @@
             <form action="{% url 'edit_image' %}" method="POST" enctype="multipart/form-data" id="editForm" class="photo">
                 {% csrf_token %}
                 <img src="{% if user.profile.image.url and user.profile.image %}{{ user.profile.image.url }}{% else %}{% static "img/user-default-gray.svg" %}{% endif %}" alt="">
-                <p id="fileName" style="display: none;"></p>
                 <div class="ph-btn">
-                    <img src="{% static 'img/change.svg' %}" alt="user">
-                    <input type="file" name="profile_image" id="profilImage" style="display: none;">
+                    <p id="fileName" style="display: none;"></p>
+                    <input type="file" name="profile_image" id="profilImage" accept="image/*" style="display: none;" onchange="showFileName()"></input>
                     <input type="button" id="editButton" value="Change Profile Picture" onclick="enableEdit()">
                     <input type="submit" id="saveButton" value="Save" style="display: none;">
-                    <input type="button" id="cancelButton" value="Cancel" style="display: none;">
+                    <input type="button" id="cancelButton" value="Cancel" onclick="cancelEdit()" style="display: none;">
                 </div>
             </form>
         </div>
-        <div class="wishlist" id="wishlistContent" style="display: none">
-            kotnsda
+        <div class="wishlist-content" id="wishlistContent" style="display: none">
+            {% for w in wishlist %}
+            <a href="{% url 'product_detail' w.id %}" class="product-box">
+                <img src="{{w.image.url}}" alt="{{w.name}}">
+                <div class="product-overlay">
+                    <div class="txt">
+                        <h4>{{w.name}}</h4>
+                        <p>{{w.price}}</p>
+                    </div>
+                    <div class="pay">
+                        <form method="POST" action="{% url 'add_to_cart' w.id %}" class="btn">
+                            {% csrf_token %}
+                            <input type="hidden" name="quantity" value="1">
+                            <button type="submit">
+                                <p>Add to Cart</p>
+                                <img src="{% static 'img/cart-white2.svg' %}" alt="cart">
+                            </button>
+                        </form>
+                        <form method="POST" action="{% url 'add_to_wishlist' w.id %}" class="wishlist">
+                            {% csrf_token %}
+                            <button type="submit" class="wishlist-button"></button>
+                        </form>
+                    </div>
+                </div>
+            </a>
+            {% empty %}
+                <style>
+                    .no-wishlist {
+                        display: flex;
+                        flex-direction: column;
+                        justify-content: center;
+                        align-items: center;
+                        width: 717px;
+                        height: 317.6px;
+                        gap: 40px;
+                    }
+                </style>
+                <div class="no-wishlist">
+                    <img src="{% static 'img/heart-wishlist.svg' %}">
+                    <p>No Product in your Wishlist.</p>
+                </div>
+            {% endfor %}
         </div>
         <div class="change-password" id="changePasswordContent" style="display: none;">
-            sdadsadsa
+            <div class="form-change-password">
+                <h1>Change Password</h1>
+                <form action="{% url 'change_password' %}" method="POST">
+                    {% csrf_token %}
+                    <div class="c-input">
+                        <label for="old_password">Current Password</label>
+                        <input type="password" name="old_password" id="old_password">
+                    </div>
+                    <div class="c-input">
+                        <label for="new_password">New Password</label>
+                        <input type="password" name="new_password" id="new_password">
+                    </div>
+                    <div class="c-input">
+                        <label for="confirm_password">Confirm New Password</label>
+                        <input type="password" name="confirm_password" id="confirm_password">
+                    </div>
+                    <button type="submit">Change Password</button>
+                </form>
+            </div>
+            <img src="{% static 'img/change_pass.svg' %}" alt="change-password">
         </div>
         <div class="delete-account" id="deleteAccountContent" style="display: none;">
             sdaasda
@@ -75,11 +143,28 @@
     </div>
 </div>
 <script>
+    function confirmDelete(event) {
+        event.preventDefault(); // Mencegah perilaku default dari tombol submit
+
+        if (confirm('Are you sure you want to delete your account? This action cannot be undone.')) {
+            document.getElementById('deleteAccountForm').submit(); // Submit form jika konfirmasi diterima
+        }
+    }
+</script>
+
+<script>
     var textElement = document.getElementById('text');
-var maxLength = 10;
+    var maxLength = 10;
 
 if (textElement.textContent.length > maxLength) {
     var truncatedText = textElement.textContent.substring(0, maxLength) + '...';
+    textElement.textContent = truncatedText;
+};
+
+    var textElement2 = document.getElementById('fileName');
+
+if (textElement2.textContent.length > maxLength) {
+    var truncatedText = textElement2.textContent.substring(0, maxLength) + '...';
     textElement.textContent = truncatedText;
 };
 
@@ -108,46 +193,53 @@ function toggleContent(button, contentId) {
 
 <script>
     function showFileName() {
-        var fileInput = document.getElementById('profileImage');
+        var fileInput = document.getElementById('profilImage');
         var fileNameDisplay = document.getElementById('fileName');
-    
-        fileNameDisplay.innerText = fileInput.files[0].name;
-        fileNameDisplay.style.display = 'block';
+
+        if (fileInput.files.length > 0) {
+            fileNameDisplay.innerText = fileInput.files[0].name;
+            fileNameDisplay.style.display = 'block';
+        } else {
+            fileNameDisplay.style.display = 'none';
+        }
     }
 
     function enableEdit() {
-        var profileImageInput = document.getElementById('profileImage');
+        var profileImageInput = document.getElementById('profilImage');
         profileImageInput.style.display = 'block';
-        
+
         var editButton = document.getElementById('editButton');
         editButton.style.display = 'none';
-        
+
         var saveButton = document.getElementById('saveButton');
         saveButton.style.display = 'block';
-        
+
         var cancelButton = document.getElementById('cancelButton');
         cancelButton.style.display = 'block';
     }
 
     function cancelEdit() {
-        var profileImageInput = document.getElementById('profileImage');
+        var profileImageInput = document.getElementById('profilImage');
         var fileNameDisplay = document.getElementById('fileName');
-    
+
         profileImageInput.style.display = 'none';
         fileNameDisplay.style.display = 'none';
-    
+
         var editButton = document.getElementById('editButton');
         editButton.style.display = 'block';
-    
+
         var saveButton = document.getElementById('saveButton');
         saveButton.style.display = 'none';
-    
+
         var cancelButton = document.getElementById('cancelButton');
         cancelButton.style.display = 'none';
-    
+
         // Reset input file value (optional)
         profileImageInput.value = '';
     }
+
+    // Add event listener to file input to show file name when a file is selected
+    document.getElementById('profilImage').addEventListener('change', showFileName);
 </script>
 
 {% include 'footer.html' %}
