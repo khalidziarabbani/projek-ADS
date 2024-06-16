@@ -10,6 +10,7 @@
     <h1>{{category.name}}</h1>
 </div>
 <div class="content">
+    {% if products.count > 0 %}
     <p>
         Showing {% if products.count > 0 %}{{ products.count }}{% else %}0{% endif %} products for "{{ category.name }}"
     </p>
@@ -43,8 +44,16 @@
             </div>
         </a>
         {% endfor %}
-
     </div>
+    {% else %}
+        <div class="no-product">
+            <img src="{% static 'img/product-not-available.svg' %}" alt="No Product">
+            <div class="tp">
+                <h2>Product Not Available</h2>
+                <p>There are no products to display on this page yet</p>
+            </div>
+        </div>
+    {% endif %}
     <div class="other-category">
         <p>Other categories</p>
         <div class="category">
@@ -66,16 +75,5 @@
     </div>
 </div>
 
-{% comment %} <div class="products">
-    {% for product in products %}
-    <div class="product">
-        <a href="{% url 'product' product.id %}">
-            <img src="{{product.image.url}}" alt="">
-            <h2>{{product.name}}</h2>
-            <p>{{product.price}}$</p>
-        </a>
-    </div>
-    {% endfor %}
-</div> {% endcomment %}
 {% include 'footer.html' %}
 {% endblock content %}

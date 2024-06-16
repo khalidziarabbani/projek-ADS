@@ -69,15 +69,24 @@ class Order(models.Model):
         orderitems = self.orderitem_set.all()
         total = sum([item.quantity * item.product.price for item in orderitems])
         return total
-
+    
     @property
-    def get_total_quantity(self):
+    def get_total_items(self):
         orderitems = self.orderitem_set.all()
         total = sum([item.quantity for item in orderitems])
+        return total 
+    
+    @property
+    def get_total_payment(self):
+        total = self.get_total_cost
+        if self.expedition:
+            total += self.expedition.price
+        if self.payment_method:
+            total += self.payment_method.tax
         return total
 
-    def generate_random_number(self):
-        return get_random_string(10)
+    def generate_random_number(self, length):
+        return get_random_string(length, allowed_chars='1234567890')
 
     def save(self, *args, **kwargs):
         if not self.order_number:
@@ -97,6 +106,22 @@ class OrderItem(models.Model):
     def get_total(self):
         total = self.product.price * self.quantity
         return total
+
+class Shipment(models.Model):
+    user = models.ForeignKey(User, on_delete=models.SET_NULL, blank=True, null=True)
+    order = models.ForeignKey(Order, on_delete=models.SET_NULL, blank=True, null=True)
+    date_added = models.DateTimeField(auto_now_add=True)
+    delivery_address = models.CharField(max_length=200, null=True, blank=True)
+    def __str__(self):
+        if self.user is not None:
+            return self.user.username
+        else:
+            return "No User Assigned"
+    
+    def save(self, *args, **kwargs):
+        if self.order is not None:
+            self.delivery_address = self.order.delivery_address
+        super().save(*args, **kwargs)
 
 class Wishlist(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)

@@ -1,0 +1,289 @@
+{% extends 'base.html' %}
+{% block title %}Delivery{% endblock title %}
+{% block content %}
+{% load static %}
+<link rel="stylesheet" href="{% static 'css/payment.css' %}">
+{% include 'navbar.html' %}
+
+<form class="bg" action="" method="POST">
+    {% csrf_token %}
+    <h1>Checkout</h1>
+    <div class="content">
+        <div class="checkout-form">
+            <div class="summary-order">
+                <h1>SUMMARY ORDER</h1>
+                <div class="product-list">
+                    {% for o in order_items %}
+                    <div class="product">
+                        <img src="{{ o.product.image.url }}" alt="{{ o.product.name }}">
+                        <div class="product-detail">
+                            <p>{{ o.product.name }}</p>
+                            <p style="font-size: 14px">{{ o.product.price }}</p>
+                            <h3>${{ o.get_total|floatformat:2 }}</h3>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+            <div class="delivery-address">
+                <h1>DELIVERY ADDRESS</h1>
+                <div class="address">
+                    <div class="home">
+                        <div class="location">
+                            <img src="{% static 'img/loc.svg' %}" alt="location">
+                            <h1>Home</h1>
+                        </div>
+                        <input name="delivery_address" type="text" id="addressInput" readonly value="{{ user.profile.address }}" required>
+                    </div>
+                    <div class="change">
+                        <input type="button" value="Change Address" onclick="toggleEditMode()">
+                        <input type="button" value="Save" style="display:none;" onclick="toggleEditMode()">
+                    </div>
+                </div>
+            </div>
+            <div class="shipping-method">
+                <h1>AVAILABLE SHIPPING METHOD</h1>
+                <div class="shipping-list">
+                    {% for e in expeditions %}
+                    <div class="shipping">
+                        <div class="s-info">
+                            <img src="{{ e.image.url }}" alt="{{ e.name }}">
+                            <div class="shipping-detail">
+                                <h1>{{ e.name }}</h1>
+                                <h3>Delivery: {{ e.time_expedition }} work</h3>
+                            </div>
+                        </div>
+                        <div class="shipping-option">
+                            <p>${{ e.price|floatformat:2 }}</p>
+                            <input type="radio" id="shippingMethodSelect{{ forloop.counter }}" name="expedition" value="{{ e.price }}" data-expedition-id="{{ e.id }}" required>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+            <div class="payment-method">
+                <h1>AVAILABLE PAYMENT METHOD</h1>
+                <div class="payment-list">
+                    {% for py in payment_methods %}
+                    <div class="payment">
+                        <div class="py-info">
+                            <img src="{{ py.image.url }}" alt="{{ py.name }}">
+                            <h1>{{ py.name }}</h1>
+                        </div>
+                        <input type="radio" name="payment_method" value="{{ py.tax }}" data-payment-id="{{ py.id }}" required>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+        <div class="summary">
+            <h1>Shopping Summary</h1>
+            <div class="s-box">
+                <div class="summary-info">
+                    <div class="info-n">
+                        <p>Total Price</p>
+                        <p class="subtotal-value">${{subtotal|floatformat:2}}</p>
+                    </div>
+                    <div class="info-n">
+                        <p>Total Delivery Fee</p>
+                        <p class="shipping-value">$0.00</p>
+                    </div>
+                    <div class="info-n">
+                        <p>Tax</p>
+                        <p class="tax-value">$0.00</p>
+                    </div>
+                    <div class="total">
+                        <p>Total</p>
+                        <input class="total-value" id="total_payment" name="total_payment" value="$0.00" readonly>
+                    </div>
+                </div>
+                <button id="myBtn" disabled>Checkout</button>
+            </div>
+        </div>
+    </div>
+    {% comment %} modal content {% endcomment %}
+    <div id="checkoutModal" class="modal">
+        <div class="modal-content">
+            <div class="xcl-button">
+                <span class="close">&times;</span>
+                <h1>Payment Confirmation</h1>
+            </div>
+            <img id="bankImage" src="" alt="bank">
+            <div class="modal-info">
+                <p>Order ID: <span>#{{ order_number }}</span></p>
+                <p>Total Payment: <span id="display-total"></span></p>
+            </div>
+            <div class="van">
+                <h3>Virtual Account Number</h3>
+                <div class="van-number">
+                    <p>
+                        {% with virtual_account|stringformat:"s" as virtual_account_str %}
+                            {% for i in virtual_account_str %}
+                                {{ i }}
+                                {% if forloop.counter|stringformat:"s"|divisibleby:"4" and not forloop.last %}
+                                    -
+                                {% endif %}
+                            {% endfor %}
+                        {% endwith %}
+                    </p>
+                    <img src="{% static 'img/copy.svg' %}" alt="copy">
+                </div>
+            </div>
+            <div class="confirm-btn">
+                <p>Payment Deadline: <span id="countdown"></span></p>
+                <button id="modalCloseBtn" type="submit">Confirm</button>
+            </div>
+        </div>
+    </div>
+    {% comment %} end modal content {% endcomment %}
+</form>
+
+{% comment %} countdown deadline {% endcomment %}
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        var countdownElement = document.getElementById('countdown');
+        var confirmButton = document.getElementById('myBtn');
+        var reloadInterval;
+
+        // Function to start the countdown
+        function startCountdown() {
+            confirmButton.disabled = true; // Disable the Confirm button
+            var targetTime = new Date();
+            targetTime.setMinutes(targetTime.getMinutes() + 5);
+
+            var countdownInterval = setInterval(updateCountdown, 1000);
+
+            function updateCountdown() {
+                var currentTime = new Date();
+                var remainingTime = targetTime - currentTime;
+
+                var minutes = Math.floor(remainingTime / (1000 * 60));
+                var seconds = Math.floor((remainingTime % (1000 * 60)) / 1000);
+
+                countdownElement.textContent = minutes.toString().padStart(2, '0') + ':' +
+                    seconds.toString().padStart(2, '0');
+
+                if (remainingTime <= 0) {
+                    clearInterval(countdownInterval);
+                    countdownElement.textContent = "Pembayaran gagal mohon lakukan pemesanan ulang";
+                    reloadInterval = setTimeout(function () {
+                        location.reload(); // Reload the page after 5 minutes
+                    }, 5000);
+                }
+            }
+        }
+
+        confirmButton.addEventListener('click', function () {
+            startCountdown();
+        });
+
+        var modal = document.getElementById("myModal");
+
+        window.onclick = function (event) {
+            if (event.target == modal) {
+                clearTimeout(reloadInterval); // Clear the reload interval if the modal is closed
+                modal.style.display = "none";
+            }
+        };
+    });
+</script>
+
+<script>
+    function toggleEditMode() {
+        var addressInput = document.getElementById("addressInput");
+        var changeButton = document.querySelector(".change input[value='Change Address']");
+        var saveButton = document.querySelector(".change input[value='Save']");
+
+        if (addressInput.readOnly) {
+            addressInput.readOnly = false;
+            changeButton.style.display = "none";
+            saveButton.style.display = "inline-block";
+        } else {
+            addressInput.readOnly = true;
+            changeButton.style.display = "inline-block";
+            saveButton.style.display = "none";
+        }
+    }
+
+    function updateTotal() {
+        const subtotal = parseFloat(document.querySelector('.subtotal-value').textContent.slice(1)) || 0;
+        const shipping = parseFloat(document.querySelector('.shipping-value').textContent.slice(1)) || 0;
+        const tax = parseFloat(document.querySelector('.tax-value').textContent.slice(1)) || 0;
+        const total = subtotal + shipping + tax;
+        document.getElementById('total_payment').value = '$' + total.toFixed(2);
+        document.getElementById('display-total').textContent = '$' + total.toFixed(2); // Update modal total
+    }
+
+    document.addEventListener('DOMContentLoaded', (event) => {
+        document.querySelectorAll('input[name="expedition"]').forEach((input) => {
+            input.addEventListener('change', function () {
+                const shippingPrice = parseFloat(this.value);
+                document.querySelector('.shipping-value').textContent = '$' + shippingPrice.toFixed(2);
+                updateTotal();
+            });
+        });
+
+        document.querySelectorAll('input[name="payment_method"]').forEach((input) => {
+            input.addEventListener('change', function () {
+                const tax = parseFloat(this.value);
+                document.querySelector('.tax-value').textContent = '$' + tax.toFixed(2);
+                updateTotal();
+            });
+        });
+
+        updateTotal();
+    });
+
+    // Agar tombol "Confirm" tidak bisa diklik sampai semua input diisi
+    document.addEventListener('DOMContentLoaded', (event) => {
+        const confirmButton = document.getElementById('myBtn');
+        const inputs = document.querySelectorAll('input[required]');
+        const bankImage = document.getElementById('bankImage');
+
+        inputs.forEach(input => {
+            input.addEventListener('input', () => {
+                const allFilled = Array.from(inputs).every(input => input.value.trim() !== '');
+                confirmButton.disabled = !allFilled;
+            });
+        });
+
+        document.querySelectorAll('input[name="payment_method"]').forEach((input) => {
+            input.addEventListener('change', function () {
+                const selectedPayment = document.querySelector('input[name="payment_method"]:checked');
+                const selectedPaymentId = selectedPayment.getAttribute('data-payment-id');
+                const selectedPaymentImage = document.querySelector(`input[name="payment_method"][data-payment-id="${selectedPaymentId}"]`).parentNode.querySelector('img').src;
+                bankImage.src = selectedPaymentImage;
+            });
+        });
+
+        confirmButton.disabled = true;
+
+        // Modal functionality
+        var modal = document.getElementById("checkoutModal");
+        var closeModalBtn = document.querySelector(".modal .close");
+        var modalCloseBtn = document.getElementById("modalCloseBtn");
+
+        confirmButton.addEventListener('click', function(event) {
+            event.preventDefault(); // Prevent form submission
+            modal.style.display = "block";
+        });
+
+        closeModalBtn.onclick = function() {
+            modal.style.display = "none";
+        }
+
+        modalCloseBtn.onclick = function() {
+            modal.style.display = "none";
+        }
+
+        window.onclick = function(event) {
+            if (event.target == modal) {
+                modal.style.display = "none";
+            }
+        }
+    });
+</script>
+
+
+{% include 'footer.html' %}
+{% endblock content %}

@@ -237,6 +237,10 @@ form.pform {
     line-height: 20px;
     text-align: left;
     margin: 0;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    background: none;
 }
 
 .input input:focus {

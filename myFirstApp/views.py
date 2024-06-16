@@ -3,12 +3,13 @@ from django.contrib.auth.models import User
 from django.contrib.auth import login, authenticate, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
+from django.utils import timezone
 from django import forms
 import random
 from django.http import JsonResponse
 import json
 
-from .models import Profile, Category, Product, Expedition, Payment_method, Order, OrderItem, Wishlist
+from .models import Profile, Category, Product, Expedition, Payment_method, Order, OrderItem, Wishlist, Shipment
 
 # homepage
 
@@ -155,9 +156,6 @@ def categoryPage(request, category_id):
         "products": products,
         }
     return render(request, 'category.html', context)
-
-def delivery(request):
-    return render(request, 'delivery.html')
 
 # cart
 
@@ -329,3 +327,78 @@ def delete_account(request):
         logout(request)
         return redirect('index')
     return render(request, 'user.html')
+
+# payment
+def delivery(request):
+    return render(request, 'delivery.html')
+
+@login_required(login_url='login')
+def payment(request):
+    user = request.user
+
+    if request.method == 'GET':
+        expeditions = Expedition.objects.all()
+        payment_methods = Payment_method.objects.all()
+        order, created = Order.objects.get_or_create(user=user, complete=False)
+        order_items = order.orderitem_set.all()
+        order.date_ordered = timezone.now()
+        order_number = order.generate_random_number(length=5)
+        virtual_account = order.generate_random_number(length=12)
+        order.order_number = order_number
+        order.virtual_account = virtual_account
+        order.save()
+
+        if not order_items:
+            return redirect('cart')
+
+        subtotal = order.get_total_cost  # Accessing property, not calling method
+        total_payment = order.get_total_payment  # Accessing property, not calling method
+
+        context = {
+            "order": order,
+            "order_items": order_items,
+            "subtotal": subtotal,
+            "total_payment": total_payment,
+            "expeditions": expeditions,
+            "payment_methods": payment_methods,
+            "virtual_account": virtual_account,
+            "order_number": order_number,
+        }
+        return render(request, 'payment.html', context)
+
+    elif request.method == 'POST':
+        delivery_address = request.POST['delivery_address']
+        total_payment = float(request.POST['total_payment'].replace('$', ''))
+
+        expedition_id = request.POST.get('expedition')
+        payment_method_id = request.POST.get('payment_method')
+
+        expedition = get_object_or_404(Expedition, price=expedition_id)
+        payment_method = get_object_or_404(Payment_method, tax=payment_method_id)
+
+        order, created = Order.objects.get_or_create(user=user, complete=False)
+        order.delivery_address = delivery_address
+        order.expedition = expedition
+        order.payment_method = payment_method
+        order.total_cost = total_payment
+
+        if request.POST.get('type') == 'now':
+            order.complete = True
+        order.save()
+
+        Shipment.objects.create(
+            user=user,
+            order=order,
+            delivery_address=delivery_address,
+        )
+
+        return redirect('transaction_list')
+
+@login_required(login_url='login')
+def transaction_list(request):
+    user = request.user
+    orders = Order.objects.filter(user=user, complete=True)
+    context = {
+        "orders": orders,
+    }
+    return render(request, 'transaction_list.html', context)
