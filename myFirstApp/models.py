@@ -85,13 +85,16 @@ class Order(models.Model):
             total += self.payment_method.tax
         return total
 
-    def generate_random_number(self, length):
-        return get_random_string(length, allowed_chars='1234567890')
-
     def save(self, *args, **kwargs):
         if not self.order_number:
-            self.order_number = self.generate_random_number()
-        super().save(*args, **kwargs)
+            self.order_number = self.generate_random_number(length=5)
+        if not self.virtual_account:
+            self.virtual_account = self.generate_random_number(length=12)
+        super(Order, self).save(*args, **kwargs)
+
+    @staticmethod
+    def generate_random_number(length):
+        return ''.join([str(random.randint(0, 9)) for _ in range(length)])
 
 class OrderItem(models.Model):
     product = models.ForeignKey(Product, on_delete=models.CASCADE, null=True)
@@ -114,7 +117,7 @@ class Shipment(models.Model):
     delivery_address = models.CharField(max_length=200, null=True, blank=True)
     def __str__(self):
         if self.user is not None:
-            return self.user.username
+            return self.user.username + "'s Shipment" + " - " + self.order.order_number
         else:
             return "No User Assigned"
     

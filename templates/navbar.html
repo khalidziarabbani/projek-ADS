@@ -242,7 +242,7 @@
                 <a class="user-name" href="#">{{ request.user.username }}</a>
                 <div class="user-dropdown">
                     <a href="{% url 'user' %}">My Profile</a>
-                    <a href="#">Transaction List</a>
+                    <a href="{% url 'transaction_list' %}">Transaction List</a>
                 </div>
             </li>
             {% endif %}
