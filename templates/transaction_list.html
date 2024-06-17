@@ -5,6 +5,48 @@
 <link rel="stylesheet" href="{% static 'css/transaction_list.css' %}">
 {% include 'navbar.html' %}
 
+<div class="bg">
+    <h1>Transaction List</h1>
+    <div class="container">
+        {% for order in orders %}
+        <div class="box-tr">
+            <div class="box-header">
+                <h2>Order ID: #{{ order.order_number }}</h2>
+                <div class="check">
+                    <img src="{% static 'img/green-check.svg' %}" alt="">
+                    <p>Paid on {{ order.date_ordered|date:"d F Y" }}</p>
+                </div>
+            </div>
+            <div class="box-body">
+                <div class="box-left">
+                    {% for item in order.orderitem_set.all %}
+                    <div class="item-box">
+                        <img src="{{ item.product.image.url }}" alt="{{ item.product.name }}">
+                        <div class="item-details">
+                            <h3>{{ item.product.name }}</h3>
+                            <h4>{{ item.product.price }}</h4>
+                            <p>Category: <span>{{item.product.category}}</span></p>
+                            <p>Brand: <span>{{item.product.brand}}</span></p>
+                            <p>Quantity: <span>{{ item.quantity }}</span></p>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+                <div class="box-right">
+                    <h3>Order Details</h3>
+                    <div class="order-details">
+                        <p>Date ordered: <span>{{ order.date_ordered|date:"d F Y" }}</span></p>
+                        <p>Expedition: <span>{{ order.expedition }}</span></p>
+                        <p>Method Payment: <span>{{ order.payment_method }}</span></p>
+                        <p>Virtual Account Number: <span>{{ order.virtual_account }}</span></p>
+                    </div>
+                    <a href="{% url 'index' %}#allproduct" class="btn">Buy Again</a>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
 
 {% include 'footer.html' %}
 {% endblock content %}
