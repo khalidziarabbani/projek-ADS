@@ -7,6 +7,7 @@
 
 <div class="bg">
     <h1>Transaction List</h1>
+    {% if orders %}
     <div class="container">
         {% for order in orders %}
         <div class="box-tr">
@@ -46,6 +47,51 @@
         </div>
         {% endfor %}
     </div>
+    {% else %}
+    <div class="empty-cart">
+        <div class="econtent">
+            <img src="{% static 'img/tr-kosong.svg' %}" alt="empty-cart">
+            <h1>No Transaction Yet</h1>
+            <p>It looks like you haven't made any transactions yet.<br /> 
+                Once you start, your transaction history will appear here.</p>
+        </div>
+        <a href="{% url 'index' %}#all-product">Start Shopping</a>
+    </div>
+    <div class="other-product">
+        <h1>Let's Checkout the Products</h1>
+        <div class="product-container">
+            {% for p in other_products %}
+            <a href="{% url 'product_detail' p.id %}" class="product-box">
+                <img src="{{p.image.url}}" alt="{{p.name}}">
+                <div class="product-overlay">
+                    <div class="txt">
+                        <h4>{{p.name}}</h4>
+                        <p>{{p.price}}</p>
+                    </div>
+                    <div class="pay">
+                        <form method="POST" action="{% url 'add_to_cart' p.id %}" class="btn">
+                            {% csrf_token %}
+                            <button type="submit">
+                            <p>Add to Cart</p>
+                            <input type="hidden" name="quantity" value="1">
+                            <img src="{% static "img/cart-white2.svg" %}" alt="cart">
+                            </button>
+                        </form>
+                        <form method="POST" action="{% url 'add_to_wishlist' p.id %}" class="wishlist">
+                            {% csrf_token %}
+                            {% if request.user.is_authenticated and p in request.user.wishlist.products.all %}
+                                <button type="submit" class="wishlist-button wishlist-added"></button>
+                            {% else %}
+                                <button type="submit" class="wishlist-button"></button>
+                            {% endif %}
+                        </form>                    
+                    </div>
+                </div>
+            </a>
+            {% endfor %}
+        </div>
+    </div>
+    {% endif %}
 </div>
 
 {% include 'footer.html' %}
