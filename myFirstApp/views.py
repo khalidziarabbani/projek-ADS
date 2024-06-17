@@ -7,11 +7,11 @@ from django.utils import timezone
 from django import forms
 import random
 from django.http import JsonResponse
+from django.http import HttpResponseBadRequest  # Import added
 import json
+from django.db import transaction
 
 from .models import Profile, Category, Product, Expedition, Payment_method, Order, OrderItem, Wishlist, Shipment
-
-# homepage
 
 def index(request):
     categories = Category.objects.all()
@@ -21,8 +21,6 @@ def index(request):
         "products": products,
     }
     return render(request, 'index.html', context)
-
-# login, logout, register
 
 def loginview(request):
     if request.method == 'POST':
@@ -64,7 +62,6 @@ def register(request):
             messages.error(request, 'Username already in use')
             return render(request, 'register.html')
 
-        # Periksa apakah pengguna sudah memiliki profil
         user = User.objects.create_user(username=username, email=email, password=password)
         if not Profile.objects.filter(user=user).exists():
             Profile.objects.create(user=user, phone_number=phone_number, full_name=full_name)
@@ -77,8 +74,6 @@ def register(request):
 
     elif request.method == 'GET':
         return render(request, 'register.html')
-
-# product detail
 
 def product_detail(request, product_id):
     if request.method == 'POST':
@@ -100,11 +95,11 @@ def product_detail(request, product_id):
                 product=product,
                 quantity=quantity,
             )
-
+        
         return redirect('cart')
     
     elif request.method == 'GET':
-        product = get_object_or_404(Product, id=product_id)
+        product = Product.objects.get(id=product_id)
         other_products = Product.objects.exclude(id=product_id).order_by('?')[:10]
 
         context = {
@@ -112,8 +107,6 @@ def product_detail(request, product_id):
             'other_products': other_products,
         }
         return render(request, 'product_detail.html', context)
-
-# user
 
 @login_required(login_url='login')
 def user(request):
@@ -144,8 +137,6 @@ def user(request):
         }
         return render(request, 'user.html', context)
 
-# category page
-
 def categoryPage(request, category_id):
     category = Category.objects.get(id=category_id)
     categories = Category.objects.all()
@@ -157,8 +148,6 @@ def categoryPage(request, category_id):
         }
     return render(request, 'category.html', context)
 
-# cart
-
 @login_required
 def cart(request):
     user = request.user
@@ -166,10 +155,8 @@ def cart(request):
     orders = Order.objects.filter(user=user, complete=False)
     if orders.exists():
         if orders.count() > 1:
-            # Handle multiple incomplete orders: keep the most recent and mark others as complete or merge them
             main_order = orders.order_by('-date_ordered').first()
             for order in orders.exclude(id=main_order.id):
-                # Optionally merge items or just mark them complete
                 order.complete = True
                 order.save()
         else:
@@ -197,29 +184,17 @@ def cart(request):
     }
     return render(request, 'cart.html', context)
 
-# add to cart
-
 @login_required(login_url='login')
 def add_to_cart(request, product_id):
     if request.method == 'POST':
-        product = get_object_or_404(Product, id=product_id)
+        product = Product.objects.get(id=product_id)
         user = request.user
         order, created = Order.objects.get_or_create(user=user, complete=False)
         quantity = int(request.POST.get('quantity', 1))
         
-        # Check if an order item with the same product and order already exists
-        order_item = OrderItem.objects.filter(order=order, product=product).first()
-        if order_item:
-            # Order item already exists, update the quantity
-            order_item.quantity += quantity
-            order_item.save()
-        else:
-            # Create a new order item
-            OrderItem.objects.create(
-                order=order,
-                product=product,
-                quantity=quantity,
-            )
+        order_item, created = OrderItem.objects.get_or_create(order=order, product=product)
+        order_item.quantity += quantity
+        order_item.save()
 
         return redirect('cart')
     elif request.method == 'GET':
@@ -228,8 +203,6 @@ def add_to_cart(request, product_id):
             "product": product,
         }
         return render(request, 'cart.html', context)
-
-# update item quantity product
 
 def updateItem(request):
     data = json.loads(request.body)
@@ -242,10 +215,10 @@ def updateItem(request):
     order, created = Order.objects.get_or_create(user=user, complete=False)
     orderItem, created = OrderItem.objects.get_or_create(order=order, product=product)
 
-    if action == 'add':
+    if action == 'add' and orderItem.quantity < product.stock:
         orderItem.quantity = (orderItem.quantity + 1)
         orderItem.save()
-    elif action == 'remove':
+    elif action == 'remove' and orderItem.quantity > 0:
         orderItem.quantity = (orderItem.quantity - 1)
         orderItem.save()  
     elif action == 'delete':
@@ -253,8 +226,6 @@ def updateItem(request):
     if orderItem.quantity <= 0:
         orderItem.delete()
     return JsonResponse('Item was added', safe=False)
-
-# add wishlist
 
 @login_required(login_url='login')
 def add_to_wishlist(request, product_id):
@@ -271,8 +242,6 @@ def add_to_wishlist(request, product_id):
 
     return redirect('user')
 
-# edit image
-
 def edit_image(request):
     if request.method == 'POST':
         if 'profile_image' in request.FILES:
@@ -280,14 +249,11 @@ def edit_image(request):
                 profile = Profile.objects.get(user=request.user)
                 profile.image = request.FILES['profile_image']
                 profile.save()
-                return redirect('user')  # Replace 'user' with the name of your user profile view
+                return redirect('user')
             except Profile.DoesNotExist:
-                # Handle the case where the profile for the user does not exist
-                pass  # You may want to create a new profile instance here
+                pass
 
     return render(request, 'user.html')
-
-# change passowrd
 
 class ChangePasswordForm(forms.Form):
     old_password = forms.CharField(widget=forms.PasswordInput)
@@ -318,8 +284,6 @@ def change_password(request):
         form = ChangePasswordForm()
     return render(request, 'user.html', {'form': form})
 
-# delete account
-
 def delete_account(request):
     if request.method == 'POST':
         user = request.user
@@ -328,77 +292,166 @@ def delete_account(request):
         return redirect('index')
     return render(request, 'user.html')
 
-# payment
-def delivery(request):
-    return render(request, 'delivery.html')
+# @login_required(login_url='login')
+# def payment(request):
+#     user = request.user
+
+#     # Handle GET request to display payment page
+#     if request.method == 'GET':
+#         expeditions = Expedition.objects.all()
+#         payment_methods = Payment_method.objects.all()
+        
+#         # Get or create order for the current user
+#         order, created = Order.objects.get_or_create(user=user, complete=False)
+#         order_items = order.orderitem_set.all()
+
+#         # Generate order number and virtual account if it's a new order
+#         if created:
+#             order.date_ordered = timezone.now()
+#             order_number = order.generate_random_number(length=5)
+#             virtual_account = order.generate_random_number(length=12)
+#             order.order_number = order_number
+#             order.virtual_account = virtual_account
+#             order.save()
+
+#         # Redirect to cart if there are no items in the order
+#         if not order_items:
+#             return redirect('cart')
+
+#         # Calculate subtotal for the order
+#         subtotal = order.get_total_cost
+#         total_payment = order.get_total_payment
+
+#         context = {
+#             "order": order,
+#             "order_items": order_items,
+#             "subtotal": subtotal,
+#             "total_payment": total_payment,
+#             "expeditions": expeditions,
+#             "payment_methods": payment_methods,
+#             "virtual_account": order.virtual_account,
+#             "order_number": order.order_number,
+#         }
+
+#         return render(request, 'payment.html', context)
+
+#     # Handle POST request for processing payment
+#     elif request.method == 'POST':
+#         try:
+#             # Extract data from POST request
+#             delivery_address = request.POST.get('delivery_address')
+#             total_payment = float(request.POST.get('total_payment').replace('$', ''))
+#             expedition_id = int(request.POST.get('expedition'))
+#             payment_method_id = int(request.POST.get('payment_method'))
+
+#             # Retrieve expedition and payment method objects
+#             expedition = get_object_or_404(Expedition, id=expedition_id)
+#             payment_method = get_object_or_404(Payment_method, id=payment_method_id)
+
+#             # Retrieve or create order for the current user
+#             order, created = Order.objects.get_or_create(user=user, complete=False)
+
+#             # Update order details
+#             order.delivery_address = delivery_address
+#             order.expedition = expedition
+#             order.payment_method = payment_method
+#             order.total_cost = total_payment
+#             order.save()
+
+#             # Create shipment record
+#             Shipment.objects.create(
+#                 user=user,
+#                 order=order,
+#                 delivery_address=delivery_address,
+#             )
+
+#             # Mark order as complete if specified in POST data
+#             if request.POST.get('type') == 'now':
+#                 order.complete = True
+#                 order.save()
+
+#             # Process each order item (if any)
+#             for order_item in order.orderitem_set.all():
+#                 product = order_item.product
+#                 product.stock -= order_item.quantity
+#                 product.save()
+
+#             # Redirect to transaction list or success page
+#             return redirect('transaction_list')
+
+#         except ValueError as e:
+#             return HttpResponseBadRequest(f"Invalid input: {e}")
+
+#     return HttpResponseBadRequest("Invalid request method")
 
 @login_required(login_url='login')
 def payment(request):
-    user = request.user
-
     if request.method == 'GET':
+        user = request.user
         expeditions = Expedition.objects.all()
         payment_methods = Payment_method.objects.all()
         order, created = Order.objects.get_or_create(user=user, complete=False)
         order_items = order.orderitem_set.all()
         order.date_ordered = timezone.now()
-        order_number = order.generate_random_number(length=5)
-        virtual_account = order.generate_random_number(length=12)
+        order_number = random.randint(10000, 99999)
+        virtual_account = random.randint(100000000000, 999999999999)
         order.order_number = order_number
         order.virtual_account = virtual_account
         order.save()
-
+        
         if not order_items:
             return redirect('cart')
 
-        subtotal = order.get_total_cost  # Accessing property, not calling method
-        total_payment = order.get_total_payment  # Accessing property, not calling method
-
+        subtotal = order.get_total_cost
+        total_payment = order.get_total_payment
         context = {
-            "order": order,
-            "order_items": order_items,
-            "subtotal": subtotal,
-            "total_payment": total_payment,
             "expeditions": expeditions,
             "payment_methods": payment_methods,
-            "virtual_account": virtual_account,
+            "order_items": order_items,
+            "subtotal": subtotal,
+            "order": order,
             "order_number": order_number,
+            "virtual_account": virtual_account,
+            "total_payment": total_payment,
         }
         return render(request, 'payment.html', context)
-
     elif request.method == 'POST':
-        delivery_address = request.POST['delivery_address']
-        total_payment = float(request.POST['total_payment'].replace('$', ''))
+        try:
+            user = request.user
+            delivery_address = request.POST['delivery_address']
+            total_payment = float(request.POST['total_payment'].replace('$', ''))
 
-        expedition_id = request.POST.get('expedition')
-        payment_method_id = request.POST.get('payment_method')
+            expedition_id = request.POST.get('expedition')
+            expedition = get_object_or_404(Expedition, price=expedition_id)  # Ganti 'price' dengan field yang sesuai dalam model Expedition
+            payment_method_id = request.POST.get('payment_method')
+            payment_method = get_object_or_404(Payment_method, tax=payment_method_id)  # Ganti 'tax' dengan field yang sesuai dalam model Payment_method
 
-        expedition = get_object_or_404(Expedition, price=expedition_id)
-        payment_method = get_object_or_404(Payment_method, tax=payment_method_id)
+            order, created = Order.objects.get_or_create(user=user, complete=False)
+            order.expedition = expedition
+            order.payment_method = payment_method
+            order.total_cost = total_payment
+            order.delivery_address = delivery_address
+            if request.POST['type'] == 'now':
+                order.complete = True
+            order.save()
 
-        order, created = Order.objects.get_or_create(user=user, complete=False)
-        order.delivery_address = delivery_address
-        order.expedition = expedition
-        order.payment_method = payment_method
-        order.total_cost = total_payment
+            Shipment.objects.create(
+                user=user,
+                order=order,
+                delivery_address=delivery_address,
+            )
+            
+            return redirect('transaction_list')
 
-        if request.POST.get('type') == 'now':
-            order.complete = True
-        order.save()
-
-        Shipment.objects.create(
-            user=user,
-            order=order,
-            delivery_address=delivery_address,
-        )
-
-        return redirect('transaction_list')
+        except ValueError as e:
+            return HttpResponseBadRequest(f"Invalid input: {e}")
 
 @login_required(login_url='login')
 def transaction_list(request):
     user = request.user
-    orders = Order.objects.filter(user=user, complete=True)
-    context = {
-        "orders": orders,
-    }
-    return render(request, 'transaction_list.html', context)
+    if request.method == 'GET':
+        orders = Order.objects.filter(user=user, complete=True).order_by('-date_ordered')
+        context = {
+            "orders": orders,
+        }
+        return render(request, 'transaction_list.html', context)

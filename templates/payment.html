@@ -1,5 +1,5 @@
 {% extends 'base.html' %}
-{% block title %}Delivery{% endblock title %}
+{% block title %}Payment{% endblock title %}
 {% block content %}
 {% load static %}
 <link rel="stylesheet" href="{% static 'css/payment.css' %}">
@@ -60,9 +60,6 @@
                     </div>
                     {% endfor %}
                 </div>
-            </div>
-            <div class="payment-method">
-                <h1>AVAILABLE PAYMENT METHOD</h1>
                 <div class="payment-list">
                     {% for py in payment_methods %}
                     <div class="payment">
@@ -111,6 +108,9 @@
             <img id="bankImage" src="" alt="bank">
             <div class="modal-info">
                 <p>Order ID: <span>#{{ order_number }}</span></p>
+                {% comment %} order number and date {% endcomment %}
+                <input type="hidden" name="order_number" value="{{ order_number }}">
+                <input type="hidden" name="date_ordered" value="{{ order.date_ordered }}">
                 <p>Total Payment: <span id="display-total"></span></p>
             </div>
             <div class="van">
@@ -131,7 +131,7 @@
             </div>
             <div class="confirm-btn">
                 <p>Payment Deadline: <span id="countdown"></span></p>
-                <button id="modalCloseBtn" type="submit">Confirm</button>
+                <button id="modalCloseBtn" value="now" name="type" type="submit">Confirm</button>
             </div>
         </div>
     </div>
