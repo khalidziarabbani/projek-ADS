@@ -18,4 +18,5 @@ urlpatterns = [
     path('add_to_wishlist/<int:product_id>/', views.add_to_wishlist, name='add_to_wishlist'),
     path('payment/', views.payment, name='payment'),
     path('transaction_list/', views.transaction_list, name='transaction_list'),
+    path('success_state/', views.success_state, name='success_state'),
 ]

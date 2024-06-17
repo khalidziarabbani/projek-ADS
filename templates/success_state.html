@@ -1,0 +1,173 @@
+{% extends 'base.html' %}
+{% block title %}Payment{% endblock title %}
+{% block content %}
+{% load static %}
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200; 1.300;1.400;1.500;1.600;1.700;1.800;1.900&display=swap'); 
+
+    * {
+        margin: 0;
+        padding: 0;
+        text-decoration: none;
+        font-family: Inter;
+        font-style: normal;
+    }
+    
+    html, body {
+        scroll-behavior: smooth;
+        width: 100%;
+        margin: 0;
+        padding: 0;
+    }
+    
+    .bg {
+        display: flex;
+        flex-direction: column;
+        gap: 64px;
+        width: 100%;
+        margin: 0;
+        padding: 80px 0;
+        background: #F9F9F9;
+        min-height: 100vh;
+    }
+
+    .container {
+        display: flex;
+        width: 836px;
+        padding: 36px;
+        flex-direction: column;
+        align-items: center;
+        gap: 56px;
+        border-radius: 12px;
+        background: #F1F1F1;
+    }
+
+    .top {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 16px;
+    }
+
+    .top img {
+        display: flex;
+        width: 240px;
+        height: 240px;
+        justify-content: center;
+        align-items: center;
+        object-fit: cover;
+    }
+
+    .top h2 {
+        color: var(--Text-tx_normal, #281814);
+        font-family: Inter;
+        font-size: 28px;
+        font-style: normal;
+        font-weight: 600;
+        line-height: 38px;
+        margin: 0;
+        padding-bottom: 20px;
+    }
+
+    .top h1 {
+        color: var(--Text-tx_normal, #281814);
+        font-family: Inter;
+        font-size: 28px;
+        font-style: normal;
+        font-weight: 600;
+        line-height: 38px;
+        margin: 0;
+    }
+
+    .top p {
+        color: var(--Text-tx_normal, #281814);
+        text-align: center;
+        font-family: Inter;
+        font-size: 18px;
+        font-style: normal;
+        font-weight: 500;
+        line-height: 27px;
+        margin: 0;
+    }
+
+    .btn {
+        display: flex;
+        gap: 28px;
+        flex-direction: column;
+        align-items: center;
+        width: 100%;
+    }
+
+    .btn .satu{
+        display: flex;
+        width: 246px;
+        height: 44px;
+        padding: 0px 16px;
+        justify-content: center;
+        align-items: center;
+        text-decoration: none;
+        border-radius: 4px;
+        background: var(--Primary-pr_normal, #C00);
+        box-shadow: 0px 3px 4px 0px rgba(0, 0, 0, 0.15);
+
+        color: var(--Secondary-sc_normal, #FFF);
+        font-family: Inter;
+        font-size: 18px;
+        font-style: normal;
+        font-weight: 600;
+        line-height: 23px;
+    }
+
+    .btn .satu:hover{
+        box-shadow: 1px 3px 4px 0px rgba(0, 0, 0, 0.5);
+    }
+
+    .btn .dua{
+        display: flex;
+        width: 246px;
+        height: 44px;
+        padding: 0px 16px;
+        justify-content: center;
+        align-items: center;
+        text-decoration: none;
+        border-radius: 4px;
+        border: 1px solid var(--Primary-pr_normal, #C00);
+        background: var(--Secondary-sc_normal, #FFF);
+        box-shadow: 0px 3px 4px 0px rgba(0, 0, 0, 0.15);
+
+        color: var(--Primary-pr_normal, #C00);
+        font-family: Inter;
+        font-size: 18px;
+        font-style: normal;
+        font-weight: 600;
+        line-height: 23px;
+    }
+
+    .btn .dua:hover{
+        box-shadow: 1px 3px 4px 0px rgba(0, 0, 0, 0.5);
+    }
+</style>
+{% include 'navbar.html' %}
+
+<div class="bg">
+    <div class="container">
+        <div class="top">
+            <img src="{% static 'img/green-check.svg' %}" alt="">
+            <h2>{{ latest_order.total_cost }}</h2>
+            <h1>Payment Successfull</h1>
+            <p>
+                The payment has been done successfully.<br />
+                Thanks for being there with us.
+            </p>
+        </div>
+        <div class="btn">
+            <a class="satu" href="{% url 'index' %}">Back to Homepage</a>
+            <a class="dua" href="{% url 'transaction_list' %}">View Order Detail</a>
+        </div>
+
+    </div>
+</div>
+
+{% include 'footer.html' %}
+{% endblock content %}

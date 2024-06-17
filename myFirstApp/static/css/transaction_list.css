@@ -226,3 +226,232 @@ html, body {
     background: var(--Primary-pr_normal-hover, #A00);
     color: var(--Secondary-sc_normal, #FFF);
 }
+
+/* hidden content */
+.empty-cart {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 36px;
+    gap: 48px;
+}
+
+.econtent {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.econtent img {
+    width: 240px;
+    height: 240px;
+    margin-bottom: 36px;
+}
+
+.econtent h1 {
+    color: var(--Text-tx_normal, #281814);
+    font-family: Inter;
+    font-size: 28px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 38px;
+}
+
+.econtent p {
+    color: var(--text-tx-light-active, #BCB7B6);
+    text-align: center;
+    font-family: Inter;
+    font-size: 28px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 38px;
+}
+
+.empty-cart a {
+    display: flex;
+    height: 44px;
+    padding: 0px 16px;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    border-radius: 4px;
+    background: var(--Primary-pr_normal, #C00);
+    box-shadow: 0px 3px 4px 0px rgba(0, 0, 0, 0.15);
+    color: var(--Secondary-sc_normal, #FFF);
+    font-family: Inter;
+    font-size: 18px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 23px;
+    text-decoration: none;
+}
+
+.empty-cart a:hover {
+    box-shadow: 3px 3px 10px rgba(40, 24, 20, 0.5); /* Memberikan bayangan yang lebih besar dengan sedikit transparansi */
+    transition: box-shadow 0.3s ease-in-out; /* Menambahkan transisi agar efek bayangan lebih halus */
+}
+
+.other-product {
+    display: flex;
+    flex-direction: column;
+    gap: 56px;
+}
+
+.other-product h1{
+    color: var(--Text-tx_normal, #281814);
+    font-size: 28px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 38px;
+    margin: 0;
+}
+
+.product-container {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    justify-items: center;
+    gap: 60px 32px;
+    padding: 0 auto;
+}
+
+.product-container .product-box {
+    text-decoration: none;
+    width: 230px;
+    border-radius: 12px;
+    background: var(--Secondary-sc_normal, #FFF);
+    box-shadow: 0px 1px 4px rgba(0, 0, 0, 0.15), 0px 1px 4px rgba(0, 0, 0, 0.15);
+    transition: transform .2s;
+}
+
+.product-container .product-box:hover {
+    cursor: default;
+    transform: scale(1.1);
+    box-shadow: 3px 3px 10px rgba(40, 24, 20, 0.5); /* Memberikan bayangan yang lebih besar dengan sedikit transparansi */
+}
+
+.product-box img {
+    border-radius: 12px 12px 0 0;
+    width: 100%;
+    height: 230px;
+    object-fit: cover;
+}
+
+.product-overlay {
+    display: flex;
+    padding: 12px 16px;
+    gap: 24px;
+    flex-direction: column;
+}
+
+.product-overlay .txt h4 {
+    color: var(--Text-tx_normal, #281814);
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 20px;
+    margin-bottom: 8px;
+}
+
+.product-overlay .txt p {
+    color: var(--Text-tx_normal, #281814);
+    font-family: Inter;
+    font-size: 18px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 23px;
+    margin-bottom: 0;
+}
+
+.product-box .pay {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-direction: row;
+}
+
+.btn {
+    padding: 0;
+}
+
+form.btn button {
+    border: none;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-radius: 4px;
+    background: var(--Primary-pr_normal, #C00);
+    box-shadow: 0px 3px 4px 0px rgba(0, 0, 0, 0.15);
+    padding: 0px 8px;
+    height: 28px;
+    gap: 8px;
+}
+
+form.btn button:hover {
+    box-shadow: 3px 3px 10px rgba(40, 24, 20, 0.5); /* Memberikan bayangan yang lebih besar dengan sedikit transparansi */
+    transition: box-shadow 0.3s ease-in-out;
+}
+
+
+form.btn p {
+    color: var(--Secondary-sc_normal, #FFF);
+    font-family: Poppins;
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 14px;
+    margin-bottom: 0;
+}
+
+form.btn img {
+    display: flex;
+    width: 16px;
+    height: 16px;
+    justify-content: center;
+    align-items: center;
+}
+
+
+button.wishlist-button {
+    font-size: 28px;
+    height: 28px;
+    width: 28px;
+    border: none;
+    background-image: url('/static/img/heart.png');
+    background-size: cover;
+    background-repeat: no-repeat;
+    cursor: pointer;
+    background-color: transparent;
+}
+
+button.wishlist-button:hover {
+    background-image: url('/static/img/heartfill.png');
+}
+
+button.wishlist-added {
+    background-image: url('/static/img/heartfill.png') !important;
+}
+
+button.wishlist-added:hover {
+    background-image: url('/static/img/heart.png') !important;
+}
+
+/* Media queries for smaller screens */
+@media (max-width: 1300px) {
+    .product-container {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+@media (max-width: 900px) {
+    .product-container {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 600px) {
+    .product-container {
+        grid-template-columns: 1fr;
+    }
+}

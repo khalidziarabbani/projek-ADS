@@ -441,7 +441,7 @@ def payment(request):
                 delivery_address=delivery_address,
             )
             
-            return redirect('transaction_list')
+            return redirect('success_state')
 
         except ValueError as e:
             return HttpResponseBadRequest(f"Invalid input: {e}")
@@ -451,7 +451,20 @@ def transaction_list(request):
     user = request.user
     if request.method == 'GET':
         orders = Order.objects.filter(user=user, complete=True).order_by('-date_ordered')
+        other_products = Product.objects.order_by('?')[:10]
         context = {
             "orders": orders,
+            "other_products": other_products,
         }
         return render(request, 'transaction_list.html', context)
+
+
+def success_state(request):
+    user = request.user
+    if request.method == 'GET':
+        latest_order = Order.objects.filter(user=user, complete=True).order_by('-date_ordered').first()
+        context = {
+            "latest_order": latest_order,
+        }
+        return render(request, 'success_state.html', context)
+
